@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { category_item } from '../../models/category-list';
-import { CategoryItemComponent } from "../../home/category-item/category-item.component";
+import { CategoryItemComponent } from '../../components/home/category-item/category-item.component';
+
 
 @Component({
   selector: 'app-home',

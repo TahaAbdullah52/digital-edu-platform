@@ -1,5 +1,6 @@
 import { Component, input } from '@angular/core';
-import { category_item } from '../../models/category-list';
+import { category_item } from '../../../models/category-list';
+
 
 @Component({
   selector: 'app-category-item',
