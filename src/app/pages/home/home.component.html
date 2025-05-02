@@ -1,0 +1,51 @@
+<section class="hero">
+  <div class="hero-content">
+    <h1>Upgrade your future through Skill Development</h1>
+    <p class="description">
+      10000+ Graduates are working in various local and global companies:
+    </p>
+    <div class="company_logos">
+      <img
+        src="	https://cdn.ostad.app/public/upload/2023-10-02T05-55-06.851Z-1%20Brainstation.webp"
+        alt=""
+      />
+      <img
+        src="https://cdn.ostad.app/public/upload/2023-10-02T05-55-36.601Z-3%20TECHNOSOFT-LOGO.webp"
+        alt=""
+      />
+      <img
+        src="	https://cdn.ostad.app/public/upload/2023-10-02T05-55-48.664Z-4%20Excel.webp"
+        alt=""
+      />
+      <img
+        src="	https://cdn.ostad.app/public/upload/2023-10-02T05-56-48.991Z-8%20Sofol%20it.webp
+        "
+        alt=""
+        style="margin: 15px 0px 0 -35px"
+      />
+      <img
+        src="https://cdn.ostad.app/public/upload/2023-10-02T05-56-38.337Z-7%20Reve%20systems.webp"
+        alt=""
+      />
+      <img
+        src="https://cdn.ostad.app/public/upload/2023-10-02T05-56-30.793Z-6%20ashtha%20it.webp
+        "
+        alt=""
+      />
+      <img
+        src="https://cdn.ostad.app/public/upload/2023-11-29T06-12-33.548Z-3.png"
+        alt=""
+        height="35px"
+        style="margin: 10px 0px 0 20px"
+      />
+    </div>
+  </div>
+</section>
+
+<section class="category">
+  <div class="outer-part">
+    @for (item of categories(); track item.id) {
+    <app-category-item [category]="item" />
+    }
+  </div>
+</section>

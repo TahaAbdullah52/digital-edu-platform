@@ -1,0 +1,12 @@
+<section class="free-courses">
+  <h2>Explore Our Free Courses</h2>
+  <p>Upgrade your skills with top quality free resources!</p>
+
+  <div class="courses-grid">
+    <div class="course-card" *ngFor="let course of courses">
+      <h3>{{ course.title }}</h3>
+      <p>{{ course.description }}</p>
+      <button>Enroll Now</button>
+    </div>
+  </div>
+</section>

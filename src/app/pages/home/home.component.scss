@@ -1,0 +1,56 @@
+.hero {
+  background: url('/assets/images/home-hero-bg.jpg') center center no-repeat;
+  background-size: 95%;
+    height: 110vh;
+      width: 92%;
+      display: flex;
+      align-items: center;
+      padding: 0 80px;
+      color: white;
+      background-color: rgb(38, 42, 68);
+      background-blend-mode: overlay;
+  }
+  
+  .hero-content {
+      max-width: 600px;
+      margin-left: 150px;
+  }
+  .hero-content h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+  }
+  
+  .description {
+      font-size: 16px;
+      margin-bottom: 30px;
+      color: #ddd;
+      font-weight: bold;
+  }
+  .company_logos{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 8px;
+    margin-top: 50px;
+  }
+  .company_logos img {
+    filter: grayscale(100%);
+    object-fit:contain;
+    margin-top: 15px;
+  }
+
+  .category{
+    background-color: #eff2ff;
+    height: 500px;   
+    padding-top: 1px;
+    width: 102%;
+  }
+  .outer-part{
+    display: grid;
+    justify-self: center;
+    height: 500px;
+    width: 96%;
+    grid-template-columns: repeat(5, 1fr);
+    margin-top: 50px;
+    gap: 20px;
+    background-color: rgb(249,249,250);
+  }
