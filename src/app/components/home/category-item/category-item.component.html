@@ -1,7 +1,9 @@
-<div class="inner-div">
-  <div class="img-div"><img [src]="category().imagePath" alt="" /></div>
+<div class="inner-div" [class.active]="isActive()" (click)="handleClick()">
+  <div class="img-div">
+    <img [src]="category.imagePath" alt="" />
+  </div>
   <div class="desc">
-    <h3>{{ category().title }}</h3>
-    <h4>{{ category().noOfCourses }} Courses</h4>
+    <h3>{{ category.title }}</h3>
+    <h4>{{ category.noOfCourses }} Courses</h4>
   </div>
 </div>

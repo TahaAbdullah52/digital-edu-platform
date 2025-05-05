@@ -6,6 +6,8 @@
     height: 110px;
     margin: 30px 20px 0 20px ;
     gap: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 .img-div{
     width: 30px;
@@ -30,4 +32,8 @@
     .img-div{
         border: 1px solid #eff2ff;
     }
+}
+.inner-div.active {
+    background-color: #e0e4ff; 
+    transform: scale(1.08);
 }

@@ -45,7 +45,52 @@
 <section class="category">
   <div class="outer-part">
     @for (item of categories(); track item.id) {
-    <app-category-item [category]="item" />
+    <app-category-item
+      [category]="item"
+      [selectedCategory]="selectedCategory()"
+      (categoryClick)="selectedCategory.set($event); showAll.set(false)"
+    />
     }
+  </div>
+  <div class="videos-part">
+    <div class="outer-div">
+      @for (item of visibleCourses; track item.id) {
+      <app-video-item [video]="item" />
+      }
+    </div>
+    <div class="see-all-btn">
+      <app-prim-button (click)="showAll.set(!showAll())">
+        {{ showAll() ? "Show Less" : "See All Courses" }}
+      </app-prim-button>
+    </div>
+  </div>
+</section>
+
+<section class="review-section">
+  <div class="outer-review-part">
+    <h1>Let's See What Our Users Say</h1>
+    <h3>
+      More than 200 users have attained skills, let's see what are they saying
+    </h3>
+  </div>
+  <div class="story-section">
+    <div class="story">
+      Even though I come from a non-CS background, I felt that understanding
+      data science would help me advance in my profession. In order to do so, I
+      enrolled in an Ostad Data Science course. I believed it would be tough for
+      me to understand without prior knowledge, but after taking the Ostad Data
+      course, I learned that it is simple to crack and that they made it even
+      easier.
+    </div>
+    <div class="story">
+      The Data Science program delivered by Ostad is perfect for me, I would
+      recommend to anyone who might be interested to take the course.
+    </div>
+    <div class="story"></div>
+    <div class="story"></div>
+    <div class="story"></div>
+    <div class="story"></div>
+    <div class="story"></div>
+    <div class="story"></div>
   </div>
 </section>

@@ -1,0 +1,15 @@
+<div class="inner-div">
+  <div class="thumbnail">
+    <a href="/your-page.html">
+      <img [src]="video().img_url" alt="Video Thumbnail" />
+    </a>
+  </div>
+  <div class="course-info">
+    <div class="course-details">Batch No:{{ video().batch_nO }}</div>
+    <div class="course-details">Seats remaining : {{ video().no_of_seat }}</div>
+    <div class="course-details">Days remaining : {{ video().rem_days }}</div>
+  </div>
+  <div class="line"></div>
+  <h2 class="coursename">{{ video().course_name }}</h2>
+  <app-prim-button>Show More</app-prim-button>
+</div>

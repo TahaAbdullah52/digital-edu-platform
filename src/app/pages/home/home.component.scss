@@ -40,17 +40,66 @@
 
   .category{
     background-color: #eff2ff;
-    height: 500px;   
+    height: auto;   
     padding-top: 1px;
     width: 102%;
   }
   .outer-part{
     display: grid;
     justify-self: center;
-    height: 500px;
+    height: 200px;
     width: 96%;
     grid-template-columns: repeat(5, 1fr);
     margin-top: 50px;
     gap: 20px;
     background-color: rgb(249,249,250);
   }
+.videos-part{
+  background-color: rgb(249,249,250);
+  padding: 1px;
+  justify-self: center;
+  height: auto;
+  width: 96%;
+}
+.outer-div{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 50px;
+  justify-self: center;
+}
+.see-all-btn{
+  text-align: center; 
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+.outer-review-part{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(249,249,250);
+    padding: 1px;
+    justify-self: center;
+    height: auto;
+}
+.outer-review-part h1{
+  font-size: 36px;
+  font-weight: 700;
+}
+.outer-review-part h3{
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5rem;
+  letter-spacing: .32px;
+}
+.story-section{
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-template-columns: repeat(4,1fr);
+  margin-top: 20px;
+}
+.story{
+  border: 1px solid gray;
+  border-radius: 5px;
+}

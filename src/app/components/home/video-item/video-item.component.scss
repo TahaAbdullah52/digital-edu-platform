@@ -1,0 +1,44 @@
+.inner-div{
+    background-color: rgb(249,249,250);
+    padding: 1px;
+    width: 330px;
+    border: 1px solid gray;
+    border-radius: 5%;
+    height: 440px;
+}
+.thumbnail{
+    width:150px;
+    cursor: pointer;
+}
+.thumbnail img{
+    width: 330px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5%;
+}
+.course-info{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
+    margin-top: 20px;
+    gap: 5px;
+}
+.course-details{
+    background-color: #eaecf0;
+    border-radius: 8%;
+    padding: 5px;
+    margin:0 5px 0 5px;
+}
+.line{
+    border: 1px solid #eaecf0;
+    margin-top: 10px;
+}
+h2{
+    margin-left: 10px;
+    height: 56px;
+}
+app-prim-button{
+    display: flex;
+    justify-self: center;
+}
