@@ -1,8 +1,7 @@
 .hero {
-  background: url('/assets/images/home-hero-bg.jpg') center center no-repeat;
-  background-size: 95%;
-    height: 110vh;
-      width: 92%;
+      background: url('/assets/images/home-hero-bg.jpg') center center no-repeat;
+      height: 110vh;
+      width: 95%;
       display: flex;
       align-items: center;
       padding: 0 80px;
@@ -42,7 +41,8 @@
     background-color: #eff2ff;
     height: auto;   
     padding-top: 1px;
-    width: 102%;
+    width: 103.5%;
+  
   }
   .outer-part{
     display: grid;
@@ -60,6 +60,9 @@
   justify-self: center;
   height: auto;
   width: 96%;
+  border: 1px solid #d8dadd;
+  border-radius: 1%;
+  margin:20px 0 0 0;
 }
 .outer-div{
   display: grid;
@@ -71,6 +74,11 @@
   text-align: center; 
   margin-top: 50px;
   margin-bottom: 50px;
+}
+.review-section{
+  background-color: rgb(249,249,250);
+  margin-bottom: 50px;
+  width: 103.5%;
 }
 .outer-review-part{
     display: flex;
@@ -94,12 +102,7 @@
 }
 .story-section{
   display: grid;
-  justify-content: center;
-  align-items: center;
   grid-template-columns: repeat(4,1fr);
   margin-top: 20px;
-}
-.story{
-  border: 1px solid gray;
-  border-radius: 5px;
+  gap: 30px;
 }

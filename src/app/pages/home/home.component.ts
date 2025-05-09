@@ -4,11 +4,14 @@ import { CategoryItemComponent } from '../../components/home/category-item/categ
 import { VideoItemComponent } from "../../components/home/video-item/video-item.component";
 import { video_item } from '../../models/video-item';
 import { PrimButtonComponent } from "../../components/prim-button/prim-button.component";
+import { story_item } from '../../models/story-item';
+import { StoryItemComponent } from "../../components/home/story-item/story-item.component";
+import { FooterComponent } from "../../components/footer/footer.component";
 
 
 @Component({
   selector: 'app-home',
-  imports: [CategoryItemComponent, VideoItemComponent, PrimButtonComponent],
+  imports: [CategoryItemComponent, VideoItemComponent, PrimButtonComponent, StoryItemComponent, FooterComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -61,7 +64,7 @@ export class HomeComponent {
     {
       id: 2,
       img_url: "https://img.youtube.com/vi/RWXKysImabs/hqdefault.jpg",
-      batch_nO: 1,
+      batch_nO: 2,
       no_of_seat: 2,
       rem_days: 2,
       course_name: "Learn Dot Net Development",
@@ -199,6 +202,58 @@ export class HomeComponent {
       subscription:"Free"
     }
   ]);
+  stories = signal<story_item[]>([
+    {
+      id: 1,
+      desc : "Even though I come from a non-CS background, I felt that understanding web development would help me advance in my profession. In order to do so, I enrolled in an SkillHive Web development course. I believed it would be tough for me to understand without prior knowledge, but after taking the course, I learned that it is simple to crack and that they made it even easier.",
+      user:"Taha Ibne Abdullah",
+      batch_name: "Learn Dot Net Development",
+      batch_no: 1
+    },
+    {
+      id: 2,
+      desc : "The teachers are execeptional and really helpful,that's why my learning here has been wonderful",
+      user:"Rahul Dutta",
+      batch_name: "Full Stack Web Development with MERN",
+      batch_no: 2
+    },
+    
+    {
+      id: 3,
+      desc : "This course has been one of the most best courses i have done in life...Everything was very detailed",
+      user:"Junain Uddin",
+      batch_name: "Learn Ethical Hacking",
+      batch_no:3
+    },
+    {
+      id: 4,
+      desc : "Alhamdulillah , i have obtained what i was looking for..Instructor was very good...I enjoyed overall and satisfied",
+      user:"Piash Islam",
+      batch_name: "Machine Full Course",
+      batch_no:1
+    },
+    {
+      id: 5,
+      desc : "My expectation has been fulfilled with Python...I have gotten instant support from SkillHive teachers,that's why i have learned with courage after making mistakes",
+      user:"Ifrit Ishty",
+      batch_name: "Python Ultimate Course",
+      batch_no:5
+    },{
+      id: 6,
+      desc : "The Data Science program delivered by Ostad is perfect for me, I would recommend to anyone who might be interested to take the course.",
+      user:"Abdullah Mohammad Asif",
+      batch_name: "Data Science Full Course",
+      batch_no:2
+    },{
+      id: 7,
+      desc : "The main aspect of SKillHive is that they focus on design psychology more than design...It helps a student in finding jobs and makes them different from others.",
+      user:"Shahad Abir",
+      batch_name: "Learn Artificial Intelligence",
+      batch_no:3
+    },
+  ])
+
+
   showAll = signal(false);
 
 get visibleCourses() {

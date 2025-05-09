@@ -1,0 +1,26 @@
+.inner-story-div{
+    display: flex;
+    flex-direction: column;
+    justify-content:end;
+    border: 1px solid gray;
+    padding: 5px;
+    border-radius: 10%;
+    width: 85%;
+    height: 350px;
+    margin-left: 45px;
+}
+.inner-story-div>p{
+    color: rgb(75, 74, 74);
+    line-height: 1.5rem;
+    letter-spacing: .32px;
+}
+h2{
+    margin: 5px;
+}
+h4{
+    margin: 5px 0 20px 0;
+
+}
+.line{
+    border: 1px solid #eaecf0;
+}

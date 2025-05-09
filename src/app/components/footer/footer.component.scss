@@ -1,0 +1,48 @@
+.main-part{
+    background-color: #fffbee;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    width: 103.5%;
+}
+.community-part{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+.community-part>h2{
+    font-weight: lighter;
+}
+
+.download-dest{
+    display: flex;
+    gap: 20px;
+}
+.download-dest>img{
+    cursor: pointer;
+    border: 1px solid white;
+    border-radius: 10%;
+    padding: 5px;
+}
+.download-dest>img:hover{
+    border: 1px solid rgb(204, 161, 80);
+    border-radius: 10%;
+}
+.contact-part{
+    display: flex;
+    flex-direction: column;
+}
+h4{
+    color: rgb(102, 101, 101);
+}
+p{
+    display: flex;
+    justify-content: flex-start;
+}
+p>img{
+    margin: 0px 10px 0px 0px;
+}
+.pmnt_ico{
+    height: 20%;
+    width: 103.5%;
+    background-color: #fffbee;
+}

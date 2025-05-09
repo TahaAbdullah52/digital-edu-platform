@@ -1,1 +1,12 @@
-<p>story-item works!</p>
+<div class="inner-story-div">
+  <p>{{ story().desc }}</p>
+  <div class="line"></div>
+  <h2 class="user">
+    {{ story().user }}<img src="assets/images/msg_icon.svg" />
+  </h2>
+  <h4 class="batch">
+    {{ story().batch_name }}<br />
+    Batch :
+    {{ story().batch_no }}
+  </h4>
+</div>

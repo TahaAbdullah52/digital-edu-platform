@@ -74,23 +74,10 @@
     </h3>
   </div>
   <div class="story-section">
-    <div class="story">
-      Even though I come from a non-CS background, I felt that understanding
-      data science would help me advance in my profession. In order to do so, I
-      enrolled in an Ostad Data Science course. I believed it would be tough for
-      me to understand without prior knowledge, but after taking the Ostad Data
-      course, I learned that it is simple to crack and that they made it even
-      easier.
-    </div>
-    <div class="story">
-      The Data Science program delivered by Ostad is perfect for me, I would
-      recommend to anyone who might be interested to take the course.
-    </div>
-    <div class="story"></div>
-    <div class="story"></div>
-    <div class="story"></div>
-    <div class="story"></div>
-    <div class="story"></div>
-    <div class="story"></div>
+    @for (item of stories(); track item.id) {
+    <app-story-item [story]="item" />
+    }
   </div>
 </section>
+
+<app-footer />
