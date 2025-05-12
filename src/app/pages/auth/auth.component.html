@@ -1,0 +1,36 @@
+<div class="auth-modal" [class.show]="isVisible">
+  <div class="auth-content">
+    <div class="auth-header">
+      <h2>Let's start with <b>SkillHive BD</b></h2>
+      <span class="close-btn" (click)="close()">×</span>
+    </div>
+
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <button [class.active]="isLogin" (click)="isLogin = true">Login</button>
+        <button [class.active]="!isLogin" (click)="isLogin = false">Sign Up</button>
+      </div>
+
+      <div *ngIf="isLogin; else signupForm" @formAnimation>
+
+        <label>Email</label>
+        <input type="text" placeholder="Enter your email" />
+        <label>Password</label>
+        <input type="text" placeholder="Enter your password" />
+        <app-prim-button >Login →</app-prim-button>
+      </div>
+
+        <ng-template #signupForm>
+        <div @formAnimation>
+            <label>Email</label>
+            <input type="text" placeholder="Add your Email" />
+            <label>Password</label>
+            <input type="text" placeholder="Add your password" />
+            <app-prim-button>Sign Up →</app-prim-button>
+        </div>
+        </ng-template>
+
+    </div>
+
+  </div>
+</div>

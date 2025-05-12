@@ -23,5 +23,7 @@
       class="user-badge"
     />
   </div>
-  <app-prim-button>Login/Sign Up</app-prim-button>
+  <app-prim-button (click)="auth.open()">Login / Sign Up</app-prim-button>
+  <app-auth #auth></app-auth>
+
 </header>
