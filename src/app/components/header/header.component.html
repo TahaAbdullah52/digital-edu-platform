@@ -13,7 +13,7 @@
     >
     <a routerLink="/free-courses" routerLinkActive="active">Free Courses</a>
     <a routerLink="/my-courses" routerLinkActive="active">My Courses</a>
-    <a routerLink="/my-profile" routerLinkActive="active">My Profile</a>
+    <a routerLink="/payment" routerLinkActive="active">My Profile</a>
   </nav>
 
   <div class="badge-section">
@@ -23,5 +23,5 @@
       class="user-badge"
     />
   </div>
-  <app-prim-button>Login/Sign Up</app-prim-button>
+  <app-prim-button (clicked)="goToLogin()">Login/Sign Up</app-prim-button>
 </header>
