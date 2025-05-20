@@ -5,14 +5,14 @@
 }
 
 .header {
-    width: 100%;
+    width: 105%;
     height: 100px;
     background-color: rgb(249,249,250);
     padding: 0px 0px;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
+    position: sticky;
     top: 0;
     left: 0;
     z-index: 10;

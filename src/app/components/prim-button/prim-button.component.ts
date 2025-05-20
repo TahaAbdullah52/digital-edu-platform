@@ -1,11 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-prim-button',
-  imports: [],
-  templateUrl: './prim-button.component.html',
-  styleUrl: './prim-button.component.scss'
+  standalone: true,
+  template: `<button (click)="onClick()"><ng-content></ng-content></button>`,
+  styleUrls: ['./prim-button.component.scss']
 })
 export class PrimButtonComponent {
+  @Output() clicked = new EventEmitter<void>();
 
+  onClick() {
+    this.clicked.emit();
+  }
 }

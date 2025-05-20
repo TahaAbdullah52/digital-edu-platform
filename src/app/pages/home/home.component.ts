@@ -220,14 +220,14 @@ export class HomeComponent {
     
     {
       id: 3,
-      desc : "This course has been one of the most best courses i have done in life...Everything was very detailed",
+      desc : "This course has been one of the best courses i have done in my life...Everything was very detailed",
       user:"Junain Uddin",
       batch_name: "Learn Ethical Hacking",
       batch_no:3
     },
     {
       id: 4,
-      desc : "Alhamdulillah , i have obtained what i was looking for..Instructor was very good...I enjoyed overall and satisfied",
+      desc : "Alhamdulillah , i have found what i was looking for..Instructor was very good...I enjoyed the overall course and satisfied",
       user:"Piash Islam",
       batch_name: "Machine Full Course",
       batch_no:1
