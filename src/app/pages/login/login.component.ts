@@ -5,7 +5,7 @@ import { PrimButtonComponent } from "../../components/prim-button/prim-button.co
   selector: 'app-login',
   standalone: true,
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements AfterViewInit {
 

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-free-courses',
   imports: [CommonModule],
   templateUrl: './free-courses.component.html',
-  styleUrl: './free-courses.component.scss'
+  styleUrl: './free-courses.component.css'
 })
 export class FreeCoursesComponent {
   courses = [

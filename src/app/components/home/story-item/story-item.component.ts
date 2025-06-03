@@ -5,7 +5,7 @@ import { story_item } from '../../../models/story-item';
   selector: 'app-story-item',
   imports: [],
   templateUrl: './story-item.component.html',
-  styleUrl: './story-item.component.scss'
+  styleUrl: './story-item.component.css'
 })
 export class StoryItemComponent {
   story = input.required<story_item>();

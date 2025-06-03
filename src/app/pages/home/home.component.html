@@ -54,10 +54,13 @@
   </div>
   <div class="videos-part">
     <div class="outer-div">
-      @for (item of visibleCourses; track item.id) {
-      <app-video-item [video]="item" />
+      @for (item of visibleCourses;track item.id) {
+      <div>
+        <app-video-item [video]="item"></app-video-item>
+      </div>
       }
     </div>
+
     <div class="see-all-btn">
       <app-prim-button (click)="showAll.set(!showAll())">
         {{ showAll() ? "Show Less" : "See All Courses" }}

@@ -4,8 +4,12 @@ export interface video_item{
     batch_nO: number;
     no_of_seat: number;
     rem_days: number;
+    course_id: string;
     course_name: string;
+    course_desc: string;
+    no_of_class: number;
     category: string;
-    subscription: string;
+    isPremium: boolean;
     course_fee?: number;
+    technologies?: { name: string; icon: string }[];
 }

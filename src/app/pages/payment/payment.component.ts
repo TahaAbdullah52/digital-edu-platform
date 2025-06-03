@@ -5,7 +5,7 @@ import { PrimButtonComponent } from "../../components/prim-button/prim-button.co
   selector: 'app-payment',
   imports: [PrimButtonComponent],
   templateUrl: './payment.component.html',
-  styleUrl: './payment.component.scss'
+  styleUrl: './payment.component.css'
 })
 export class PaymentComponent {
 

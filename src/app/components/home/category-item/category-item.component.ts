@@ -6,11 +6,12 @@ import { category_item } from '../../../models/category-list';
   selector: 'app-category-item',
   imports: [],
   templateUrl: './category-item.component.html',
-  styleUrl: './category-item.component.scss'
+  styleUrl: './category-item.component.css'
 })
 export class CategoryItemComponent {
+  
   // category = input.required<category_item>();
-@Input() category!: category_item;
+  @Input() category!: category_item;
   @Input() selectedCategory!: string; // passed from parent
 
   @Output() categoryClick = new EventEmitter<string>();

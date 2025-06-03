@@ -9,7 +9,7 @@ import { PrimButtonComponent } from '../prim-button/prim-button.component';
   standalone: true,
   imports: [CommonModule, RouterModule, PrimButtonComponent],
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
   constructor(private router: Router) {}

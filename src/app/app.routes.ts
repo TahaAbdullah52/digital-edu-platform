@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { FreeCoursesComponent } from './pages/free-courses/free-courses.component';
 import { PaymentComponent } from './pages/payment/payment.component';
+import { SingleCourseComponent } from './pages/single-course/single-course.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },  // default Home page
@@ -11,6 +12,6 @@ export const routes: Routes = [
       loadComponent: () =>
       import('./pages/login/login.component').then(m => m.LoginComponent)
     },
-    { path: 'payment', component: PaymentComponent }
-  // { path: 'my-courses', component: MyCoursesComponent },
+    { path: 'payment', component: PaymentComponent },
+    { path: 'single-course/:id', component: SingleCourseComponent },
 ];

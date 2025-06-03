@@ -1,0 +1,95 @@
+<section class="course-details" *ngIf="course; else notFound">
+  <div class="course-info">
+    <h1>{{ course.course_name }}</h1>
+    <p>{{ course.course_desc }}</p>
+
+    <div class="course-fee-sec">
+      <app-prim-button>Enroll In Course</app-prim-button>
+      <h2>
+        {{
+          course.course_fee ? (course.course_fee | currency : "BDT") : "Free"
+        }}
+      </h2>
+    </div>
+
+    <div class="classNo">
+      <img src="assets/images/apps-line.svg" alt="" />
+      <h4>34 classes</h4>
+      <h4>Teacher: Abdus Salam</h4>
+    </div>
+
+    <div class="course-time-seat">
+      <h4>Batch No: {{ course.batch_nO }}</h4>
+      <h4>10 Projects</h4>
+      <h4>{{ course.rem_days }} days left</h4>
+      <h4>{{ course.no_of_seat }} seats left</h4>
+    </div>
+
+    <div class="course-benefits">
+      <h3>Job Placement support</h3>
+      <h3>Lifetime Access to Class Recordings</h3>
+    </div>
+  </div>
+
+  <div class="course-img">
+    <img [src]="course.img_url" [alt]="course.course_name" />
+  </div>
+</section>
+
+<ng-template #notFound>
+  <p>Course details not found.</p>
+</ng-template>
+
+<section class="outcomes">
+  <h1 class="title">Tools and Technology You Will Learn</h1>
+  <div class="tech-details">
+    <div class="tech-icons" *ngIf="course?.technologies?.length">
+      <div class="tech-item" *ngFor="let tech of course?.technologies">
+        <img [src]="tech.icon" [alt]="tech.name" />
+        <span>{{ tech.name }}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- course-benefits -->
+<div class="course-benefits-container">
+  <h1 class="title">What You Will Get in This Course</h1>
+  <div class="benefits-grid">
+    <div class="benefit-item" *ngFor="let benefit of benefits">
+      <img [src]="benefit.icon" alt="icon" class="icon" />
+      <h3>{{ benefit.title }}</h3>
+      <p>{{ benefit.description }}</p>
+    </div>
+  </div>
+</div>
+
+<!-- course-requirements -->
+
+<div class="requirements-container">
+  <h1 class="title">What You Need to Get Started</h1>
+  <div class="requirements-grid">
+    <div class="requirement-item" *ngFor="let req of requirements">
+      <img [src]="req.icon" [alt]="req.title" />
+      <p>{{ req.title }}</p>
+    </div>
+  </div>
+</div>
+
+<div class="faq-container">
+  <h1 class="title">Frequently Asked Questions</h1>
+  <div class="faq-item" *ngFor="let faq of faqList; let i = index">
+    <button
+      class="faq-question"
+      (click)="toggleFAQ(i)"
+      [class.active]="activeIndex === i"
+    >
+      <span class="question-text">{{ i + 1 }}. {{ faq.question }}</span>
+      <span class="toggle-icon" [class.active]="activeIndex === i">▼</span>
+    </button>
+    <div class="faq-answer" [class.active]="activeIndex === i">
+      <div class="answer-content">{{ faq.answer }}</div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

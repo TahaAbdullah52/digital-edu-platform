@@ -1,0 +1,99 @@
+.header {
+  width: 105%;
+  height: 100px;
+  background-color: white;
+  padding: 0px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.logo img {
+  background: none;
+  margin-left: 0px;
+  cursor: pointer;
+}
+
+/* input {
+  height: 2px;
+  width: 450px;
+  padding: 25px 25px;
+  border: 1px solid black;
+  border-radius: 25% 25% 0 0;
+  background: none;
+  color: black;
+  margin-right: 80px;
+  margin-left: 40px;
+} */
+input {
+  height: 25px;
+  width: 450px;
+  padding: 12px 25px;
+  border: 1px solid black;
+  border-radius: 25px;
+  background: none;
+  color: black;
+  margin-right: 80px;
+  margin-left: 40px;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+/* Optional: Add focus state for better UX */
+input:focus {
+  border-color: #007bff; /* Change to your preferred color */
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+input::placeholder {
+  color: rgb(38, 42, 68);
+  font-family: "Poppins", sans-serif;
+  font-size: medium;
+}
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 0px;
+  margin-right: 120px;
+}
+
+.nav a {
+  text-decoration: none;
+  font-size: large;
+  font-weight: 500;
+  margin-bottom: 10px;
+  position: relative;
+  color: black;
+}
+
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  height: 2px;
+  width: 100%;
+  background-color: #6c63ff;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+  transform-origin: right;
+}
+
+.nav a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.badge-section {
+  margin-right: 60px;
+  border: 1px solid rgb(38, 42, 68);
+  border-radius: 25px;
+  padding: 2px 6px 0px 6px;
+  background-color: rgb(239, 242, 255);
+}
