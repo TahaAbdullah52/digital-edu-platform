@@ -1,32 +1,18 @@
 .title {
-  justify-self: center;
-  font-size: 32px;
+  margin-left: 15px;
+  position: relative;
+  display: inline-block;
 }
+
 .title::after {
   content: "";
   display: block;
-  margin: 15px auto;
+  margin-top: 5px;
+  justify-self: center;
   width: 65%;
   height: 5px;
   background-color: #f4b400;
   border-radius: 0 0 80% 80%;
-}
-.category {
-  background-color: #eff2ff;
-  height: auto;
-  padding-top: 1px;
-  width: 103.5%;
-  margin-top: 50px;
-}
-.outer-part {
-  display: grid;
-  justify-self: center;
-  height: 200px;
-  width: 96%;
-  grid-template-columns: repeat(5, 1fr);
-  margin-top: 50px;
-  gap: 20px;
-  background-color: rgb(249, 249, 250);
 }
 .videos-part {
   background-color: rgb(249, 249, 250);
@@ -36,14 +22,13 @@
   width: 96%;
   border: 1px solid #d8dadd;
   border-radius: 1%;
-  margin: 20px 0 0 0;
+  margin-top: 25px;
 }
 
 .outer-div {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 50px;
-  justify-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 .see-all-btn {
   text-align: center;
@@ -58,4 +43,21 @@
   color: #777;
   font-style: italic;
   font-size: 1.5rem;
+}
+.recommendation-div {
+  margin-top: 50px;
+}
+.recm-videos-part {
+  background-color: rgb(249, 249, 250);
+  padding: 20px;
+  justify-self: center;
+  min-height: 300px;
+  width: 95%;
+  border: 1px solid #d8dadd;
+  border-radius: 1%;
+  margin-top: 25px;
+}
+.recm-outer-div {
+  display: flex;
+  gap: 30px;
 }

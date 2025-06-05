@@ -1,12 +1,41 @@
 <section class="free-courses">
-  <h2>Explore Our Free Courses</h2>
-  <p>Upgrade your skills with top quality free resources!</p>
+  <h1 class="title">Free Courses</h1>
 
-  <div class="courses-grid">
-    <div class="course-card" *ngFor="let course of courses">
-      <h3>{{ course.title }}</h3>
-      <p>{{ course.description }}</p>
-      <button>Enroll Now</button>
+  <div class="category">
+    <div class="outer-part">
+      @for (item of categoriesWithCounts; track item.id) {
+      <app-category-item
+        [category]="item"
+        [selectedCategory]="selectedCategory()"
+        (categoryClick)="selectedCategory.set($event); showAll.set(false)"
+      />
+      }
     </div>
   </div>
+
+  <div class="videos-part">
+    <ng-container *ngIf="filteredCourses.length > 0; else noCourses">
+      <div class="outer-div">
+        @for (item of filteredCourses; track item.id) {
+        <div>
+          <app-video-item [video]="item"></app-video-item>
+        </div>
+        }
+      </div>
+
+      <div class="see-all-btn">
+        <app-prim-button (click)="showAll.set(!showAll())">
+          {{ showAll() ? "Show Less" : "See All Courses" }}
+        </app-prim-button>
+      </div>
+    </ng-container>
+
+    <ng-template #noCourses>
+      <div class="no-courses">
+        <p>No courses to view.</p>
+      </div>
+    </ng-template>
+  </div>
 </section>
+
+<app-footer />

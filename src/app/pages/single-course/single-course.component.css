@@ -138,9 +138,9 @@
 .title {
   font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 30px;
   position: relative;
   display: inline-block;
+  margin-bottom: 40px;
 }
 
 .title::after {
@@ -191,12 +191,6 @@
   text-align: center;
   max-width: 1200px;
   margin: 70px auto;
-}
-
-.title {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 40px;
 }
 
 .requirements-grid {

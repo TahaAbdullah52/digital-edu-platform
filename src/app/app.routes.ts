@@ -3,15 +3,18 @@ import { HomeComponent } from './pages/home/home.component';
 import { FreeCoursesComponent } from './pages/free-courses/free-courses.component';
 import { PaymentComponent } from './pages/payment/payment.component';
 import { SingleCourseComponent } from './pages/single-course/single-course.component';
+import { MyCoursesComponent } from './pages/my-courses/my-courses.component';
 
 export const routes: Routes = [
-    { path: '', component: HomeComponent },  // default Home page
+    { path: '', redirectTo: 'home', pathMatch: 'full' },  // Default route
+    { path: 'home', component: HomeComponent },
     { path: 'free-courses', component: FreeCoursesComponent },
+    { path: 'my-courses', component: MyCoursesComponent },
+    { path: 'payment', component: PaymentComponent },
+    { path: 'single-course/:id', component: SingleCourseComponent },
     {
       path: 'login',
       loadComponent: () =>
       import('./pages/login/login.component').then(m => m.LoginComponent)
     },
-    { path: 'payment', component: PaymentComponent },
-    { path: 'single-course/:id', component: SingleCourseComponent },
 ];

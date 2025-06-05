@@ -1,12 +1,12 @@
 <header class="header">
-  <div class="logo">
+  <div class="logo" [routerLink]="['home']">
     <img src="assets/images/logo.png" alt="Digital Agency Logo" />
   </div>
   <input type="text" placeholder="Search Courses" />
 
   <nav class="nav">
     <a
-      routerLink="/"
+      routerLink="home"
       routerLinkActive="active"
       [routerLinkActiveOptions]="{ exact: true }"
       >Home</a

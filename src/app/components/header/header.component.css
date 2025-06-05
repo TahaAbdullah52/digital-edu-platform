@@ -1,7 +1,7 @@
 .header {
   width: 105%;
   height: 100px;
-  background-color: white;
+  background-color: rgb(247, 244, 244);
   padding: 0px 0px;
   display: flex;
   justify-content: center;
@@ -17,25 +17,13 @@
   margin-left: 0px;
   cursor: pointer;
 }
-
-/* input {
-  height: 2px;
-  width: 450px;
-  padding: 25px 25px;
-  border: 1px solid black;
-  border-radius: 25% 25% 0 0;
-  background: none;
-  color: black;
-  margin-right: 80px;
-  margin-left: 40px;
-} */
 input {
   height: 25px;
   width: 450px;
   padding: 12px 25px;
   border: 1px solid black;
   border-radius: 25px;
-  background: none;
+  background-color: white;
   color: black;
   margin-right: 80px;
   margin-left: 40px;
@@ -44,9 +32,8 @@ input {
   transition: border-color 0.3s ease;
 }
 
-/* Optional: Add focus state for better UX */
 input:focus {
-  border-color: #007bff; /* Change to your preferred color */
+  border-color: #007bff;
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 

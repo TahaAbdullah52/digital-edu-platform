@@ -10,6 +10,7 @@ export interface video_item{
     no_of_class: number;
     category: string;
     isPremium: boolean;
+    isEnrolled: boolean;
     course_fee?: number;
     technologies?: { name: string; icon: string }[];
 }

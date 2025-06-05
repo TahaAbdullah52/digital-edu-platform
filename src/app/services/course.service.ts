@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { video_item } from '../models/video-item';
 import { COMMON_WEB_TECHS, DEVOPS_TECHS, DOT_NET_TECHS, MERN_TECHS, PYTHON_TECHS } from '../shared/data/shared-tech';
+import { category_item } from '../models/category-list';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,8 @@ export class CourseService {
       course_desc: "This project demonstrates full-stack web development using the MERN stack (MongoDB, Express.js, React.js, and Node.js). It covers building a responsive frontend with React, managing backend APIs with Express and Node, and integrating MongoDB for data storage—offering a complete end-to-end application development experience.",
       no_of_class: 139,
       category: "Web Development",
-      isPremium: false
+      isPremium: true,
+      isEnrolled: false
     },
     {
       id: 2,
@@ -32,7 +34,8 @@ export class CourseService {
       course_desc: "This project showcases web application development using the .NET framework, focusing on building scalable backend services with ASP.NET Core. It includes implementation of RESTful APIs, integration with a SQL Server database, and application of MVC architecture for clean and maintainable code structure.",
       no_of_class: 10,
       category: "Web Development",
-      isPremium: false
+      isPremium: false,
+      isEnrolled: false
     },
     {
       id: 3,
@@ -45,7 +48,8 @@ export class CourseService {
       course_desc: "This project demonstrates full-stack web development using the MERN stack (MongoDB, Express.js, React.js, and Node.js). It covers building a responsive frontend with React, managing backend APIs with Express and Node, and integrating MongoDB for data storage—offering a complete end-to-end application development experience.",
       no_of_class: 30,
       category: "Web Development",
-      isPremium: false
+      isPremium: true,
+      isEnrolled: false
     },
     {
       id: 4,
@@ -58,7 +62,8 @@ export class CourseService {
       course_desc: "This project demonstrates full-stack web development using the MERN stack (MongoDB, Express.js, React.js, and Node.js). It covers building a responsive frontend with React, managing backend APIs with Express and Node, and integrating MongoDB for data storage—offering a complete end-to-end application development experience.",
       no_of_class: 20,
       category: "Artificial Intelligence",
-      isPremium: false
+      isPremium: false,
+      isEnrolled: false
     },
     {
       id: 5,
@@ -71,7 +76,8 @@ export class CourseService {
       course_desc: "This project demonstrates full-stack web development using the MERN stack (MongoDB, Express.js, React.js, and Node.js). It covers building a responsive frontend with React, managing backend APIs with Express and Node, and integrating MongoDB for data storage—offering a complete end-to-end application development experience.",
       no_of_class: 14,
       category: "Data Engineering",
-      isPremium: false
+      isPremium: false,
+      isEnrolled: false
     },
     {
       id: 6,
@@ -84,7 +90,8 @@ export class CourseService {
       course_desc: "This project demonstrates full-stack web development using the MERN stack (MongoDB, Express.js, React.js, and Node.js). It covers building a responsive frontend with React, managing backend APIs with Express and Node, and integrating MongoDB for data storage—offering a complete end-to-end application development experience.",
       no_of_class: 80,
       category: "Cyber Security",
-      isPremium: false
+      isPremium: true,
+      isEnrolled: false
     },
     {
       id: 7,
@@ -97,7 +104,8 @@ export class CourseService {
       course_desc: "This project demonstrates full-stack web development using the MERN stack (MongoDB, Express.js, React.js, and Node.js). It covers building a responsive frontend with React, managing backend APIs with Express and Node, and integrating MongoDB for data storage—offering a complete end-to-end application development experience.",
       no_of_class: 40,
       category: "Programming",
-      isPremium: false
+      isPremium: false,
+      isEnrolled: false
     },
     {
       id: 8,
@@ -110,7 +118,8 @@ export class CourseService {
       course_desc: "This project demonstrates full-stack web development using the MERN stack (MongoDB, Express.js, React.js, and Node.js). It covers building a responsive frontend with React, managing backend APIs with Express and Node, and integrating MongoDB for data storage—offering a complete end-to-end application development experience.",
       no_of_class: 23,
       category: "Programming",
-      isPremium: false
+      isPremium: true,
+      isEnrolled: false
     },
     {
       id: 9,
@@ -123,7 +132,8 @@ export class CourseService {
       course_desc: "This project demonstrates core DevOps practices, including continuous integration, continuous deployment (CI/CD), infrastructure automation, and containerization. Tools like Git, Jenkins/GitHub Actions, Docker, and Kubernetes are used to streamline development workflows and ensure reliable, scalable software delivery.",
       no_of_class: 55,
       category: "Web Development",
-      isPremium: false
+      isPremium: false,
+      isEnrolled: false
     },
     {
       id: 10,
@@ -136,7 +146,8 @@ export class CourseService {
       course_desc: "This project demonstrates full-stack web development using the MERN stack (MongoDB, Express.js, React.js, and Node.js). It covers building a responsive frontend with React, managing backend APIs with Express and Node, and integrating MongoDB for data storage—offering a complete end-to-end application development experience.",
       no_of_class: 60,
       category: "Web Development",
-      isPremium: false
+      isPremium: false,
+      isEnrolled: true
     },
     {
       id: 11,
@@ -149,7 +160,8 @@ export class CourseService {
       course_desc: "This project demonstrates full-stack web development using the MERN stack (MongoDB, Express.js, React.js, and Node.js). It covers building a responsive frontend with React, managing backend APIs with Express and Node, and integrating MongoDB for data storage—offering a complete end-to-end application development experience.",
       no_of_class: 77,
       category: "Artificial Intelligence",
-      isPremium: false
+      isPremium: true,
+      isEnrolled: false
     },
     {
       id: 12,
@@ -162,7 +174,8 @@ export class CourseService {
       course_desc: "This project demonstrates full-stack web development using the MERN stack (MongoDB, Express.js, React.js, and Node.js). It covers building a responsive frontend with React, managing backend APIs with Express and Node, and integrating MongoDB for data storage—offering a complete end-to-end application development experience.",
       no_of_class: 47,
       category: "Artificial Intelligence",
-      isPremium: false
+      isPremium: false,
+      isEnrolled: false
     },
     {
       id: 13,
@@ -175,7 +188,8 @@ export class CourseService {
       course_desc: "This project demonstrates full-stack web development using the MERN stack (MongoDB, Express.js, React.js, and Node.js). It covers building a responsive frontend with React, managing backend APIs with Express and Node, and integrating MongoDB for data storage—offering a complete end-to-end application development experience.",
       no_of_class: 52,
       category: "Cyber Security",
-      isPremium: false
+      isPremium: false,
+      isEnrolled: true
     },
     {
       id: 14,
@@ -188,7 +202,8 @@ export class CourseService {
       course_desc: "This project demonstrates full-stack web development using the MERN stack (MongoDB, Express.js, React.js, and Node.js). It covers building a responsive frontend with React, managing backend APIs with Express and Node, and integrating MongoDB for data storage—offering a complete end-to-end application development experience.",
       no_of_class: 40,
       category: "Programming",
-      isPremium: false
+      isPremium: true,
+      isEnrolled: false
     },
     {
       id: 15,
@@ -201,16 +216,48 @@ export class CourseService {
       course_desc: "This project demonstrates full-stack web development using the MERN stack (MongoDB, Express.js, React.js, and Node.js). It covers building a responsive frontend with React, managing backend APIs with Express and Node, and integrating MongoDB for data storage—offering a complete end-to-end application development experience.",
       no_of_class: 60,
       category: "Programming",
-      isPremium: false
+      isPremium: false,
+      isEnrolled: true
     }
   ]);
-  
+  categories = signal<category_item[]>([
+      {
+        id: 1,
+        title: "Web Development",
+        imagePath: "assets/images/code-box-line.png",
+        noOfCourses: 5
+      },
+      {
+        id: 2,
+        title: "Artificial Intelligence",
+        imagePath: "assets/images/robot-2-line.png",
+        noOfCourses: 3
+      },
+      {
+        id: 3,
+        title: "Cyber Security",
+        imagePath: "assets/images/bug-line.png",
+        noOfCourses: 2
+      },
+      {
+        id: 4,
+        title: "Data Engineering",
+        imagePath: "assets/images/database-2-line.png",
+        noOfCourses: 1
+      },
+      {
+        id: 5,
+        title: "Programming",
+        imagePath: "assets/images/braces-line.png",
+        noOfCourses: 4
+      }
+  ]);
   getCourseById(id: number): video_item | undefined {
 
     // return this.vid_items().find(course => course.id === id);
-     const course = this.vid_items().find(c => c.id === id);
+    const course = this.vid_items().find(c => c.id === id);
 
-  if (!course) return undefined;
+    if (!course) return undefined;
 
   // Auto-assign techs based on category or course_id
     if (course.category === "Web Development") {
@@ -234,6 +281,15 @@ export class CourseService {
     else
       course.technologies = [...PYTHON_TECHS];
   return course;
+  }
+  selectedCategory = signal('Web Development');
+  showAll = signal(false);
+
+  get visibleCourses() {
+  const selected = this.selectedCategory();
+  const filtered = this.vid_items().filter(
+    (v) => v.category === selected);
+  return this.showAll() ? filtered : filtered.slice(0, 4);
   }
   constructor() { }
 }

@@ -1,0 +1,41 @@
+<div class="my-courses-div">
+  <h1 class="title">My Courses</h1>
+  <div class="videos-part">
+    <ng-container *ngIf="filteredCourses.length > 0; else noCourses">
+      <div class="outer-div">
+        @for (item of filteredCourses; track item.id) {
+        <div>
+          <app-my-course [video]="item"></app-my-course>
+        </div>
+        }
+      </div>
+    </ng-container>
+
+    <ng-template #noCourses>
+      <div class="no-courses">
+        <p>No courses to view.</p>
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+<div class="recommendation-div">
+  <h1 class="title">Recommended Courses</h1>
+  <div class="recm-videos-part">
+    <ng-container *ngIf="recommendedCourses.length > 0; else noCourses">
+      <div class="recm-outer-div">
+        @for (item of recommendedCourses; track item.id) {
+        <div>
+          <app-my-course [video]="item"></app-my-course>
+        </div>
+        }
+      </div>
+    </ng-container>
+
+    <ng-template #noCourses>
+      <div class="no-courses">
+        <p>No courses to view.</p>
+      </div>
+    </ng-template>
+  </div>
+</div>

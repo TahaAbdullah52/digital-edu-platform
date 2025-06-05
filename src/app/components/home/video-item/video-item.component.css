@@ -6,6 +6,7 @@
   border-radius: 5%;
   height: 440px;
   margin-top: 25px;
+  transition: border 0.3s ease;
 }
 .inner-div:hover {
   border: 1px solid gray;

@@ -26,38 +26,6 @@ export class HomeComponent {
   get vid_items() {
     return this.courseService.vid_items;
   }
-  categories = signal<category_item[]>([
-    {
-      id: 1,
-      title: "Web Development",
-      imagePath: "assets/images/code-box-line.png",
-      noOfCourses: 5
-    },
-    {
-      id: 2,
-      title: "Artificial Intelligence",
-      imagePath: "assets/images/robot-2-line.png",
-      noOfCourses: 3
-    },
-    {
-      id: 3,
-      title: "Cyber Security",
-      imagePath: "assets/images/bug-line.png",
-      noOfCourses: 2
-    },
-    {
-      id: 4,
-      title: "Data Engineering",
-      imagePath: "assets/images/database-2-line.png",
-      noOfCourses: 1
-    },
-    {
-      id: 5,
-      title: "Programming",
-      imagePath: "assets/images/braces-line.png",
-      noOfCourses: 4
-    }
-  ]); 
   stories = signal<story_item[]>([
     {
       id: 1,
@@ -109,17 +77,17 @@ export class HomeComponent {
     },
   ])
 
-  selectedCategory = signal('Web Development');
-  showAll = signal(false);
+  get categories() {
+    return this.courseService.categories;
+  }
+  get selectedCategory() {
+    return this.courseService.selectedCategory;
+  }
+  get showAll() {
+    return this.courseService.showAll;
+  }
+  get visibleCourses() {
+  return this.courseService.visibleCourses;
+  }
 
-get visibleCourses() {
-  const selected = this.selectedCategory();
-  const filtered = this.vid_items().filter(
-    (v) => v.category === selected
-  );
-  return this.showAll() ? filtered : filtered.slice(0, 4);
-}
-//  getCourse(id: number): video_item | undefined {
-//     return this.courseService.getCourseById(id);
-//   }
 }

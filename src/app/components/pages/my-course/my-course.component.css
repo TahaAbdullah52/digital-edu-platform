@@ -1,0 +1,36 @@
+.inner-div {
+  background-color: white;
+  padding: 1px;
+  width: 550px;
+  border: 1px solid rgb(212, 209, 209);
+  border-radius: 8px;
+  height: 135px;
+  margin-top: 25px;
+  display: flex;
+  transition: border 0.4s ease;
+}
+.inner-div:hover {
+  border: 1px solid gray;
+  cursor: pointer;
+}
+.thumbnail {
+  width: 150px;
+}
+.thumbnail img {
+  width: 200px;
+  height: 135px;
+  object-fit: cover;
+  border-radius: 5%;
+}
+.course-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  margin-left: 80px;
+}
+.course-details {
+  background-color: #eaecf0;
+  border-radius: 5px;
+  padding: 4px;
+  max-width: 100px;
+}
