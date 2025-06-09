@@ -4,7 +4,7 @@
     <ng-container *ngIf="filteredCourses.length > 0; else noCourses">
       <div class="outer-div">
         @for (item of filteredCourses; track item.id) {
-        <div>
+        <div [routerLink]="['/videos-list', item.playlistId]">
           <app-my-course [video]="item"></app-my-course>
         </div>
         }

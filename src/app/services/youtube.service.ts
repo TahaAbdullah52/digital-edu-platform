@@ -1,0 +1,62 @@
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { catchError, Observable, of, tap } from "rxjs";
+import { CourseService } from "./course.service";
+
+@Injectable({
+  providedIn: 'root'
+})
+export class YoutubeService {
+
+  apiKey = 'AIzaSyA_cwkoyCHZ3OyPVbEDi4WdzvtZ18dwOHk';
+  private cachedVideos: { [id: string]: any[] } = {};
+
+  constructor(private http: HttpClient, private courseService: CourseService) { }
+  
+  title(playlistIdOrVideoId: string) {
+    const allCourses = this.courseService.course_items(); 
+    let filtered = allCourses.filter(v =>
+      v.playlistId === playlistIdOrVideoId
+    );
+    return filtered;
+  }
+
+  getPlaylistItems(playlistIdOrVideoId: string): Observable<any> {
+
+    if (this.cachedVideos[playlistIdOrVideoId]) {
+      return of({ items: this.cachedVideos[playlistIdOrVideoId] });
+    }
+
+    const playlistUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=25&playlistId=${playlistIdOrVideoId}&key=${this.apiKey}`;
+
+    return this.http.get<any>(playlistUrl).pipe(
+      tap(res => {
+        if (res?.items?.length) {
+          this.cachedVideos[playlistIdOrVideoId] = res.items;
+        }
+      }),
+
+      catchError(() => {
+        const titleFromCourse = this.title(playlistIdOrVideoId)[0]?.course_name ?? 'Single Video';
+        const videoObj = {
+          items: [
+            {
+              snippet: {
+                title: titleFromCourse,
+                thumbnails: {
+                  medium: {
+                    url: `https://img.youtube.com/vi/${playlistIdOrVideoId}/mqdefault.jpg`
+                  }
+                },
+                resourceId: {
+                  videoId: playlistIdOrVideoId
+                }
+              }
+            }
+          ]
+        };
+        return of(videoObj);
+      })
+    );
+  }
+}

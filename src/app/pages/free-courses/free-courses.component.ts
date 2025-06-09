@@ -1,13 +1,13 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CategoryItemComponent } from "../../components/home/category-item/category-item.component";
-import { VideoItemComponent } from "../../components/home/video-item/video-item.component";
 import { PrimButtonComponent } from "../../components/prim-button/prim-button.component";
 import { CourseService } from '../../services/course.service';
 import { FooterComponent } from "../../components/footer/footer.component";
+import { CourseItemComponent } from "../../components/home/course-item/course-item.component";
 @Component({
   selector: 'app-free-courses',
-  imports: [CommonModule, CategoryItemComponent, VideoItemComponent, PrimButtonComponent, FooterComponent],
+  imports: [CommonModule, CategoryItemComponent, PrimButtonComponent, FooterComponent, CourseItemComponent],
   templateUrl: './free-courses.component.html',
   styleUrl: './free-courses.component.css'
 })
@@ -17,8 +17,8 @@ export class FreeCoursesComponent {
   ngOnInit() {
     this.courseService.selectedCategory.set('Web Development');    
   }
-  get vid_items() {
-    return this.courseService.vid_items;
+  get course_items() {
+    return this.courseService.course_items;
   }
   get selectedCategory() {
     return this.courseService.selectedCategory;
@@ -29,7 +29,7 @@ export class FreeCoursesComponent {
   get filteredCourses() {
     
     const selected = this.selectedCategory();
-    const allCourses = this.courseService.vid_items();
+    const allCourses = this.courseService.course_items();
     
     let filtered = allCourses.filter(v => 
       v.isPremium === false && 
@@ -39,7 +39,7 @@ export class FreeCoursesComponent {
     return this.showAll() ? filtered : filtered.slice(0, 4);
 }
   get allFreeCourses() {
-    return this.courseService.vid_items().filter(v => v.isPremium === false);
+    return this.courseService.course_items().filter(v => v.isPremium === false);
   }
 
   get categoriesWithCounts() {

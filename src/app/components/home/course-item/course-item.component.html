@@ -1,0 +1,15 @@
+<div class="inner-div" [routerLink]="['/single-course', course().id]">
+  <div class="thumbnail">
+    <img [src]="course().img_url" alt="course Thumbnail" />
+  </div>
+
+  <div class="course-info">
+    <div class="course-details">Batch No:{{ course().batch_nO }}</div>
+    <div class="course-details">Seats remaining: {{ course().no_of_seat }}</div>
+    <div class="course-details">Days remaining: {{ course().rem_days }}</div>
+  </div>
+  <div class="line"></div>
+  <h2 class="coursename">{{ course().course_name }}</h2>
+
+  <app-prim-button>Show More</app-prim-button>
+</div>

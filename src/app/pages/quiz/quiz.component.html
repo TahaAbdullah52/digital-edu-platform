@@ -1,0 +1,122 @@
+<!-- quiz.component.html -->
+<div class="quiz-page">
+  <!-- Header -->
+  <header class="quiz-header">
+    <div class="header-content">
+      <h1 class="quiz-title">{{ courseName }} : Quiz</h1>
+      <div class="quiz-info">
+        <span class="question-count">{{ quizQuestions.length }} Question</span>
+        <span class="total-points">{{ quizQuestions.length * 10 }} Points</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quiz Container -->
+  <div class="quiz-container">
+    <!-- Quiz Questions -->
+    <div class="quiz-content" *ngIf="!showResult">
+      <!-- Progress Section -->
+      <div class="progress-section">
+        <div class="question-counter">
+          Question {{ currentQuestionIndex + 1 }} of {{ quizQuestions.length }}
+        </div>
+        <div class="progress-bar">
+          <div
+            class="progress-fill"
+            [style.width.%]="
+              ((currentQuestionIndex + 1) / quizQuestions.length) * 100
+            "
+          ></div>
+        </div>
+      </div>
+
+      <!-- Question Card -->
+      <div class="question-card">
+        <h2 class="question">{{ getCurrentQuestion()?.question }}</h2>
+
+        <div class="options">
+          <label
+            class="option"
+            *ngFor="let option of getCurrentQuestion()?.options; let i = index"
+            [class.selected]="selectedAnswers[currentQuestionIndex] === i"
+          >
+            <input
+              type="radio"
+              [name]="'question_' + currentQuestionIndex"
+              [value]="i"
+              (change)="selectAnswer(i)"
+              [checked]="selectedAnswers[currentQuestionIndex] === i"
+            />
+            <span class="option-text">{{ option }}</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="quiz-navigation">
+        <button
+          class="nav-btn prev-btn"
+          (click)="previousQuestion()"
+          [disabled]="currentQuestionIndex === 0"
+        >
+          Previous
+        </button>
+
+        <button
+          class="nav-btn next-btn"
+          (click)="nextQuestion()"
+          *ngIf="currentQuestionIndex < quizQuestions.length - 1"
+          [disabled]="!isCurrentQuestionAnswered()"
+        >
+          Next
+        </button>
+
+        <button
+          class="submit-btn"
+          (click)="submitQuiz()"
+          *ngIf="currentQuestionIndex === quizQuestions.length - 1"
+          [disabled]="!areAllQuestionsAnswered()"
+        >
+          Submit Answer
+        </button>
+      </div>
+    </div>
+
+    <!-- Quiz Results -->
+    <div class="quiz-results" *ngIf="showResult">
+      <div class="result-card">
+        <div class="result-header">
+          <div class="result-icon">🎉</div>
+          <h2>Quiz Completed!</h2>
+          <p class="course-name">{{ courseName }}</p>
+        </div>
+
+        <div class="score-section">
+          <div class="score-display">
+            <div class="score-circle">
+              <span class="score-number">{{ score }}</span>
+              <span class="score-total">/{{ quizQuestions.length * 10 }}</span>
+            </div>
+            <div class="score-percentage">
+              {{
+                (score / (quizQuestions.length * 10)) * 100 | number : "1.0-0"
+              }}%
+            </div>
+          </div>
+
+          <h3 class="result-message">{{ getResultMessage() }}</h3>
+          <p class="result-details">
+            You answered {{ score / 10 }} out of
+            {{ quizQuestions.length }} questions correctly.
+          </p>
+        </div>
+
+        <div class="result-actions">
+          <button class="back-home-btn" (click)="goBackToMyCourses()">
+            <i>🏠</i> Back to My Courses
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

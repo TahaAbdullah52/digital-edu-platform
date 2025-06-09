@@ -1,0 +1,14 @@
+import { Component, input } from '@angular/core';
+import { PrimButtonComponent } from "../../prim-button/prim-button.component";
+import { course_item} from '../../../models/course-item';
+import { RouterModule } from '@angular/router';
+
+@Component({
+  selector: 'app-course-item',
+  imports: [PrimButtonComponent,RouterModule],
+  templateUrl: './course-item.component.html',
+  styleUrl: './course-item.component.css'
+})
+export class CourseItemComponent {
+  course = input.required<course_item>();
+}

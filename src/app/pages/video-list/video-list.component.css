@@ -1,0 +1,74 @@
+.video-list-sec {
+  display: flex;
+  justify-content: flex-start;
+  gap: 30px;
+}
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 25px;
+  justify-self: center;
+}
+.title::after {
+  content: "";
+  display: block;
+  margin: 15px auto;
+  width: 65%;
+  height: 5px;
+  background-color: #f4b400;
+  border-radius: 0 0 80% 80%;
+}
+.video-list {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  padding: 25px;
+  border: 1px solid #f4b400;
+  border-radius: 8px;
+  margin-top: 30px;
+  margin-left: 30px;
+}
+.video-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+
+.video-item:hover {
+  background-color: #f5f5f5;
+}
+
+.video-item img {
+  width: 270px;
+  height: 150px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+.video-item h1 {
+  font-size: 1.2rem;
+  color: #333;
+}
+.quiz-btn {
+  margin-top: 50px;
+  margin-left: 200px;
+}
+button {
+  border-radius: 15px;
+  padding: 15px;
+  width: 120px;
+  background-color: #f4b400;
+  color: #f3f5f9;
+  border: none;
+  font-size: medium;
+  font-weight: bold;
+  cursor: pointer;
+}
+button:hover {
+  opacity: 0.8;
+}

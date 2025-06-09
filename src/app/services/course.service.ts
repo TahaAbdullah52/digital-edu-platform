@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { video_item } from '../models/video-item';
+import { course_item } from '../models/course-item';
 import { COMMON_WEB_TECHS, DEVOPS_TECHS, DOT_NET_TECHS, MERN_TECHS, PYTHON_TECHS } from '../shared/data/shared-tech';
 import { category_item } from '../models/category-list';
 
@@ -8,7 +8,7 @@ import { category_item } from '../models/category-list';
 })
 export class CourseService {
 
-  vid_items = signal<video_item[]>([
+  course_items = signal<course_item[]>([
     {
       id: 1,
       img_url: "https://img.youtube.com/vi/tVzUXW6siu0/hqdefault.jpg",
@@ -21,7 +21,9 @@ export class CourseService {
       no_of_class: 139,
       category: "Web Development",
       isPremium: true,
-      isEnrolled: false
+      isEnrolled: false,
+      playlistId: 'PLu0W_9lII9agq5TrH9XLIKQvv0iaF2X3w',
+
     },
     {
       id: 2,
@@ -35,7 +37,9 @@ export class CourseService {
       no_of_class: 10,
       category: "Web Development",
       isPremium: false,
-      isEnrolled: false
+      isEnrolled: false,
+      playlistId: 'RWXKysImabs',
+
     },
     {
       id: 3,
@@ -49,7 +53,9 @@ export class CourseService {
       no_of_class: 30,
       category: "Web Development",
       isPremium: true,
-      isEnrolled: false
+      isEnrolled: false,
+      playlistId: 'EsUL2bfKKLc',
+
     },
     {
       id: 4,
@@ -63,7 +69,9 @@ export class CourseService {
       no_of_class: 20,
       category: "Artificial Intelligence",
       isPremium: false,
-      isEnrolled: false
+      isEnrolled: false,
+      playlistId: '5NgNicANyqM',
+
     },
     {
       id: 5,
@@ -77,7 +85,9 @@ export class CourseService {
       no_of_class: 14,
       category: "Data Engineering",
       isPremium: false,
-      isEnrolled: false
+      isEnrolled: false,
+      playlistId: '7WRlYJFG7YI',
+
     },
     {
       id: 6,
@@ -91,7 +101,9 @@ export class CourseService {
       no_of_class: 80,
       category: "Cyber Security",
       isPremium: true,
-      isEnrolled: false
+      isEnrolled: false,
+      playlistId: 'fNzpcB7ODxQ',
+
     },
     {
       id: 7,
@@ -105,7 +117,9 @@ export class CourseService {
       no_of_class: 40,
       category: "Programming",
       isPremium: false,
-      isEnrolled: false
+      isEnrolled: false,
+      playlistId: '-TkoO8Z07hI',
+
     },
     {
       id: 8,
@@ -119,7 +133,9 @@ export class CourseService {
       no_of_class: 23,
       category: "Programming",
       isPremium: true,
-      isEnrolled: false
+      isEnrolled: false,
+      playlistId: 'UrsmFxEIp5k',
+
     },
     {
       id: 9,
@@ -133,7 +149,9 @@ export class CourseService {
       no_of_class: 55,
       category: "Web Development",
       isPremium: false,
-      isEnrolled: false
+      isEnrolled: false,
+      playlistId: 'jpWj2kKcen4',
+
     },
     {
       id: 10,
@@ -147,7 +165,9 @@ export class CourseService {
       no_of_class: 60,
       category: "Web Development",
       isPremium: false,
-      isEnrolled: true
+      isEnrolled: true,
+      playlistId: 'PLjVLYmrlmjGcyt3m6rt21nfjhYSWP_Ue_',
+
     },
     {
       id: 11,
@@ -161,7 +181,9 @@ export class CourseService {
       no_of_class: 77,
       category: "Artificial Intelligence",
       isPremium: true,
-      isEnrolled: false
+      isEnrolled: false,
+      playlistId: 'GwIo3gDZCVQ',
+
     },
     {
       id: 12,
@@ -175,7 +197,9 @@ export class CourseService {
       no_of_class: 47,
       category: "Artificial Intelligence",
       isPremium: false,
-      isEnrolled: false
+      isEnrolled: false,
+      playlistId: 'G1P2IaBcXx8',
+
     },
     {
       id: 13,
@@ -189,7 +213,9 @@ export class CourseService {
       no_of_class: 52,
       category: "Cyber Security",
       isPremium: false,
-      isEnrolled: true
+      isEnrolled: true,
+      playlistId: 'ykrE849Yq68',
+
     },
     {
       id: 14,
@@ -203,7 +229,9 @@ export class CourseService {
       no_of_class: 40,
       category: "Programming",
       isPremium: true,
-      isEnrolled: false
+      isEnrolled: false,
+      playlistId: 'GoXwIVyNvX0',
+
     },
     {
       id: 15,
@@ -217,7 +245,9 @@ export class CourseService {
       no_of_class: 60,
       category: "Programming",
       isPremium: false,
-      isEnrolled: true
+      isEnrolled: true,
+      playlistId: 'MXlZCgh2M6A',
+
     }
   ]);
   categories = signal<category_item[]>([
@@ -252,10 +282,10 @@ export class CourseService {
         noOfCourses: 4
       }
   ]);
-  getCourseById(id: number): video_item | undefined {
+  getCourseById(id: number): course_item | undefined {
 
-    // return this.vid_items().find(course => course.id === id);
-    const course = this.vid_items().find(c => c.id === id);
+    // return this.course_items().find(course => course.id === id);
+    const course = this.course_items().find(c => c.id === id);
 
     if (!course) return undefined;
 
@@ -287,7 +317,7 @@ export class CourseService {
 
   get visibleCourses() {
   const selected = this.selectedCategory();
-  const filtered = this.vid_items().filter(
+  const filtered = this.course_items().filter(
     (v) => v.category === selected);
   return this.showAll() ? filtered : filtered.slice(0, 4);
   }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../../components/footer/footer.component';
-import { video_item } from '../../models/video-item';
+import { course_item } from '../../models/course-item';
 import { CourseService } from '../../services/course.service';
 import { PrimButtonComponent } from '../../components/prim-button/prim-button.component';
 
@@ -13,7 +13,7 @@ import { PrimButtonComponent } from '../../components/prim-button/prim-button.co
   styleUrl: './single-course.component.css'
 })
 export class SingleCourseComponent implements OnInit{
-  course: video_item | undefined;
+  course: course_item | undefined;
   activeIndex: number | null = null;
    benefits = [
     {

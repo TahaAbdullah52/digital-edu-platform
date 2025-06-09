@@ -1,0 +1,25 @@
+<section class="video-list-sec">
+  <div class="outer-div">
+    <h1 class="title">My Videos</h1>
+    <div class="video-list">
+      <a
+        class="video-item"
+        *ngFor="let video of videos"
+        [href]="
+          'https://www.youtube.com/watch?v=' + video.snippet.resourceId.videoId
+        "
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          [src]="video.snippet.thumbnails.medium.url"
+          alt="Video thumbnail"
+        />
+        <h1>{{ video.snippet.title }}</h1>
+      </a>
+    </div>
+  </div>
+  <div class="quiz-btn">
+    <button (click)="takeQuiz()">Take Quiz</button>
+  </div>
+</section>

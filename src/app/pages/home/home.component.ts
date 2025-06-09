@@ -1,18 +1,17 @@
 import { Component, signal } from '@angular/core';
-import { category_item } from '../../models/category-list';
 import { CategoryItemComponent } from '../../components/home/category-item/category-item.component';
-import { VideoItemComponent } from "../../components/home/video-item/video-item.component";
 import { PrimButtonComponent } from "../../components/prim-button/prim-button.component";
 import { story_item } from '../../models/story-item';
 import { StoryItemComponent } from "../../components/home/story-item/story-item.component";
 import { FooterComponent } from "../../components/footer/footer.component";
 import { CourseService } from '../../services/course.service';
 import { CommonModule } from '@angular/common';
+import { CourseItemComponent } from "../../components/home/course-item/course-item.component";
 
 
 @Component({
   selector: 'app-home',
-  imports: [CategoryItemComponent, VideoItemComponent, PrimButtonComponent, StoryItemComponent, FooterComponent,CommonModule],
+  imports: [CategoryItemComponent, PrimButtonComponent, StoryItemComponent, FooterComponent, CommonModule, CourseItemComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -23,8 +22,8 @@ export class HomeComponent {
   )
   { }
 
-  get vid_items() {
-    return this.courseService.vid_items;
+  get course_items() {
+    return this.courseService.course_items;
   }
   stories = signal<story_item[]>([
     {

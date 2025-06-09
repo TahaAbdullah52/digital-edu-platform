@@ -1,0 +1,247 @@
+<div class="profile-container">
+  <!-- Header -->
+  <div class="header">
+    <h1 class="title">Profile</h1>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button
+      class="tab"
+      [class.active]="activeTab === 'account'"
+      (click)="activeTab = 'account'"
+    >
+      Account Details
+    </button>
+    <button
+      class="tab"
+      [class.active]="activeTab === 'transactions'"
+      (click)="activeTab = 'transactions'"
+    >
+      Transactions History
+    </button>
+  </div>
+
+  <!-- ACCOUNT DETAILS SECTION -->
+  <div class="content" *ngIf="activeTab === 'account'" @fadeInOut>
+    <!-- Main Content Area -->
+    <div class="main-content">
+      <!-- Profile Section with Leaderboard and Image -->
+      <div class="profile-header">
+        <!-- Leaderboard Section -->
+        <div class="leaderboard-section">
+          <h3>Leaderboard</h3>
+          <div class="leaderboard-list">
+            <div
+              class="leaderboard-item"
+              *ngFor="let user of leaderboardUsers"
+              [class.current-user]="user.name === 'You'"
+            >
+              <div class="rank">{{ user.rank }}</div>
+              <div class="user-info">
+                <div class="details">
+                  <div class="name">{{ user.name }}</div>
+                  <div class="points">{{ user.points }} pts</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile Image Section -->
+        <div class="profile-image-section">
+          <div class="profile-image">
+            <img [src]="profileImage" alt="" />
+          </div>
+          <label class="upload-btn">
+            UPLOAD YOUR IMAGE
+            <input
+              type="file"
+              (change)="onImageUpload($event)"
+              accept="image/*"
+              hidden
+            />
+          </label>
+        </div>
+      </div>
+
+      <!-- Profile Form -->
+      <div class="profile-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" [(ngModel)]="profileData.fullName" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Primary Number</label>
+            <input type="text" [(ngModel)]="profileData.primaryNumber" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Alternative Email</label>
+            <input type="email" [(ngModel)]="profileData.alternativeEmail" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Alternative Number</label>
+            <div class="phone-input">
+              <select
+                [(ngModel)]="profileData.countryCode"
+                class="country-code"
+              >
+                <option value="+880">+880</option>
+                <option value="+1">+1</option>
+                <option value="+44">+44</option>
+              </select>
+              <input
+                type="text"
+                [(ngModel)]="profileData.alternativeNumber"
+                placeholder="Alternative Number"
+              />
+            </div>
+          </div>
+        </div>
+
+        <button class="update-btn" (click)="onUpdate()">
+          UPDATE <i class="fas fa-chevron-down"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="form-group">
+        <label>Current Occupation</label>
+        <select [(ngModel)]="profileData.currentOccupation">
+          <option *ngFor="let occupation of occupations" [value]="occupation">
+            {{ occupation }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Which sector do you want to build skills in?</label>
+        <select [(ngModel)]="profileData.skillSector">
+          <option *ngFor="let sector of skillSectors" [value]="sector">
+            {{ sector }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Select a specific topic</label>
+        <select [(ngModel)]="profileData.specificTopic">
+          <option *ngFor="let topic of specificTopics" [value]="topic">
+            {{ topic }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Gender</label>
+        <select [(ngModel)]="profileData.gender">
+          <option *ngFor="let gender of genders" [value]="gender">
+            {{ gender }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Age</label>
+        <input type="number" [(ngModel)]="profileData.age" />
+      </div>
+
+      <div class="form-group">
+        <label>Educational Background</label>
+        <select [(ngModel)]="profileData.educationalBackground">
+          <option *ngFor="let education of educationLevels" [value]="education">
+            {{ education }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Subject</label>
+        <select [(ngModel)]="profileData.subject">
+          <option *ngFor="let subject of subjects" [value]="subject">
+            {{ subject }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Change Password Section -->
+  <div
+    class="change-password-section"
+    *ngIf="activeTab === 'account'"
+    @fadeInOut
+  >
+    <h2>Change Password</h2>
+    <div class="form-group">
+      <label>Old Password</label>
+      <input type="password" placeholder="Enter old password" />
+    </div>
+    <div class="form-group">
+      <label>New Password</label>
+      <input type="password" placeholder="Enter new password" />
+    </div>
+    <div class="form-group">
+      <label>Confirm Password</label>
+      <input type="password" placeholder="Confirm new password" />
+    </div>
+    <button class="change-password-btn" (click)="onChangePassword()">
+      Change Password
+    </button>
+  </div>
+
+  <!-- Transaction History Section -->
+  <div
+    class="transaction-history"
+    *ngIf="activeTab === 'transactions'"
+    @fadeInOut
+  >
+    <h2>Transaction History</h2>
+
+    <div class="transaction-filters">
+      <select [(ngModel)]="transactionFilter">
+        <option value="">All Types</option>
+        <option value="Nagad">Nagad</option>
+        <option value="Bkash">Bkash</option>
+        <option value="Rocket">Rocket</option>
+      </select>
+    </div>
+
+    <div class="transactions-table">
+      <div class="transaction-row header">
+        <div>ID</div>
+        <div>Date</div>
+        <div>Description</div>
+        <div>Type</div>
+        <div>Amount</div>
+        <div>Status</div>
+      </div>
+
+      <div class="transaction-row" *ngFor="let txn of filteredTransactions">
+        <div>{{ txn.id }}</div>
+        <div>{{ txn.date }}</div>
+        <div>{{ txn.course_name }}</div>
+        <div>{{ txn.type }}</div>
+        <div>{{ txn.amount }} BDT</div>
+        <div
+          [class.completed]="txn.status === 'Completed'"
+          [class.pending]="txn.status === 'Pending'"
+        >
+          {{ txn.status }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

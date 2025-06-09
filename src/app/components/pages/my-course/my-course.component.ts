@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { video_item } from '../../../models/video-item';
+import { course_item } from '../../../models/course-item';
 
 @Component({
   selector: 'app-my-course',
@@ -8,6 +8,6 @@ import { video_item } from '../../../models/video-item';
   styleUrl: './my-course.component.css'
 })
 export class MyCourseComponent {
-  video = input.required<video_item>();
+  video = input.required<course_item>();
 
 }
