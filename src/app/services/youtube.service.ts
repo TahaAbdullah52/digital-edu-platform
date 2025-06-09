@@ -2,13 +2,15 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { catchError, Observable, of, tap } from "rxjs";
 import { CourseService } from "./course.service";
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class YoutubeService {
 
-  apiKey = 'AIzaSyA_cwkoyCHZ3OyPVbEDi4WdzvtZ18dwOHk';
+  // apiKey = 'AIzaSyA_cwkoyCHZ3OyPVbEDi4WdzvtZ18dwOHk';
+  private apiKey = environment.youtubeApiKey;
   private cachedVideos: { [id: string]: any[] } = {};
 
   constructor(private http: HttpClient, private courseService: CourseService) { }
