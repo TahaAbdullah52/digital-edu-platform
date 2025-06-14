@@ -1,59 +1,62 @@
 :host {
   display: flex;
-  justify-content: center; 
-  align-items: center; 
+  justify-content: center;
+  align-items: center;
   height: 100vh;
   width: 100vw;
   background-color: #eef0f8;
 }
 
-.outer-div{
-    border-radius: 10px;
-    padding: 5px;
-    background-color: white;
-    width: 70%;
-    height: 75%;
-    margin-bottom: 160px;
+.outer-div {
+  border-radius: 10px;
+  padding: 5px;
+  background-color: white;
+  width: 70%;
+  height: 75%;
+  margin-bottom: 160px;
 }
-.outer-div>h1{
-    margin-left: 50px;
-    margin-top: 40px;
+.outer-div > h1 {
+  margin-left: 50px;
+  margin-top: 40px;
 }
-.inner-div-1{
-    display: flex;
-    gap: 70px;
+.inner-div-1 {
+  display: flex;
+  gap: 70px;
 }
-.inner-div{
-    display: flex;
-    flex-direction: column;
-    border: 1px solid rgb(170, 169, 169);
-    border-radius: 5%;
-    width: 40%;
-    margin-left: 50px;
+.inner-div {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgb(170, 169, 169);
+  border-radius: 5%;
+  width: 40%;
+  margin-left: 50px;
 }
-.course-details{
-    display: flex;
+.course-details {
+  display: flex;
 }
-.course-details>img{
-    height: 150px;
-    width: 200px;
-    margin:10px;
-    object-fit: cover;
-    border-radius: 5%;
+.course-details > img {
+  height: 150px;
+  width: 200px;
+  margin: 10px;
+  object-fit: cover;
+  border-radius: 5%;
 }
-h3{
-    margin:15px;
+h2 {
+  margin: 15px;
 }
-h4{
-    margin:15px;
+h3 {
+  margin: 15px;
 }
-.payment-class{
-    border: 1px solid rgb(170, 169, 169);
-    border-radius: 5%;
-    width: 40%;
+h4 {
+  margin: 15px;
 }
-.payment-class>h2{
-    margin-left: 20px;
+.payment-class {
+  border: 1px solid rgb(170, 169, 169);
+  border-radius: 5%;
+  width: 40%;
+}
+.payment-class > h2 {
+  margin-left: 20px;
 }
 .payment-methods {
   display: flex;
@@ -64,20 +67,20 @@ h4{
 }
 
 .payment-methods label {
-    display: flex;
-    cursor: pointer;
+  display: flex;
+  cursor: pointer;
 }
-.payment-logo{
-    width: 150px;
-    height: 50px;
-    object-fit: contain;
-    margin-left: 20px;
-    margin-bottom: 10px;
+.payment-logo {
+  width: 150px;
+  height: 50px;
+  object-fit: contain;
+  margin-left: 20px;
+  margin-bottom: 10px;
 }
-p{
-    margin: 70px 0 0 50px;
-    font-weight: 600;
-    color: rgb(107, 107, 107);
+p {
+  margin: 70px 0 0 50px;
+  font-weight: 600;
+  color: rgb(107, 107, 107);
 }
 .transaction {
   display: flex;
@@ -106,8 +109,8 @@ p{
   box-shadow: 0 0 5px rgba(74, 144, 226, 0.4);
   outline: none;
 }
-.Complete-pmnt-Btn{
-    margin-top: 70px;
-    justify-self: center;
-    align-self: center;
+.Complete-pmnt-Btn {
+  margin-top: 70px;
+  justify-self: center;
+  align-self: center;
 }

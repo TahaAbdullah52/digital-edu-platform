@@ -9,5 +9,4 @@ import { course_item } from '../../../models/course-item';
 })
 export class MyCourseComponent {
   video = input.required<course_item>();
-
 }

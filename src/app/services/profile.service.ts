@@ -1,68 +1,64 @@
+// src/app/services/profile.service.ts
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { DropdownOptions, LeaderboardUser, ProfileData } from '../models/profile-model';
+import { catchError, tap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { ProfileData, LeaderboardUser, DropdownOptions } from '../models/profile-model';
+import { MOCK_PROFILE, MOCK_LEADERBOARD } from '../mock-data/mock-profile';
+import { STATIC_DROPDOWN_OPTIONS } from '../constants/dropdown-options';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
 
-  private profileSubject = new BehaviorSubject<ProfileData>(this.getDefaultProfileData());
+  private profileSubject = new BehaviorSubject<ProfileData>(MOCK_PROFILE);
   public profile$ = this.profileSubject.asObservable();
-  
-  constructor() { }
 
-  // Get current profile data
+  constructor(private http: HttpClient) {}
+
+  fetchAndEmitProfileData(): void {
+    this.http.get<ProfileData>(`https://your-api-url.com/profile/update`).pipe(
+      catchError(err => {
+        console.warn('API failed, loading mock profile.');
+        return of(MOCK_PROFILE);
+      })
+    ).subscribe(profile => this.profileSubject.next(profile));
+  }
+
+  
   getCurrentProfile(): ProfileData {
     return this.profileSubject.value;
   }
 
-  // Update profile data
   updateProfile(profileData: ProfileData): Observable<boolean> {
-    try {
-      // Here you would typically make an HTTP call to your backend
-      // For now, we'll simulate it
-      this.profileSubject.next(profileData);
-      
-      // Simulate API call
-      return of(true);
-    } catch (error) {
-      console.error('Error updating profile:', error);
-      return of(false);
-    }
+    return this.http.post<boolean>(`https://your-api-url.com/profile/update`, profileData).pipe(
+      tap(() => this.profileSubject.next(profileData)),
+      catchError((error) => {
+        console.error('Update failed, fallback to local update.', error);
+        this.profileSubject.next(profileData); // still update UI
+        return of(true);
+      })
+    );
   }
 
-  // Get leaderboard data
   getLeaderboardData(): Observable<LeaderboardUser[]> {
-    // In real app, this would be an HTTP call
-    const leaderboardData: LeaderboardUser[] = [
-      { rank: 1, name: 'John Doe', points: 2000, avatar: 'assets/avatar1.jpg' },
-      { rank: 2, name: 'Sarah Smith', points: 1500, avatar: 'assets/avatar2.jpg' },
-      { rank: 3, name: 'Mike Johnson', points: 100, avatar: 'assets/avatar3.jpg' },
-      { rank: 4, name: 'Emily Davis', points: 500, avatar: 'assets/avatar4.jpg' },
-      { rank: 5, name: 'You', points: 0, avatar: 'assets/profile-placeholder.jpg' }
-    ];
-    
-    return of(leaderboardData);
+    return this.http.get<LeaderboardUser[]>(`https://your-api-url.com/leaderboard`).pipe(
+      catchError((err) => {
+        console.warn('Leaderboard API failed, using mock data.', err);
+        return of(MOCK_LEADERBOARD);
+      })
+    );
   }
 
-  // Get dropdown options
   getDropdownOptions(): DropdownOptions {
-    return {
-      occupations: ['Student', 'Professional', 'Freelancer', 'Entrepreneur'],
-      skillSectors: ['Web Development', 'Mobile Development', 'Data Science', 'Machine Learning', 'DevOps'],
-      specificTopics: ['Full Stack Development', 'Frontend Development', 'Backend Development', 'Data Scientist', 'Cyber Security Expert','ML Engineer'],
-      genders: ['Male', 'Female', 'Other'],
-      educationLevels: ['High School', 'BSc', 'MSc', 'PhD', 'Diploma', 'Other'],
-      subjects: ['CSE', 'EEE', 'ETE', 'ME', 'CE', 'MIE', 'Other']
-    };
+    return STATIC_DROPDOWN_OPTIONS;
   }
 
-  // Upload profile image
   uploadProfileImage(file: File): Observable<string> {
-    // In real app, this would upload to server and return URL
-    return new Observable(observer => {
-      const reader = new FileReader();
+    // Replace with real API call when backend is ready
+    const reader = new FileReader();
+    return new Observable<string>((observer) => {
       reader.onload = (e: any) => {
         observer.next(e.target.result);
         observer.complete();
@@ -71,61 +67,44 @@ export class ProfileService {
     });
   }
 
-  // Change password
   changePassword(oldPassword: string, newPassword: string): Observable<boolean> {
-    // In real app, this would be an HTTP call to backend
-    console.log('Changing password...');
-    return of(true);
+    return this.http.post<boolean>(`https://your-api-url.com/profile/change-password`, {
+      oldPassword,
+      newPassword
+    }).pipe(
+      catchError((error) => {
+        console.error('Password change failed:', error);
+        return of(false);
+      })
+    );
   }
 
-  private getDefaultProfileData(): ProfileData {
-    return {
-      fullName: '',
-      primaryNumber: '',
-      alternativeEmail: '',
-      alternativeNumber: '',
-      countryCode: '+880',
-      age:20,
-      currentOccupation: 'Student',
-      skillSector: 'Web Development',
-      specificTopic: '',
-      gender: 'Male',
-      educationalBackground: 'BSc',
-      subject: 'CSE'
-    };
-  }
-  // Update user points and recalculate leaderboard
+  // Optional enhancements for leaderboard updates
   updateUserPoints(userId: string, newPoints: number): Observable<boolean> {
-    // In real app, this would be an HTTP call to backend
-    // Update the user's points and refresh leaderboard
-    return of(true);
+    return this.http.post<boolean>(`https://your-api-url.com/leaderboard/update`, {
+      userId,
+      points: newPoints
+    }).pipe(catchError(() => of(true)));
   }
 
-  // Add points to current user
   addPointsToCurrentUser(points: number): Observable<boolean> {
-    // Update current user's points and refresh leaderboard
-    return of(true);
+    return of(true); // Replace with real call later
   }
 
-  // Refresh leaderboard data
   refreshLeaderboard(): Observable<LeaderboardUser[]> {
-    // Fetch updated leaderboard from backend
     return this.getLeaderboardData();
   }
 
   private leaderboardSubject = new BehaviorSubject<LeaderboardUser[]>([]);
   public leaderboard$ = this.leaderboardSubject.asObservable();
 
-  // Initialize leaderboard
   initializeLeaderboard(): void {
     this.getLeaderboardData().subscribe(data => {
       this.leaderboardSubject.next(data);
     });
   }
 
-  // Update leaderboard when points change
   updateLeaderboard(updatedData: LeaderboardUser[]): void {
-    // Sort by points descending and update ranks
     const sortedData = updatedData
       .sort((a, b) => b.points - a.points)
       .map((user, index) => ({ ...user, rank: index + 1 }));

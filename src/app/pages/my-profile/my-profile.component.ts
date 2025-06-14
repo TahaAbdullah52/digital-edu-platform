@@ -1,10 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { ProfileService } from '../../services/profile.service';
 import { DropdownOptions, LeaderboardUser, ProfileData } from '../../models/profile-model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { trigger,  transition,  style, animate} from '@angular/animations';
+import { PaymentService } from '../../services/payment.service';
+import { payment_item } from '../../models/payment';
 
 @Component({
   imports:[FormsModule,CommonModule],
@@ -23,33 +25,24 @@ import { trigger,  transition,  style, animate} from '@angular/animations';
     ])
   ]
 })
+
 export class MyProfileComponent implements OnInit, OnDestroy {
-
-  activeTab = 'account'; // or 'transactions'
-
-  transactions = [
-    {
-      id: 'TXN001',
-      course_name:'Web Dev',
-      date: '2025-06-01',
-      type: 'Bkash',
-      amount: 1499,
-      status: 'Completed',
-    },
-    {
-      id: 'TXN002',
-      course_name:'Web Dev',
-      date: '2025-06-05',
-      type: 'Rocket',
-      amount: 2000,
-      status: 'Pending',
-    },
-    // more mock transactions...
-  ];
+  
+  payments = signal<payment_item[]>([]);
+  constructor(private profileService: ProfileService, private paymentService: PaymentService) {
+    this.loadPayments();
+  }
+  
+  loadPayments() {
+    this.paymentService.getPayments().subscribe((data) => {
+      this.payments.set(data);
+    });
+  }
+  activeTab = 'account';
   transactionFilter = '';
 
    get filteredTransactions() {
-    return this.transactions.filter(txn => {
+    return this.payments().filter(txn => {
       const matchesFilter = this.transactionFilter
         ? txn.type === this.transactionFilter
         : true;
@@ -61,7 +54,7 @@ export class MyProfileComponent implements OnInit, OnDestroy {
   
   // Profile form data
   profileData: ProfileData = {} as ProfileData;
-  profileImage: string = 'assets/profile-placeholder.jpg';
+  profileImage: string = '';
 
   // Leaderboard data
   leaderboardUsers: LeaderboardUser[] = [];
@@ -80,8 +73,6 @@ export class MyProfileComponent implements OnInit, OnDestroy {
     confirmPassword: ''
   };
 
-  constructor(private profileService: ProfileService) {}
-
   ngOnInit(): void {
     this.loadProfileData();
     this.loadLeaderboard();
@@ -95,6 +86,7 @@ export class MyProfileComponent implements OnInit, OnDestroy {
   }
 
   private loadProfileData(): void {
+    this.profileService.fetchAndEmitProfileData();
     this.profileService.profile$
       .pipe(takeUntil(this.destroy$))
       .subscribe(profile => {

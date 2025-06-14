@@ -54,7 +54,7 @@
   </div>
   <div class="videos-part">
     <div class="outer-div">
-      @for (item of visibleCourses;track item.id) {
+      @for (item of visibleCourses();track item.id) {
       <div>
         <app-course-item [course]="item"></app-course-item>
       </div>
@@ -81,6 +81,17 @@
     <app-story-item [story]="item" />
     }
   </div>
+  <div class="post-story-btn">
+    <app-prim-button (click)="openStoryModal()">Post My Story</app-prim-button>
+  </div>
 </section>
+
+<!-- Story Modal -->
+<app-story-modal
+  [isVisible]="showStoryModal()"
+  (close)="closeStoryModal()"
+  (storySubmitted)="onStorySubmitted($event)"
+>
+</app-story-modal>
 
 <app-footer />

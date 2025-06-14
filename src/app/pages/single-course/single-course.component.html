@@ -4,10 +4,12 @@
     <p>{{ course.course_desc }}</p>
 
     <div class="course-fee-sec">
-      <app-prim-button>Enroll In Course</app-prim-button>
+      <app-prim-button (click)="enrollInCourse()">{{
+        course.isEnrolled ? "Already Enrolled" : "Enroll In Course"
+      }}</app-prim-button>
       <h2>
         {{
-          course.course_fee ? (course.course_fee | currency : "BDT") : "Free"
+          course.course_fee ? (course.course_fee | currency : "BDT - ") : "Free"
         }}
       </h2>
     </div>

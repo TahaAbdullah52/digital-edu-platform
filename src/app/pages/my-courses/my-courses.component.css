@@ -30,6 +30,9 @@
   flex-direction: column;
   gap: 30px;
 }
+.my-video {
+  width: 554px;
+}
 .see-all-btn {
   text-align: center;
   margin-top: 50px;

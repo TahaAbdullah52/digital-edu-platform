@@ -1,0 +1,72 @@
+<div class="modal-overlay" *ngIf="isVisible" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Share Your Story</h2>
+      <button class="close-btn" (click)="closeModal()">&times;</button>
+    </div>
+
+    <form class="story-form" (ngSubmit)="onSubmit()" #storyForm="ngForm">
+      <div class="form-group">
+        <label for="userName">Your Name *</label>
+        <input
+          type="text"
+          id="userName"
+          name="userName"
+          [(ngModel)]="formData.user"
+          required
+          placeholder="Enter your full name"
+          class="form-control"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="courseName">Course Name *</label>
+        <input
+          type="text"
+          id="courseName"
+          name="courseName"
+          [(ngModel)]="formData.batch_name"
+          required
+          placeholder="e.g., Full Stack Web Development with MERN"
+          class="form-control"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="batchNo">Batch Number *</label>
+        <input
+          type="number"
+          id="batchNo"
+          name="batchNo"
+          [(ngModel)]="formData.batch_no"
+          required
+          min="1"
+          placeholder="Enter batch number"
+          class="form-control"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="storyDesc">Your Story *</label>
+        <textarea
+          id="storyDesc"
+          name="storyDesc"
+          [(ngModel)]="formData.desc"
+          required
+          placeholder="Share your learning experience, what you achieved, how the course helped you..."
+          class="form-control story-textarea"
+          rows="5"
+        ></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-cancel" (click)="closeModal()">
+          Cancel
+        </button>
+        <button type="submit" class="btn-submit" [disabled]="!storyForm.valid">
+          Post My Story
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

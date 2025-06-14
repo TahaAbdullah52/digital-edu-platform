@@ -1,17 +1,14 @@
 <div class="outer-div">
   <h1>Complete Payment</h1>
 
-  <div class="inner-div-1">
+  <div class="inner-div-1" *ngIf="course">
     <div class="inner-div">
       <div class="course-details">
-        <img
-          src="https://img.youtube.com/vi/tVzUXW6siu0/hqdefault.jpg"
-          alt=""
-        />
-        <h3>Web Development From Scratch</h3>
+        <img [src]="course.img_url" [alt]="course.course_name" />
+        <h2>{{ course.course_name }}</h2>
       </div>
       <h3>Payment Details</h3>
-      <h4>Course Fee : 8000 BDT/=</h4>
+      <h4>Course Fee : {{ course.course_fee }} BDT/=</h4>
     </div>
 
     <div class="payment-class">
@@ -41,7 +38,7 @@
     017********
   </p>
   <div class="transaction">
-    <label for="trxid">Transaction Number</label>
+    <label for="trxid">Transaction ID</label>
     <input id="trxid" type="text" placeholder="e.g., CEA12345678" />
   </div>
   <div class="Complete-pmnt-Btn">

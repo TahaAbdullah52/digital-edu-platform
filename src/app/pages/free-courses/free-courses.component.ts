@@ -18,7 +18,7 @@ export class FreeCoursesComponent {
     this.courseService.selectedCategory.set('Web Development');    
   }
   get course_items() {
-    return this.courseService.course_items;
+    return this.courseService.courses;
   }
   get selectedCategory() {
     return this.courseService.selectedCategory;
@@ -29,7 +29,7 @@ export class FreeCoursesComponent {
   get filteredCourses() {
     
     const selected = this.selectedCategory();
-    const allCourses = this.courseService.course_items();
+    const allCourses = this.courseService.courses();
     
     let filtered = allCourses.filter(v => 
       v.isPremium === false && 
@@ -39,13 +39,13 @@ export class FreeCoursesComponent {
     return this.showAll() ? filtered : filtered.slice(0, 4);
 }
   get allFreeCourses() {
-    return this.courseService.course_items().filter(v => v.isPremium === false);
+    return this.courseService.courses().filter(v => v.isPremium === false);
   }
 
   get categoriesWithCounts() {
     const allFree = this.allFreeCourses;
     
-    return this.courseService.categories().map(cat => {
+    return this.courseService.computedCategories().map(cat => {
       const count = allFree.filter(course => course.category === cat.title).length;
       
       return {

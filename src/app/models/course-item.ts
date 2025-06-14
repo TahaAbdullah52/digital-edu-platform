@@ -12,6 +12,6 @@ export interface course_item{
     playlistId: string;
     isPremium: boolean;
     isEnrolled: boolean;
-    course_fee?: number;
+    course_fee: number;
     technologies?: { name: string; icon: string }[];
 }

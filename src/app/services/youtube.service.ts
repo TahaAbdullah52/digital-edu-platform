@@ -8,15 +8,13 @@ import { environment } from "../../environments/environment";
   providedIn: 'root'
 })
 export class YoutubeService {
-
-  // apiKey = 'AIzaSyA_cwkoyCHZ3OyPVbEDi4WdzvtZ18dwOHk';
   private apiKey = environment.youtubeApiKey;
   private cachedVideos: { [id: string]: any[] } = {};
 
   constructor(private http: HttpClient, private courseService: CourseService) { }
   
-  title(playlistIdOrVideoId: string) {
-    const allCourses = this.courseService.course_items(); 
+  getTitle(playlistIdOrVideoId: string) {
+    const allCourses = this.courseService.courses(); 
     let filtered = allCourses.filter(v =>
       v.playlistId === playlistIdOrVideoId
     );
@@ -39,7 +37,7 @@ export class YoutubeService {
       }),
 
       catchError(() => {
-        const titleFromCourse = this.title(playlistIdOrVideoId)[0]?.course_name ?? 'Single Video';
+        const titleFromCourse = this.getTitle(playlistIdOrVideoId)[0]?.course_name;
         const videoObj = {
           items: [
             {

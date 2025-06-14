@@ -44,6 +44,7 @@ export class QuizComponent implements OnInit {
   loadQuizForCourse(courseId: string) {
     // Load quiz questions based on course ID
     this.quizQuestions = this.quizService.getQuizByCourseId(courseId);
+    
     this.courseName = this.quizService.getCourseNameById(courseId);
     // Initialize selectedAnswers array with -1 for each question (no answer selected)
     this.selectedAnswers = new Array(this.quizQuestions.length).fill(-1);

@@ -1,0 +1,191 @@
+<div class="dashboard-container">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <img src="assets/images/logo.png" alt="" />
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <p class="nav-title">MAIN MENU</p>
+        <button
+          *ngFor="let item of menuItems"
+          (click)="setActiveTab(item.id)"
+          [class]="'nav-item ' + (isActiveTab(item.id) ? 'active' : '')"
+        >
+          <span class="material-icons">{{ item.icon }}</span>
+          <span>{{ item.label }}</span>
+        </button>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="nav-item">
+        <span class="material-icons">logout</span>
+        <span>Log Out</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <div class="page-info">
+          <h1 class="page-title">{{ getPageTitle() }}</h1>
+          <p class="current-date">{{ getCurrentDate() }}</p>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div class="search-container">
+          <span class="material-icons search-icon">search</span>
+          <input type="text" placeholder="Search" class="search-input" />
+        </div>
+        <div class="admin-profile">
+          <div class="admin-avatar">A</div>
+          <div class="admin-info">
+            <p class="admin-name">Admin</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <main class="page-content">
+      <!-- Dashboard Content -->
+      <div *ngIf="activeTab === 'dashboard'" class="dashboard-content">
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+          <div *ngFor="let stat of stats" class="stat-card">
+            <div class="stat-content">
+              <div class="stat-info">
+                <p class="stat-title">{{ stat.title }}</p>
+                <p class="stat-value">{{ stat.value }}</p>
+              </div>
+              <div [class]="'stat-icon ' + stat.color">
+                <span class="material-icons">{{ stat.icon }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions needed and Course distribution chart -->
+        <div class="dashboard-grid">
+          <div class="actions-progress">
+            <h3>Actions needed</h3>
+            <div class="progress-container">
+              <div class="progress-circle">
+                <svg class="progress-ring" width="120" height="120">
+                  <circle
+                    class="progress-ring-circle-bg"
+                    stroke="#e5e7eb"
+                    stroke-width="8"
+                    fill="transparent"
+                    r="52"
+                    cx="60"
+                    cy="60"
+                  />
+                  <circle
+                    class="progress-ring-circle"
+                    stroke="#6366f1"
+                    stroke-width="8"
+                    fill="transparent"
+                    r="52"
+                    cx="60"
+                    cy="60"
+                    [style.stroke-dasharray]="circumference"
+                    [style.stroke-dashoffset]="strokeDashoffset"
+                  />
+                </svg>
+                <div class="progress-text">
+                  <span class="progress-percentage"
+                    >{{ getProgressPercentage() }}%</span
+                  >
+                </div>
+              </div>
+              <div class="progress-details">
+                <p class="progress-info">
+                  {{ getCompletedTasks() }} of {{ getTotalTasks() }} tasks
+                  completed
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="course-stats-chart">
+            <h3>Course Distribution</h3>
+            <div class="chart-container">
+              <canvas #pieChart width="200" height="200"></canvas>
+            </div>
+            <div class="chart-legend">
+              <div class="legend-item">
+                <div class="legend-color free-color"></div>
+                <span>Free Courses ({{ getFreePercentage() }}%)</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color premium-color"></div>
+                <span>Premium Courses ({{ getPremiumPercentage() }}%)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="course-enrollment-chart">
+            <div class="header-div">
+              <h3>Most Enrolled Courses</h3>
+              <!-- Color guide goes here -->
+              <div class="color-guide">
+                <small>
+                  <span style="color: #f59e0b">●</span> Premium
+                  courses&nbsp;&nbsp; <span style="color: #3b82f6">●</span> Free
+                  courses
+                </small>
+              </div>
+            </div>
+            <div class="chart-bars">
+              <div *ngFor="let course of topCourses" class="course-bar">
+                <div class="course-info">
+                  <span class="course-name">{{ course.name }}</span>
+                  <span class="enrollment-count">{{ course.enrollments }}</span>
+                </div>
+                <div class="bar-container">
+                  <div
+                    class="bar-fill"
+                    [style.width.%]="getBarWidth(course.enrollments)"
+                    [class]="course.type"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Other Tab Contents -->
+      <div *ngIf="activeTab === 'users'" class="tab-content">
+        <div class="content-placeholder">
+          <app-manage-users />
+        </div>
+      </div>
+
+      <div *ngIf="activeTab === 'payments'" class="tab-content">
+        <div class="content-placeholder">
+          <app-payment-management />
+        </div>
+      </div>
+
+      <div *ngIf="activeTab === 'courses'" class="tab-content">
+        <div class="content-placeholder">
+          <app-course-management />
+        </div>
+      </div>
+
+      <div *ngIf="activeTab === 'success-stories'" class="tab-content">
+        <div class="content-placeholder">
+          <app-story-management />
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

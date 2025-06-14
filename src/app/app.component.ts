@@ -18,7 +18,7 @@ export class AppComponent {
   constructor(private router: Router) {
     router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.showHeader = !event.url.includes('/login');  // hide header on login
+        this.showHeader = !(event.url.includes('/login') || event.url.includes('/admin'));
       }
     });
   }

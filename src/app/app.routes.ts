@@ -7,6 +7,7 @@ import { MyCoursesComponent } from './pages/my-courses/my-courses.component';
 import { VideoListComponent } from './pages/video-list/video-list.component';
 import { QuizComponent } from './pages/quiz/quiz.component';
 import { MyProfileComponent } from './pages/my-profile/my-profile.component';
+import { AdminDashboardComponent } from './admin-pages/dashboard/admin-dashboard.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },  // Default route
@@ -21,6 +22,7 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () =>
-    import('./pages/login/login.component').then(m => m.LoginComponent)
+      import('./pages/login/login.component').then(m => m.LoginComponent)
   },
+  { path: 'admin-dash', component: AdminDashboardComponent },
 ];
