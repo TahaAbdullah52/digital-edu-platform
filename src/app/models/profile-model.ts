@@ -1,9 +1,12 @@
 export interface ProfileData {
-  fullName: string;
+  id: number;
+  name: string;
+  avatar:string,
   primaryNumber: string;
-  alternativeEmail: string;
   alternativeNumber: string;
+  email: string;
   countryCode: string;
+  joinDate: string;
   currentOccupation: string;
   skillSector: string;
   specificTopic: string;
@@ -14,17 +17,9 @@ export interface ProfileData {
 }
 
 export interface LeaderboardUser {
+  id:number,
   rank: number;
   name: string;
   points: number;
   avatar?: string;
-}
-
-export interface DropdownOptions {
-  occupations: string[];
-  skillSectors: string[];
-  specificTopics: string[];
-  genders: string[];
-  educationLevels: string[];
-  subjects: string[];
 }

@@ -1,0 +1,32 @@
+<div class="payment-management-container">
+  <div class="header">
+    <p class="total-count">Total: {{ paymentRequests.length }}</p>
+  </div>
+
+  <div class="payment-list">
+    <div *ngFor="let payment of paymentRequests" class="payment-item">
+      <div class="user-info">
+        <div class="avatar">{{ payment.user_avatar }}</div>
+        <div class="user-details">
+          <h3 class="user-name">{{ payment.user_name }}</h3>
+          <p class="transaction-id">{{ payment.trxId }}</p>
+          <p class="amount" *ngIf="payment.amount">৳ {{ payment.amount }}</p>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button class="btn btn-accept" (click)="acceptPayment(payment.id)">
+          Accept
+        </button>
+        <button class="btn btn-reject" (click)="rejectPayment(payment.id)">
+          Reject
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="paymentRequests.length === 0" class="no-users">
+      <span class="material-icons">person_off</span>
+      <p>No users found matching your criteria</p>
+    </div>
+  </div>
+</div>

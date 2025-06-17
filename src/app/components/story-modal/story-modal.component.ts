@@ -15,7 +15,7 @@ export class StoryModalComponent {
   @Output() storySubmitted = new EventEmitter<story_item>();
 
   formData = {
-    user: '',
+    user_name: '',
     batch_name: '',
     batch_no: 1,
     desc: ''
@@ -31,10 +31,13 @@ export class StoryModalComponent {
     if (this.isFormValid()) {
       const newStory: story_item = {
         id: Date.now(), // Simple ID generation
-        user: this.formData.user.trim(),
+        user_name: this.formData.user_name.trim(),
         course_name: this.formData.batch_name.trim(),
         batch_no: this.formData.batch_no,
-        desc: this.formData.desc.trim()
+        desc: this.formData.desc.trim(),
+        user_avatar: '',
+        submissionDate: '',
+        status: 'pending'
       };
 
       this.storySubmitted.emit(newStory);
@@ -44,7 +47,7 @@ export class StoryModalComponent {
 
   private isFormValid(): boolean {
     return !!(
-      this.formData.user.trim() &&
+      this.formData.user_name.trim() &&
       this.formData.batch_name.trim() &&
       this.formData.batch_no &&
       this.formData.desc.trim()
@@ -53,7 +56,7 @@ export class StoryModalComponent {
 
   private resetForm() {
     this.formData = {
-      user: '',
+      user_name: '',
       batch_name: '',
       batch_no: 1,
       desc: ''

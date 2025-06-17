@@ -1,0 +1,368 @@
+<div class="manage-courses-container">
+  <!-- Header with Search and Add Course -->
+  <div class="header-left">
+    <div class="course-stats">
+      <span class="stat-item">Total: {{ courses.length }}</span>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-primary" (click)="showAddCourseForm()">
+        <span class="material-icons">add</span>
+        Add Course
+      </button>
+    </div>
+  </div>
+
+  <!-- Search and Filter Bar -->
+  <div class="filter-bar">
+    <div class="filter-controls">
+      <select class="filter-select" [(ngModel)]="categoryFilter">
+        <option value="">All Categories</option>
+        <option value="Programming">Programming</option>
+        <option value="Web Development">Web Development</option>
+        <option value="Artificial Intelligence">Artificial Intelligence</option>
+        <option value="Cyber Security">Cyber Security</option>
+        <option value="Data Science">Data Science</option>
+      </select>
+      <select class="filter-select" [(ngModel)]="premiumFilter">
+        <option value="">All Courses</option>
+        <option value="true">Premium Only</option>
+        <option value="false">Free Only</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="courses-content" [class.has-selected]="selectedCourse">
+    <!-- Courses List -->
+    <div class="courses-list">
+      <div
+        *ngFor="let course of filteredCourses"
+        class="course-card"
+        [class.selected]="selectedCourse?.id === course.id"
+        (click)="selectCourse(course)"
+      >
+        <div class="course-content">
+          <div class="course-header">
+            <div class="course-id">ID: {{ course.course_id }}</div>
+            <div class="course-premium" *ngIf="course.isPremium">
+              <span class="material-icons">star</span>
+            </div>
+          </div>
+          <h3 class="course-name">{{ course.course_name }}</h3>
+          <div class="course-category">
+            <span class="material-icons">category</span>
+            {{ course.category }}
+          </div>
+          <div class="course-meta">
+            <span class="meta-item" *ngIf="course.isPremium">
+              <span class="BDT-icon">৳</span>
+              {{ course.course_fee }}
+            </span>
+            <span class="meta-item free-tag" *ngIf="!course.isPremium">
+              FREE
+            </span>
+          </div>
+        </div>
+        <div class="course-actions">
+          <button
+            class="action-btn delete-btn"
+            (click)="$event.stopPropagation(); deleteCourse(course)"
+          >
+            <span class="material-icons">delete</span>
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="filteredCourses.length === 0" class="no-courses">
+        <span class="material-icons">school_off</span>
+        <p>No courses found matching your criteria</p>
+      </div>
+    </div>
+
+    <!-- Course Details Panel -->
+    <div *ngIf="selectedCourse" class="course-details">
+      <div class="details-header">
+        <h3>Course Details</h3>
+        <button class="close-btn" (click)="closeCourseDetails()">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+
+      <div class="details-content">
+        <!-- Course Profile Section -->
+        <div class="details-section">
+          <div class="course-profile">
+            <div class="course-icon">
+              <span class="material-icons">school</span>
+            </div>
+            <div class="profile-info">
+              <h2>{{ selectedCourse.course_name }}</h2>
+              <p class="course-id-detail">
+                Course ID: {{ selectedCourse.course_id }}
+              </p>
+              <div class="course-category-detail">
+                <span class="material-icons">category</span>
+                {{ selectedCourse.category }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Course Information -->
+        <div class="details-section">
+          <h4>Course Information</h4>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="material-icons">description</span>
+              <div>
+                <label>Description</label>
+                <p>{{ selectedCourse.course_desc }}</p>
+              </div>
+            </div>
+            <div class="info-item">
+              <span class="material-icons">event_seat</span>
+              <div>
+                <label>Available Seats</label>
+                <p>{{ selectedCourse.no_of_seat }}</p>
+              </div>
+            </div>
+            <div class="info-item">
+              <span class="material-icons">star</span>
+              <div>
+                <label>Course Type</label>
+                <p>{{ selectedCourse.isPremium ? "Premium" : "Free" }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pricing Information -->
+        <div class="details-section" *ngIf="selectedCourse.isPremium">
+          <h4>Pricing</h4>
+          <div class="pricing-card">
+            <span class="BDT-icon">৳</span>
+            <div>
+              <p class="price-value">{{ selectedCourse.course_fee }}</p>
+              <p class="price-label">Course Fee</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="details-actions">
+          <button class="btn btn-edit" (click)="editCourse(selectedCourse)">
+            <span class="material-icons">edit</span>
+            Edit Course
+          </button>
+          <button class="btn btn-danger" (click)="deleteCourse(selectedCourse)">
+            <span class="material-icons">delete</span>
+            Delete Course
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add/Edit Course Form -->
+    <div *ngIf="showForm" class="course-form-panel">
+      <div class="form-header">
+        <h3>{{ isEditMode ? "Edit Course" : "Add New Course" }}</h3>
+        <button class="close-btn" (click)="hideAddCourseForm()">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+
+      <div class="form-content">
+        <form (ngSubmit)="saveCourse()" #courseForm="ngForm">
+          <div class="form-section">
+            <h4>Basic Information</h4>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="courseName">Course Name *</label>
+                <input
+                  type="text"
+                  id="courseName"
+                  name="courseName"
+                  class="form-input"
+                  [(ngModel)]="courseFormData.course_name"
+                  placeholder="Enter course name"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="courseCategory">Category *</label>
+                <select
+                  id="courseCategory"
+                  name="courseCategory"
+                  class="form-select"
+                  [(ngModel)]="courseFormData.category"
+                >
+                  <option value="">All Categories</option>
+                  <option value="Programming">Programming</option>
+                  <option value="Web Development">Web Development</option>
+                  <option value="Artificial Intelligence">
+                    Artificial Intelligence
+                  </option>
+                  <option value="Cyber Security">Cyber Security</option>
+                  <option value="Data Science">Data Science</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="courseDesc">Course Description *</label>
+              <textarea
+                id="courseDesc"
+                name="courseDesc"
+                class="form-textarea"
+                [(ngModel)]="courseFormData.course_desc"
+                placeholder="Enter course description"
+                rows="4"
+              ></textarea>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="seatNo">Available Seats *</label>
+                <input
+                  type="number"
+                  id="seatNo"
+                  name="seatNo"
+                  class="form-input"
+                  [(ngModel)]="courseFormData.no_of_seat"
+                  placeholder="Enter number of seats"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="batchNo">Batch No *</label>
+                <input
+                  type="number"
+                  id="batchNo"
+                  name="batchNo"
+                  class="form-input"
+                  [(ngModel)]="courseFormData.batch_nO"
+                  placeholder="Enter batch number"
+                />
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="remDays">Remaining Days *</label>
+                <input
+                  type="number"
+                  id="remDays"
+                  name="remDays"
+                  class="form-input"
+                  [(ngModel)]="courseFormData.rem_days"
+                  placeholder="Enter remaining days"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="noOfClass">Number of Classes *</label>
+                <input
+                  type="number"
+                  id="noOfClass"
+                  name="noOfClass"
+                  class="form-input"
+                  [(ngModel)]="courseFormData.no_of_class"
+                  placeholder="Enter number of classes"
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="playlistId">YouTube Playlist ID</label>
+              <input
+                type="text"
+                id="playlistId"
+                name="playlistId"
+                class="form-input"
+                [(ngModel)]="courseFormData.playlistId"
+                placeholder="Enter YouTube playlist ID"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="imgUrl">Image URL</label>
+              <input
+                type="text"
+                id="imgUrl"
+                name="imgUrl"
+                class="form-input"
+                [(ngModel)]="courseFormData.img_url"
+                placeholder="Enter image URL"
+              />
+            </div>
+
+            <div class="form-group">
+              <div class="checkbox-group">
+                <input
+                  type="checkbox"
+                  id="isPremium"
+                  name="isPremium"
+                  [(ngModel)]="courseFormData.isPremium"
+                  (change)="onPremiumChange()"
+                />
+                <label for="isPremium" class="checkbox-label"
+                  >Premium Course</label
+                >
+                <input
+                  type="checkbox"
+                  name="isEnrolled"
+                  [(ngModel)]="courseFormData.isEnrolled"
+                />
+                <label for="isEnrolled" class="checkbox-label">Enrolled</label>
+              </div>
+            </div>
+
+            <div class="form-group" *ngIf="courseFormData.isPremium">
+              <label for="courseFee">Course Fee (৳) *</label>
+              <input
+                type="number"
+                id="courseFee"
+                name="courseFee"
+                class="form-input"
+                [(ngModel)]="courseFormData.course_fee"
+                min="0"
+                step="0.01"
+                placeholder="Enter course fee"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="technologies">Technologies (JSON format)</label>
+              <textarea
+                id="technologies"
+                name="technologies"
+                class="form-textarea"
+                [(ngModel)]="technologiesInput"
+                placeholder='[{"name": "Angular", "icon": "angular-icon.png"}, ...]'
+                rows="3"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="hideAddCourseForm()"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="!courseForm.valid"
+            >
+              <span class="material-icons">save</span>
+              {{ isEditMode ? "Update Course" : "Add Course" }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { ProfileData, LeaderboardUser, DropdownOptions } from '../models/profile-model';
+import { ProfileData, LeaderboardUser } from '../models/profile-model';
 import { MOCK_PROFILE, MOCK_LEADERBOARD } from '../mock-data/mock-profile';
-import { STATIC_DROPDOWN_OPTIONS } from '../constants/dropdown-options';
+import { DropdownOptions, STATIC_DROPDOWN_OPTIONS } from '../constants/dropdown-options';
 
 @Injectable({
   providedIn: 'root'

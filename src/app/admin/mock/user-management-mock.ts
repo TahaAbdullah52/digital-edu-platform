@@ -1,0 +1,61 @@
+import { UserManagementData } from '../models/user-management';
+
+export const MOCK_USERS: UserManagementData[] = [
+  {
+    id: 1,
+    name: 'John Smith',
+    avatar: 'JS',
+    primaryNumber: '+1 (555) 123-4567',
+    alternativeNumber: '+1 (555) 123-4568',
+    email: 'john.smith@email.com',
+    countryCode: 'US',
+    joinDate: '2024-01-15',
+    currentOccupation: 'Software Developer',
+    skillSector: 'Technology',
+    specificTopic: 'Web Development',
+    gender: 'Male',
+    age: 28,
+    educationalBackground: 'Bachelor in Computer Science',
+    subject: 'Computer Science',
+    coursesEnrolled: 3,
+    totalSpent: 0
+  },
+  {
+    id: 2,
+    name: 'Sarah Johnson',
+    avatar: 'SJ',
+    primaryNumber: '+1 (555) 987-6543',
+    alternativeNumber: '+1 (555) 987-6544',
+    email: 'sarah.j@email.com',
+    countryCode: 'US',
+    joinDate: '2024-02-03',
+    currentOccupation: 'Data Analyst',
+    skillSector: 'Analytics',
+    specificTopic: 'Data Science',
+    gender: 'Female',
+    age: 25,
+    educationalBackground: 'Master in Statistics',
+    subject: 'Statistics',
+    coursesEnrolled: 2,
+    totalSpent: 1999
+  },
+  {
+    id: 3,
+    name: 'Michael Chen',
+    avatar: 'MC',
+    primaryNumber: '+1 (555) 456-7890',
+    alternativeNumber: '+1 (555) 456-7891',
+    email: 'michael.chen@email.com',
+    countryCode: 'US',
+    joinDate: '2023-11-20',
+    currentOccupation: 'UX Designer',
+    skillSector: 'Design',
+    specificTopic: 'User Experience',
+    gender: 'Male',
+    age: 30,
+    educationalBackground: 'Bachelor in Design',
+    subject: 'Design',
+    coursesEnrolled: 4,
+    totalSpent: 3499
+  }
+];

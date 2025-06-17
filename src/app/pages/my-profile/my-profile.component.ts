@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy, signal } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { ProfileService } from '../../services/profile.service';
-import { DropdownOptions, LeaderboardUser, ProfileData } from '../../models/profile-model';
+import { LeaderboardUser, ProfileData } from '../../models/profile-model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { trigger,  transition,  style, animate} from '@angular/animations';
 import { PaymentService } from '../../services/payment.service';
 import { payment_item } from '../../models/payment';
+import { DropdownOptions, STATIC_DROPDOWN_OPTIONS } from '../../constants/dropdown-options';
 
 @Component({
   imports:[FormsModule,CommonModule],
@@ -28,55 +29,30 @@ import { payment_item } from '../../models/payment';
 
 export class MyProfileComponent implements OnInit, OnDestroy {
   
-  payments = signal<payment_item[]>([]);
-  constructor(private profileService: ProfileService, private paymentService: PaymentService) {
-    this.loadPayments();
-  }
-  
-  loadPayments() {
-    this.paymentService.getPayments().subscribe((data) => {
-      this.payments.set(data);
-    });
-  }
   activeTab = 'account';
-  transactionFilter = '';
-
-   get filteredTransactions() {
-    return this.payments().filter(txn => {
-      const matchesFilter = this.transactionFilter
-        ? txn.type === this.transactionFilter
-        : true;
-
-      return matchesFilter;
-    });
-  }
-  private destroy$ = new Subject<void>();
-  
-  // Profile form data
-  profileData: ProfileData = {} as ProfileData;
   profileImage: string = '';
-
-  // Leaderboard data
-  leaderboardUsers: LeaderboardUser[] = [];
-
-  // Dropdown options
-  dropdownOptions: DropdownOptions = {} as DropdownOptions;
-
-  // Loading states
+  transactionFilter = '';
   isUpdating = false;
   isLoadingLeaderboard = false;
-
-  // Form data for password change
   passwordForm = {
     oldPassword: '',
     newPassword: '',
     confirmPassword: ''
   };
 
-  ngOnInit(): void {
+  payments = signal<payment_item[]>([]);
+  profileData: ProfileData = {} as ProfileData;
+  leaderboardUsers: LeaderboardUser[] = [];
+  dropdownOptions: DropdownOptions = STATIC_DROPDOWN_OPTIONS;
+
+  private destroy$ = new Subject<void>();
+
+  constructor(private profileService: ProfileService, private paymentService: PaymentService) {
+    this.loadPayments();
     this.loadProfileData();
     this.loadLeaderboard();
-    this.loadDropdownOptions();
+  }
+  ngOnInit(): void {
     window.scrollTo(0, 0);
   }
 
@@ -84,8 +60,14 @@ export class MyProfileComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
+  
+  loadPayments() {
+    this.paymentService.getPayments().subscribe((data) => {
+      this.payments.set(data);
+    });
+  }
 
-  private loadProfileData(): void {
+  loadProfileData(): void {
     this.profileService.fetchAndEmitProfileData();
     this.profileService.profile$
       .pipe(takeUntil(this.destroy$))
@@ -94,7 +76,7 @@ export class MyProfileComponent implements OnInit, OnDestroy {
       });
   }
 
-  private loadLeaderboard(): void {
+  loadLeaderboard(): void {
     this.isLoadingLeaderboard = true;
     this.profileService.getLeaderboardData()
       .pipe(takeUntil(this.destroy$))
@@ -110,8 +92,14 @@ export class MyProfileComponent implements OnInit, OnDestroy {
       });
   }
 
-  private loadDropdownOptions(): void {
-    this.dropdownOptions = this.profileService.getDropdownOptions();
+   get filteredTransactions() {
+    return this.payments().filter(txn => {
+      const matchesFilter = this.transactionFilter
+        ? txn.type === this.transactionFilter
+        : true;
+
+      return matchesFilter;
+    });
   }
 
   // Getter methods for template

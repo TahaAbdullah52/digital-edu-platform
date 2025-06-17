@@ -1,0 +1,223 @@
+<div class="manage-stories-container">
+  <!-- All Stories Section -->
+  <div class="all-stories">
+    <div class="stories-header">
+      <div class="header-left">
+        <div class="story-stats">
+          <span class="stat-item pending" *ngIf="statusFilter === 'pending'">
+            Pending: {{ pendingStories.length }}
+          </span>
+          <span class="stat-item accepted" *ngIf="statusFilter === 'accepted'">
+            Accepted: {{ acceptedStories.length }}
+          </span>
+          <span class="stat-item rejected" *ngIf="statusFilter === 'rejected'">
+            Rejected: {{ rejectedStories.length }}
+          </span>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="filter-controls">
+          <select
+            class="status-filter"
+            [(ngModel)]="statusFilter"
+            (ngModelChange)="onStatusFilterChange()"
+          >
+            <option value="pending">Pending Stories</option>
+            <option value="accepted">Accepted Stories</option>
+            <option value="rejected">Rejected Stories</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="stories-content" [class.has-selected]="selectedStoryId">
+      <!-- Stories List -->
+      <div class="stories-list">
+        <div
+          *ngFor="let story of filteredStories"
+          class="story-card"
+          [class.selected]="selectedStoryId === story.id"
+          [class.pending-card]="story.status === 'pending'"
+          [class.accepted-card]="story.status === 'accepted'"
+          [class.rejected-card]="story.status === 'rejected'"
+          (click)="selectStory(story.id)"
+        >
+          <div class="user-info">
+            <div class="avatar">
+              {{ story.user_avatar }}
+            </div>
+            <div class="user-details">
+              <div class="story-status">
+                <span
+                  class="status-badge"
+                  [class.pending]="story.status === 'pending'"
+                  [class.accepted]="story.status === 'accepted'"
+                  [class.rejected]="story.status === 'rejected'"
+                >
+                  <span class="material-icons">
+                    {{
+                      story.status === "pending"
+                        ? "hourglass_empty"
+                        : story.status === "accepted"
+                        ? "check_circle"
+                        : "cancel"
+                    }}
+                  </span>
+                  {{ story.status | titlecase }}
+                </span>
+              </div>
+              <h3 class="user-name">{{ story.user_name }}</h3>
+              <p class="course-name">{{ story.course_name }}</p>
+              <div class="story-meta" *ngIf="story.status === 'pending'">
+                <span class="meta-item">
+                  <span class="material-icons">calendar_today</span>
+                  {{ story.submissionDate | date : "shortDate" }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action buttons for pending stories -->
+          <div class="story-actions" *ngIf="story.status === 'pending'">
+            <button
+              class="action-btn accept-btn"
+              (click)="$event.stopPropagation(); acceptStory(story.id, $event)"
+              title="Accept Story"
+            >
+              <span class="material-icons">check</span>
+            </button>
+            <button
+              class="action-btn reject-btn"
+              (click)="$event.stopPropagation(); rejectStory(story.id, $event)"
+              title="Reject Story"
+            >
+              <span class="material-icons">close</span>
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="filteredStories.length === 0" class="no-stories">
+          <span class="material-icons">article</span>
+          <p>No {{ statusFilter }} stories found</p>
+        </div>
+      </div>
+
+      <!-- Story Details Panel -->
+      <div *ngIf="getSelectedStory() as selectedStory" class="story-details">
+        <div class="details-header">
+          <h3>Success Story Details</h3>
+          <div class="header-status">
+            <span
+              class="status-badge large"
+              [class.pending]="selectedStory.status === 'pending'"
+              [class.accepted]="selectedStory.status === 'accepted'"
+              [class.rejected]="selectedStory.status === 'rejected'"
+            >
+              <span class="material-icons">
+                {{
+                  selectedStory.status === "pending"
+                    ? "hourglass_empty"
+                    : selectedStory.status === "accepted"
+                    ? "check_circle"
+                    : "cancel"
+                }}
+              </span>
+              {{ selectedStory.status | titlecase }}
+            </span>
+          </div>
+          <button class="close-btn" (click)="closePanel()">
+            <span class="material-icons">close</span>
+          </button>
+        </div>
+
+        <div class="details-content">
+          <!-- Story Profile Section -->
+          <div class="details-section">
+            <div class="profile-header">
+              <div class="profile-avatar large">
+                {{ selectedStory.user_avatar }}
+              </div>
+              <div class="profile-info">
+                <h2>{{ selectedStory.user_name }}</h2>
+                <p class="profile-course">{{ selectedStory.course_name }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Story Information -->
+          <div class="details-section">
+            <h4>Course Information</h4>
+            <div class="info-grid">
+              <div class="info-item">
+                <span class="material-icons">school</span>
+                <div>
+                  <label>Course</label>
+                  <p>{{ selectedStory.course_name }}</p>
+                </div>
+              </div>
+              <div class="info-item">
+                <span class="material-icons">group</span>
+                <div>
+                  <label>Batch</label>
+                  <p>{{ selectedStory.batch_no }}</p>
+                </div>
+              </div>
+              <div class="info-item">
+                <span class="material-icons">calendar_today</span>
+                <div>
+                  <label>Submitted</label>
+                  <p>
+                    {{ selectedStory.submissionDate | date : "mediumDate" }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Success Story Content -->
+          <div class="details-section story-section">
+            <h4>Success Story</h4>
+            <div class="story-content">
+              <p class="story-text">{{ selectedStory.desc }}</p>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="details-actions">
+            <!-- Accept button for pending and rejected stories -->
+            <button
+              *ngIf="
+                selectedStory.status === 'pending' ||
+                selectedStory.status === 'rejected'
+              "
+              class="btn btn-success"
+              (click)="acceptStory(selectedStory.id, $event)"
+            >
+              <span class="material-icons">check</span>
+              Accept Story
+            </button>
+
+            <!-- Reject button for pending stories -->
+            <button
+              *ngIf="selectedStory.status === 'pending'"
+              class="btn btn-danger"
+              (click)="rejectStory(selectedStory.id, $event)"
+            >
+              <span class="material-icons">close</span>
+              Reject Story
+            </button>
+
+            <!-- Delete button for all stories -->
+            <button
+              class="btn btn-danger"
+              (click)="deleteStory(selectedStory.id, $event)"
+            >
+              <span class="material-icons">delete</span>
+              Delete Story
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,12 @@
-import { DropdownOptions } from '../models/profile-model';
+export interface DropdownOptions {
+  occupations: string[];
+  skillSectors: string[];
+  specificTopics: string[];
+  genders: string[];
+  educationLevels: string[];
+  subjects: string[];
+}
+
 
 export const STATIC_DROPDOWN_OPTIONS: DropdownOptions = {
   occupations: ['Student', 'Professional', 'Freelancer', 'Entrepreneur'],
