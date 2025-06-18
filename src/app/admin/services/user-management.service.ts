@@ -8,7 +8,9 @@ import { MOCK_USERS } from '../mock/user-management-mock';
   providedIn: 'root'
 })
 export class UserManagementService {
-  
+  private deletedUserIds = new Set<number>(); 
+  private usingMockData = false; 
+
   constructor(private http: HttpClient) { }
 
   getUsers(filter: string = 'all'): Observable<UserManagementApiResponse> {
@@ -17,8 +19,13 @@ export class UserManagementService {
     return this.http.get<UserManagementApiResponse>('https://your-api-url.com/api/admin/users', { params }).pipe(
       catchError(error => {
         console.warn('Failed to load users from API:', error.message);
+        this.usingMockData = true;
+        
+        // Filter out deleted users from mock data
+        const filteredUsers = MOCK_USERS.filter(user => !this.deletedUserIds.has(user.id));
+        
         return of({
-          users: MOCK_USERS
+          users: filteredUsers
         });
       })
     );
@@ -28,9 +35,15 @@ export class UserManagementService {
     return this.http.delete<{ success: boolean }>(`https://your-api-url.com/api/admin/users/${userId}`).pipe(
       catchError(error => {
         console.error('Failed to delete user:', error);
+        
+        // If using mock data, simulate successful deletion
+        if (this.usingMockData) {
+          this.deletedUserIds.add(userId);
+          return of({ success: true });
+        }
+        
         return of({ success: false });
       })
     );
   }
-
 }

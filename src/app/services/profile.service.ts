@@ -36,7 +36,7 @@ export class ProfileService {
       tap(() => this.profileSubject.next(profileData)),
       catchError((error) => {
         console.error('Update failed, fallback to local update.', error);
-        this.profileSubject.next(profileData); // still update UI
+        this.profileSubject.next(profileData); 
         return of(true);
       })
     );
@@ -56,7 +56,6 @@ export class ProfileService {
   }
 
   uploadProfileImage(file: File): Observable<string> {
-    // Replace with real API call when backend is ready
     const reader = new FileReader();
     return new Observable<string>((observer) => {
       reader.onload = (e: any) => {
@@ -79,7 +78,6 @@ export class ProfileService {
     );
   }
 
-  // Optional enhancements for leaderboard updates
   updateUserPoints(userId: string, newPoints: number): Observable<boolean> {
     return this.http.post<boolean>(`https://your-api-url.com/leaderboard/update`, {
       userId,

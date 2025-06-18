@@ -21,14 +21,14 @@ export class StoryManagementComponent implements OnInit {
  
   statusFilter: 'pending' | 'accepted' | 'rejected' = 'pending';
 
-  constructor(private storyService: StoryManagementService) {}
+  constructor(private storyAdminService: StoryManagementService) {}
 
   ngOnInit(): void {
     this.loadAllStories();
   }
 
   loadAllStories(): void {
-    this.storyService.getAllStories().subscribe({
+    this.storyAdminService.getAllStories().subscribe({
       next: stories => {
         console.log('All stories loaded:', stories);
         this.allStories = stories;
@@ -42,16 +42,9 @@ export class StoryManagementComponent implements OnInit {
     this.pendingStories = this.allStories.filter(story => story.status === 'pending');
     this.acceptedStories = this.allStories.filter(story => story.status === 'accepted');
     this.rejectedStories = this.allStories.filter(story => story.status === 'rejected');
-    
-    console.log('Categorized stories:', {
-      pending: this.pendingStories.length,
-      accepted: this.acceptedStories.length,
-      rejected: this.rejectedStories.length
-    });
   }
 
   get filteredStories(): story_item[] {
-    console.log('Getting filtered stories for filter:', this.statusFilter);
     switch (this.statusFilter) {
       case 'pending':
         return this.pendingStories;
@@ -66,7 +59,6 @@ export class StoryManagementComponent implements OnInit {
 
   onStatusFilterChange(): void {
     this.selectedStoryId = null;
-    console.log('Status filter changed to:', this.statusFilter);
   }
 
   selectStory(storyId: number): void {
@@ -86,18 +78,16 @@ export class StoryManagementComponent implements OnInit {
   acceptStory(storyId: number, event: Event): void {
     event.stopPropagation();
 
-    this.storyService.acceptStory(storyId).subscribe({
+    this.storyAdminService.acceptStory(storyId).subscribe({
       next: response => {
         if (response.success) {
           console.log('Story accepted successfully');
           
-          // Update the story status in local data
           const story = this.allStories.find(s => s.id === storyId);
           if (story) {
             story.status = 'accepted';
             this.categorizeStories();
             
-            // Clear selection if we're not on accepted tab
             if (this.statusFilter !== 'accepted' && this.selectedStoryId === storyId) {
               this.selectedStoryId = null;
             }
@@ -111,18 +101,16 @@ export class StoryManagementComponent implements OnInit {
   rejectStory(storyId: number, event: Event): void {
     event.stopPropagation();
 
-    this.storyService.rejectStory(storyId).subscribe({
+    this.storyAdminService.rejectStory(storyId).subscribe({
       next: response => {
         if (response.success) {
           console.log('Story rejected successfully');
           
-          // Update the story status in local data
           const story = this.allStories.find(s => s.id === storyId);
           if (story) {
             story.status = 'rejected';
             this.categorizeStories();
             
-            // Clear selection if we're not on rejected tab
             if (this.statusFilter !== 'rejected' && this.selectedStoryId === storyId) {
               this.selectedStoryId = null;
             }
@@ -138,16 +126,14 @@ export class StoryManagementComponent implements OnInit {
 
     if (!confirm('Are you sure you want to delete this story permanently?')) return;
 
-    this.storyService.deleteStory(storyId).subscribe({
+    this.storyAdminService.deleteStory(storyId).subscribe({
       next: response => {
         if (response.success) {
           console.log('Story deleted successfully');
           
-          // Remove from all local data
           this.allStories = this.allStories.filter(story => story.id !== storyId);
           this.categorizeStories();
           
-          // Clear selection if the deleted story was selected
           if (this.selectedStoryId === storyId) {
             this.selectedStoryId = null;
           }

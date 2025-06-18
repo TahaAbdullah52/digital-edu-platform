@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CategoryItemComponent } from '../../components/home/category-item/category-item.component';
 import { PrimButtonComponent } from "../../components/prim-button/prim-button.component";
 import { story_item } from '../../models/story-item';
@@ -24,16 +24,15 @@ import { StoryService } from '../../services/story.service';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit{
   showStoryModal = signal(false);
   stories = signal<story_item[]>([]);
 
-  constructor(
-    private courseService: CourseService,
-     private storyService: StoryService
-  ){
-      this.loadStories();
-   }
+  constructor(private courseService: CourseService,private storyService: StoryService){}
+  
+  ngOnInit(): void {
+    this.loadStories();
+  }
 
   loadStories() {
     this.storyService.getStories().subscribe((data) => {
@@ -69,6 +68,12 @@ export class HomeComponent {
   }
 
   onStorySubmitted(newStory: story_item) {
-    this.stories.update(stories => [newStory, ...stories]);
+    this.storyService.submitStory(newStory).subscribe(res => {
+      if (res.success) {
+        this.loadStories();
+      } else {
+        console.warn('Story submission failed:', res.message);
+      }
+    });
   }
 }

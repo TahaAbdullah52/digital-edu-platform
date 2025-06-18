@@ -17,9 +17,21 @@ import { BASE_CATEGORIES } from '../constants/categories';
   providedIn: 'root'
 })
 export class CourseService {
+
   private http = inject(HttpClient);
 
-  // --- Fetch courses as observable ---
+  private _courses = signal<course_item[]>([]);
+  courses = this._courses.asReadonly();
+
+  selectedCategory = signal('Web Development');
+  showAll = signal(false);
+  
+  constructor() {
+    this.fetchCourses().subscribe(courses => {
+      this._courses.set(courses);
+    });
+  }
+  
   private fetchCourses() {
     return this.http.get<course_item[]>('https://your-api-url.com/courses').pipe(
       catchError((err) => {
@@ -29,18 +41,23 @@ export class CourseService {
     );
   }
 
-  // --- Courses as writable signal ---
-  private _courses = signal<course_item[]>([]);
-  courses = this._courses.asReadonly();
-
-  // Initialize courses
-  constructor() {
-    this.fetchCourses().subscribe(courses => {
-      this._courses.set(courses);
-    });
+  updateCourse(updatedCourse: course_item) {
+    return this.http.put<course_item>(`https://your-api-url.com/courses/${updatedCourse.id}`, updatedCourse).pipe(
+      catchError((err) => {
+        console.warn('API update failed, handling locally.', err);
+        return of(updatedCourse);
+      }),
+      tap((course) => {
+        const currentCourses = this._courses();
+        const updatedCourses = currentCourses.map(c => 
+          c.id === course.id ? course : c
+        );
+        this._courses.set(updatedCourses);
+        console.log('Course updated successfully');
+      })
+    );
   }
 
-  // --- Static categories signal ---
   computedCategories = computed(() => {
     const courses = this.courses();
     return BASE_CATEGORIES.map(category => ({
@@ -49,18 +66,12 @@ export class CourseService {
     }));
   });
 
-  // --- Signals for filters ---
-  selectedCategory = signal('Web Development');
-  showAll = signal(false);
-
-  // --- Computed visible courses ---
   visibleCourses = computed(() => {
     const selected = this.selectedCategory();
     const filtered = this.courses().filter(course => course.category === selected);
     return this.showAll() ? filtered : filtered.slice(0, 4);
   });
 
-  // --- Get course by ID as observable ---
   getCourseById(id: number) {
     return this.fetchCourses().pipe(
       map(courses => {
@@ -86,33 +97,12 @@ export class CourseService {
         } else {
           course.technologies = [...PYTHON_TECHS];
         }
-
         return course;
       })
     );
   }
 
-  // --- Get course by playlistId from the signal ---
   getCourseByPlaylistId(playlistId: string): course_item | undefined {
     return this.courses().find(c => c.playlistId === playlistId);
-  }
-
-  // --- Update course method ---
-  updateCourse(updatedCourse: course_item) {
-    return this.http.put<course_item>(`https://your-api-url.com/courses/${updatedCourse.id}`, updatedCourse).pipe(
-      catchError((err) => {
-        console.warn('API update failed, handling locally.', err);
-        return of(updatedCourse);
-      }),
-      tap((course) => {
-        // Update the local signal
-        const currentCourses = this._courses();
-        const updatedCourses = currentCourses.map(c => 
-          c.id === course.id ? course : c
-        );
-        this._courses.set(updatedCourses);
-        console.log('Course updated successfully');
-      })
-    );
   }
 }

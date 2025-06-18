@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { story_item } from '../../models/story-item';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MOCK_STORIES } from '../../mock-data/mock-stories';
 
 @Component({
   selector: 'app-story-modal',
@@ -16,7 +17,7 @@ export class StoryModalComponent {
 
   formData = {
     user_name: '',
-    batch_name: '',
+    course_name: '',
     batch_no: 1,
     desc: ''
   };
@@ -29,14 +30,17 @@ export class StoryModalComponent {
 
   onSubmit() {
     if (this.isFormValid()) {
+      const today = new Date().toISOString().split('T')[0];
+      const uniqueId = this.generateUniqueId();
+
       const newStory: story_item = {
-        id: Date.now(), // Simple ID generation
+        id: uniqueId,
         user_name: this.formData.user_name.trim(),
-        course_name: this.formData.batch_name.trim(),
+        course_name: this.formData.course_name.trim(),
         batch_no: this.formData.batch_no,
         desc: this.formData.desc.trim(),
         user_avatar: '',
-        submissionDate: '',
+        submissionDate: today,
         status: 'pending'
       };
 
@@ -45,10 +49,23 @@ export class StoryModalComponent {
     }
   }
 
+  private generateUniqueId(): number {
+   
+    const mockIds = MOCK_STORIES.map(s => s.id);
+    
+    const stored = localStorage.getItem('mockStories');
+    const localIds = stored ? JSON.parse(stored).map((s: story_item) => s.id) : [];
+    
+    const allIds = [...mockIds, ...localIds];
+    const maxId = allIds.length ? Math.max(...allIds) : 0;
+    
+    return maxId + 1;
+  }
+
   private isFormValid(): boolean {
     return !!(
       this.formData.user_name.trim() &&
-      this.formData.batch_name.trim() &&
+      this.formData.course_name.trim() &&
       this.formData.batch_no &&
       this.formData.desc.trim()
     );
@@ -57,7 +74,7 @@ export class StoryModalComponent {
   private resetForm() {
     this.formData = {
       user_name: '',
-      batch_name: '',
+      course_name: '',
       batch_no: 1,
       desc: ''
     };

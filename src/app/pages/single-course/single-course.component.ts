@@ -45,7 +45,6 @@ export class SingleCourseComponent implements OnInit{
   private enrollFreeCourse(): void {
     if (!this.course) return;
 
-    // Update course enrollment status
     const updatedCourse: course_item = {
       ...this.course,
       isEnrolled: true
