@@ -12,14 +12,12 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class MyCoursesComponent {
 
-  constructor(private courseService: CourseService, private router:Router)
-  { }
+  constructor(private courseService: CourseService, private router:Router){}
   
   get showAll() {
     return this.courseService.showAll;
   }
   get filteredCourses() {
-      
       const allCourses = this.courseService.courses();
       let filtered = allCourses.filter(v => 
         v.isEnrolled === true
@@ -27,27 +25,20 @@ export class MyCoursesComponent {
     return this.showAll() ? filtered : filtered.slice(0, 4);
   }
   
-  // Use computed signal for recommendations - automatically updates when courses change
   recommendedCourses = computed(() => {
     const allCourses = this.courseService.courses();
     const enrolledCourses = allCourses.filter(v => v.isEnrolled === true);
     
     if (enrolledCourses.length === 0) {
-      // If no enrolled courses, show general recommendations
       let allNonEnrolled = allCourses.filter(v => !v.isEnrolled);
-      // Sort by ID or title for consistency instead of random
       allNonEnrolled = allNonEnrolled.sort((a, b) => a.id - b.id);
       return allNonEnrolled.slice(0, 3);
     }
     
-    // If there are enrolled courses, show category-based recommendations
     const categories = Array.from(new Set(enrolledCourses.map(v => v.category)));
-    
     let recmCourses = allCourses.filter(v =>
       categories.includes(v.category) && !v.isEnrolled
     );
-    
-    // Sort by ID or title for consistency instead of random
     recmCourses = recmCourses.sort((a, b) => a.id - b.id);
     return recmCourses.slice(0, 3);
   });

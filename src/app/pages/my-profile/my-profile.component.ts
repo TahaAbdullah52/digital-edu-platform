@@ -47,13 +47,12 @@ export class MyProfileComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private profileService: ProfileService, private paymentService: PaymentService) {
+  constructor(private profileService: ProfileService, private paymentService: PaymentService) {}
+  ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.loadPayments();
     this.loadProfileData();
     this.loadLeaderboard();
-  }
-  ngOnInit(): void {
-    window.scrollTo(0, 0);
   }
 
   ngOnDestroy(): void {
@@ -102,7 +101,6 @@ export class MyProfileComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Getter methods for template
   get occupations() { return this.dropdownOptions.occupations || []; }
   get skillSectors() { return this.dropdownOptions.skillSectors || []; }
   get specificTopics() { return this.dropdownOptions.specificTopics || []; }

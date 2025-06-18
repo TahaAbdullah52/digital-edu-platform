@@ -16,7 +16,7 @@ export class VideoListComponent implements OnInit {
   courseId: string = ''; 
   courseName: string = ''; 
 
-  constructor(private youtube: YoutubeService, private route: ActivatedRoute,
+  constructor(private youtubeService: YoutubeService, private route: ActivatedRoute,
     private router: Router, private courseService:CourseService
   ) {}
 
@@ -36,7 +36,7 @@ export class VideoListComponent implements OnInit {
         this.courseName = 'General';
       }
 
-      this.youtube.getPlaylistItems(playlistId).subscribe(res => {
+      this.youtubeService.getPlaylistItems(playlistId).subscribe(res => {
         this.videos = res.items;
       });
     }
