@@ -23,5 +23,7 @@
       class="user-badge"
     />
   </div>
-  <app-prim-button (clicked)="goToLogin()">Login/Sign Up</app-prim-button>
+  <app-prim-button (clicked)="goToLogin()">
+    {{ isAuthenticated ? 'Sign Out' : 'Login / Sign Up' }}
+  </app-prim-button>
 </header>

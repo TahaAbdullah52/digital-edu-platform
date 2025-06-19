@@ -1,6 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { PrimButtonComponent } from "../../components/prim-button/prim-button.component";
 import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,7 @@ import { UserService } from '../../services/user.service';
 })
 export class LoginComponent implements AfterViewInit {
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngAfterViewInit(): void {
     const signUpBtn = document.getElementById('signUp') as HTMLElement;
@@ -33,7 +34,11 @@ export class LoginComponent implements AfterViewInit {
       const password = (signupForm.querySelector('input[placeholder="Password"]') as HTMLInputElement).value;
 
       this.userService.signUp({ username, email, password }).subscribe({
-        next: (res) => alert('Signup successful!'),
+        next: (res) => {
+          alert('Signup successful!');
+          localStorage.setItem('auth_token', res.token);
+          this.router.navigate(['/home']); // Redirect to home after successful signup
+        },
         error: (err) => alert(err.error?.message || 'Signup failed')
       });
     });
@@ -45,7 +50,11 @@ export class LoginComponent implements AfterViewInit {
       const password = (loginForm.querySelector('input[placeholder="Password"]') as HTMLInputElement).value;
 
       this.userService.login({ email, password }).subscribe({
-        next: (res) => alert('Login successful!'),
+        next: (res) => {
+          alert('Login successful!');
+          localStorage.setItem('auth_token', res.token);
+          this.router.navigate(['/home']); // Redirect to home after successful login
+        },
         error: (err) => alert(err.error?.message || 'Login failed')
       });
     });

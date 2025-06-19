@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { PrimButtonComponent } from '../prim-button/prim-button.component';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -12,9 +13,20 @@ import { PrimButtonComponent } from '../prim-button/prim-button.component';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private userService: UserService) {}
 
+  // Check if the user is authenticated
+  get isAuthenticated() {
+    return this.userService.isAuthenticated();
+  }
+
+  // Redirect user to login page
   goToLogin() {
-    this.router.navigate(['/login']);
+    if (this.isAuthenticated) {
+      this.userService.logout();  // Logout if user is already logged in
+      // this.router.navigate(['/login']);
+    } else {
+      this.router.navigate(['/login']);  // Navigate to login if not authenticated
+    }
   }
 }

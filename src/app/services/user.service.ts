@@ -26,4 +26,12 @@ export class UserService {
   }): Observable<any>{
     return this.http.post(`${this.BASE_URL}/login`, credentials);
   }
+
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem('auth_token');  // Check if the user has an auth token
+  }
+
+  logout(): void {
+    localStorage.removeItem('auth_token');  // Remove the auth token on logout
+  }
 }
