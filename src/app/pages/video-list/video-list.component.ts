@@ -13,7 +13,7 @@ import { CourseService } from '../../services/course.service';
 })
 export class VideoListComponent implements OnInit {
   videos: any[] = [];
-  courseId: string = ''; 
+  courseId: number = 0; 
   courseName: string = ''; 
 
   constructor(private youtubeService: YoutubeService, private route: ActivatedRoute,
@@ -29,10 +29,10 @@ export class VideoListComponent implements OnInit {
       const course = this.courseService.getCourseByPlaylistId(playlistId);
 
       if (course) {
-        this.courseId = course.course_id;
+        this.courseId = course.id;
         this.courseName = course.course_name;
       } else {
-        this.courseId = 'default';
+        this.courseId = 0;
         this.courseName = 'General';
       }
 

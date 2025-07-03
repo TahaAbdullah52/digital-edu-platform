@@ -10,6 +10,7 @@ import { StatCard } from '../../models/stat-card';
 import { TopCourse } from '../../models/top-courses';
 import { CourseCountsApiResponse } from '../../models/course-counts';
 import { TaskCounts } from '../../models/task-management';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -19,6 +20,7 @@ import { TaskCounts } from '../../models/task-management';
 })
 export class AdminDashboardComponent implements AfterViewInit, OnDestroy {
 
+  
   @ViewChild('pieChart', { static: false }) pieChart!: ElementRef<HTMLCanvasElement>;
   
   circumference = 2 * Math.PI * 52;
@@ -36,12 +38,21 @@ export class AdminDashboardComponent implements AfterViewInit, OnDestroy {
   courseCounts = signal<CourseCountsApiResponse>({ freeCoursesCount: 0, premiumCoursesCount: 0 });
   topCourses = signal<TopCourse[]>([]);
   
-  constructor(private cdr: ChangeDetectorRef,private dashboardService: DashboardService) {
+  constructor(private cdr: ChangeDetectorRef,private dashboardService: DashboardService, private router: Router) {
     this.loadStats();
     this.loadTaskData();
     this.loadCourseCounts();
     this.loadTopCourses();
   }
+
+  logout(): void {
+  // Clear any stored session/auth data if needed
+    localStorage.clear(); // or sessionStorage.clear()
+
+    // Redirect to login
+    this.router.navigate(['/login']);
+  }
+
 
   loadStats(): void {
     this.dashboardService.getStatItems().subscribe((data) => {

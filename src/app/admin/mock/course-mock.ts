@@ -3,7 +3,7 @@ import { course_item } from "../../models/course-item";
 export const MOCK_ADMIN_COURSES: course_item[] = [
     {
       id: 1,
-      course_id: 'PROG102',
+      // course_id: 'PROG102',
       course_name: 'Angular Fundamentals',
       category: 'Programming',
       course_desc: 'Learn the fundamentals of Angular.',
@@ -19,7 +19,7 @@ export const MOCK_ADMIN_COURSES: course_item[] = [
     },
     {
       id: 2,
-      course_id: 'DES101',
+      // course_id: 'DES101',
       course_name: 'Graphic Design Basics',
       category: 'Design',
       course_desc: 'Introductory course to graphic design.',

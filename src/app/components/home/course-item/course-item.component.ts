@@ -10,5 +10,11 @@ import { RouterModule } from '@angular/router';
   styleUrl: './course-item.component.css'
 })
 export class CourseItemComponent {
+
+  // Log the ID whenever the course is clicked
+  logCourseId(id: number) {
+    console.log('Course ID clicked:', id);
+  }
+  
   course = input.required<course_item>();
 }

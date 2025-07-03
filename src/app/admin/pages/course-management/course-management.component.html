@@ -43,7 +43,7 @@
       >
         <div class="course-content">
           <div class="course-header">
-            <div class="course-id">ID: {{ course.course_id }}</div>
+            <div class="course-id">ID: {{ course.id }}</div>
             <div class="course-premium" *ngIf="course.isPremium">
               <span class="material-icons">star</span>
             </div>
@@ -98,7 +98,7 @@
             <div class="profile-info">
               <h2>{{ selectedCourse.course_name }}</h2>
               <p class="course-id-detail">
-                Course ID: {{ selectedCourse.course_id }}
+                Course ID: {{ selectedCourse.id }}
               </p>
               <div class="course-category-detail">
                 <span class="material-icons">category</span>
@@ -172,6 +172,10 @@
       </div>
 
       <div class="form-content">
+        <div *ngIf="error" class="error-message">
+          <span class="material-icons">error</span>
+          {{ error }}
+        </div>
         <form (ngSubmit)="saveCourse()" #courseForm="ngForm">
           <div class="form-section">
             <h4>Basic Information</h4>
@@ -194,7 +198,7 @@
                   id="courseCategory"
                   name="courseCategory"
                   class="form-select"
-                  [(ngModel)]="courseFormData.category"
+                  [(ngModel)]="courseFormData.category" required
                 >
                   <option value="">All Categories</option>
                   <option value="Programming">Programming</option>
@@ -217,6 +221,7 @@
                 [(ngModel)]="courseFormData.course_desc"
                 placeholder="Enter course description"
                 rows="4"
+                required
               ></textarea>
             </div>
 
@@ -308,12 +313,12 @@
                 <label for="isPremium" class="checkbox-label"
                   >Premium Course</label
                 >
-                <input
+                <!-- <input
                   type="checkbox"
                   name="isEnrolled"
                   [(ngModel)]="courseFormData.isEnrolled"
                 />
-                <label for="isEnrolled" class="checkbox-label">Enrolled</label>
+                <label for="isEnrolled" class="checkbox-label">Enrolled</label> -->
               </div>
             </div>
 

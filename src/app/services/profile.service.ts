@@ -1,8 +1,8 @@
 // src/app/services/profile.service.ts
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { catchError, map, tap } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ProfileData, LeaderboardUser } from '../models/profile-model';
 import { MOCK_PROFILE, MOCK_LEADERBOARD } from '../mock-data/mock-profile';
 import { DropdownOptions, STATIC_DROPDOWN_OPTIONS } from '../constants/dropdown-options';
@@ -15,10 +15,20 @@ export class ProfileService {
   private profileSubject = new BehaviorSubject<ProfileData>(MOCK_PROFILE);
   public profile$ = this.profileSubject.asObservable();
 
+  private apiUrl = 'http://localhost:3000/api';
+
   constructor(private http: HttpClient) {}
 
+
+   // Helper method to get JWT token
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('auth_token');
+    return new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  }
   fetchAndEmitProfileData(): void {
-    this.http.get<ProfileData>(`https://your-api-url.com/profile/update`).pipe(
+    const headers = this.getAuthHeaders(); // Set authorization header with the token
+    const userId = localStorage.getItem('user_id');
+    this.http.get<ProfileData>(`${this.apiUrl}/user/profile`, { headers }).pipe(
       catchError(err => {
         console.warn('API failed, loading mock profile.');
         return of(MOCK_PROFILE);
@@ -32,12 +42,30 @@ export class ProfileService {
   }
 
   updateProfile(profileData: ProfileData): Observable<boolean> {
-    return this.http.post<boolean>(`https://your-api-url.com/profile/update`, profileData).pipe(
-      tap(() => this.profileSubject.next(profileData)),
+    const headers = this.getAuthHeaders();
+  
+    // Fixed: Expect the actual response type from backend
+    return this.http.post<{ message: string }>(`${this.apiUrl}/profile/update`, profileData, { headers }).pipe(
+      map(response => {
+        // Check if the response indicates success
+        return response.message === 'Profile updated';
+      }),
+      tap((success) => {
+        if (success) {
+          this.profileSubject.next(profileData);
+        }
+      }),
       catchError((error) => {
-        console.error('Update failed, fallback to local update.', error);
-        this.profileSubject.next(profileData); 
-        return of(true);
+        console.error('Update failed:', error);
+        
+        // Log more details about the error
+        if (error.status === 403) {
+          console.error('Authentication failed - check JWT token');
+        } else if (error.status === 500) {
+          console.error('Server error - check backend logs');
+        }
+        
+        return of(false);
       })
     );
   }
@@ -56,27 +84,45 @@ export class ProfileService {
   }
 
   uploadProfileImage(file: File): Observable<string> {
-    const reader = new FileReader();
-    return new Observable<string>((observer) => {
-      reader.onload = (e: any) => {
-        observer.next(e.target.result);
-        observer.complete();
-      };
-      reader.readAsDataURL(file);
-    });
-  }
+    const formData = new FormData();
+    formData.append('avatar', file, file.name);
 
-  changePassword(oldPassword: string, newPassword: string): Observable<boolean> {
-    return this.http.post<boolean>(`https://your-api-url.com/profile/change-password`, {
-      oldPassword,
-      newPassword
-    }).pipe(
+    // Fixed: Add authorization headers for image upload
+    const headers = this.getAuthHeaders();
+
+    return this.http.post<{ avatarUrl: string }>(
+      `${this.apiUrl}/profile/upload-avatar`,
+      formData,
+      { headers } // Added missing headers
+    ).pipe(
+      map(response => response.avatarUrl),
       catchError((error) => {
-        console.error('Password change failed:', error);
-        return of(false);
+        console.error('Error uploading image:', error);
+        
+        // Log more details about the error
+        if (error.status === 403) {
+          console.error('Authentication failed for image upload');
+        }
+        
+        return of('');
       })
     );
   }
+
+
+  changePassword(oldPassword: string, newPassword: string): Observable<boolean> {
+  const headers = this.getAuthHeaders();
+  return this.http.post<{ message: string }>(`${this.apiUrl}/profile/change-password`, {
+    oldPassword,
+    newPassword
+  }, { headers }).pipe(
+    map(() => true), // Convert success to boolean
+    catchError((error) => {
+      console.error('Password change failed:', error);
+      return of(false);
+    })
+  );
+}
 
   updateUserPoints(userId: string, newPoints: number): Observable<boolean> {
     return this.http.post<boolean>(`https://your-api-url.com/leaderboard/update`, {

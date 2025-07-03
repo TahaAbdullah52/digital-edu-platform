@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CategoryItemComponent } from "../../components/home/category-item/category-item.component";
 import { PrimButtonComponent } from "../../components/prim-button/prim-button.component";
@@ -11,7 +11,7 @@ import { CourseItemComponent } from "../../components/home/course-item/course-it
   templateUrl: './free-courses.component.html',
   styleUrl: './free-courses.component.css'
 })
-export class FreeCoursesComponent {
+export class FreeCoursesComponent implements OnInit {
   constructor(private courseService: CourseService)
   { }
   ngOnInit() {
@@ -20,6 +20,9 @@ export class FreeCoursesComponent {
   get course_items() {
     return this.courseService.courses;
   }
+  get categories() {
+    return this.courseService.computedCategories;
+  }
   get selectedCategory() {
     return this.courseService.selectedCategory;
   }
@@ -27,31 +30,26 @@ export class FreeCoursesComponent {
     return this.courseService.showAll;
   }
   get filteredCourses() {
-    
-    const selected = this.selectedCategory();
-    const allCourses = this.courseService.courses();
-    
-    let filtered = allCourses.filter(v => 
-      v.isPremium === false && 
-      (!selected || v.category === selected)
-    );
-    
-    return this.showAll() ? filtered : filtered.slice(0, 4);
+  return this.courseService.filteredFreeCourses();
 }
+
+  get categoriesWithCounts() {
+  return this.courseService.freeCategoriesWithCounts();
+  }
   get allFreeCourses() {
     return this.courseService.courses().filter(v => v.isPremium === false);
   }
 
-  get categoriesWithCounts() {
-    const allFree = this.allFreeCourses;
+  // get categoriesWithCounts() {
+  //   const allFree = this.allFreeCourses;
     
-    return this.courseService.computedCategories().map(cat => {
-      const count = allFree.filter(course => course.category === cat.title).length;
+  //   return this.courseService.computedCategories().map(cat => {
+  //     const count = allFree.filter(course => course.category === cat.title).length;
       
-      return {
-        ...cat,
-        noOfCourses: count
-      };
-    });
-  }  
+  //     return {
+  //       ...cat,
+  //       noOfCourses: count
+  //     };
+  //   });
+  // }  
 }

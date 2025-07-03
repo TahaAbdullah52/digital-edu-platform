@@ -18,6 +18,7 @@ export class CourseManagementComponent implements OnInit{
   error: string | null = null;
 
   technologiesInput: string = '';
+
   showForm = false;
   isEditMode = false;
 
@@ -38,6 +39,7 @@ export class CourseManagementComponent implements OnInit{
     this.adminCourseService.getCourses().subscribe({
       next: (courses) => {
         this.courses = courses;
+        console.log('Fecthed courses:', this.courses);
         this.loading = false;
       },
       error: (error) => {
@@ -52,6 +54,7 @@ export class CourseManagementComponent implements OnInit{
     if (this.selectedCourse?.id === course.id) {
       this.selectedCourse = null;
     } else {
+      console.log('Selected course:', course);
       this.selectedCourse = course;
       this.showForm = false;
     }
@@ -73,11 +76,31 @@ export class CourseManagementComponent implements OnInit{
   }
   
   saveCourse() {
+    // Handle technologies input formatting
+    if (this.technologiesInput) {
+    try {
+      // If technologiesInput is a string (from textarea), parse it
+      if (typeof this.technologiesInput === 'string') {
+        this.courseFormData.technologies = JSON.parse(this.technologiesInput);
+      } else {
+        // If it's already an array, use it directly
+        this.courseFormData.technologies = this.technologiesInput;
+      }
+      console.log('Parsed technologies:', this.courseFormData.technologies);
+    } catch (error) {
+      this.error = 'Invalid technologies format. Please enter valid JSON.';
+      return;
+    }
+  } else {
+    this.courseFormData.technologies = [];
+  }
     if (this.isEditMode) {
       this.adminCourseService.updateCourse(this.courseFormData.id, this.courseFormData).subscribe({
         next: (updatedCourse) => {
           const index = this.courses.findIndex(c => c.id === updatedCourse.id);
           if (index !== -1) {
+            console.log('Course updated:', updatedCourse);
+            console.log('Previous course data:', this.courses[index]);
             this.courses[index] = updatedCourse;
           }
           this.hideAddCourseForm();
@@ -89,6 +112,7 @@ export class CourseManagementComponent implements OnInit{
         }
       });
     } else {
+      // const { id, ...newCourseData } = this.courseFormData;
       this.adminCourseService.createCourse(this.courseFormData).subscribe({
         next: (newCourse) => {
           this.courses.push(newCourse);
@@ -118,19 +142,20 @@ export class CourseManagementComponent implements OnInit{
   }
 
   editCourse(course: course_item) {
-    this.isEditMode = true;
-    this.showForm = true;
+  this.isEditMode = true;
+  this.showForm = true;
 
-    this.adminCourseService.getCourseById(course.id).subscribe({
-      next: (fullCourse) => {
-        this.courseFormData = { ...fullCourse };
-      },
-      error: (err) => {
-        console.error('Failed to load full course data for editing:', err);
-        this.courseFormData = { ...course }; 
-      }
-    });
-  }
+  this.adminCourseService.getCourseById(course.id).subscribe({
+    next: (fullCourse) => {
+      console.log('Full course data for editing:', fullCourse);
+      this.courseFormData = { ...fullCourse };
+    },
+    error: (err) => {
+      console.error('Failed to load full course data for editing:', err);
+      this.courseFormData = { ...course };
+    }
+  });
+}
 
   showAddCourseForm() {
     this.resetForm();
@@ -167,7 +192,7 @@ export class CourseManagementComponent implements OnInit{
       no_of_seat: 0,
       no_of_class:0,
       rem_days:0,
-      course_id: '',
+      // course_id: '',
       course_name: '',
       course_desc: '',
       category: '',

@@ -49,6 +49,9 @@ export class MyProfileComponent implements OnInit, OnDestroy {
 
   constructor(private profileService: ProfileService, private paymentService: PaymentService) {}
   ngOnInit(): void {
+
+    console.log('JWT Token:', localStorage.getItem('auth_token'));
+    console.log('User ID:', localStorage.getItem('user_id'));
     window.scrollTo(0, 0);
     this.loadPayments();
     this.loadProfileData();
@@ -60,10 +63,13 @@ export class MyProfileComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
   
-  loadPayments() {
-    this.paymentService.getPayments().subscribe((data) => {
-      this.payments.set(data);
-    });
+  private loadPayments() {
+    this.paymentService.getPayments()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(data => {
+        this.payments.set(data)
+        console.log('Payments loaded:', this.payments());
+      });
   }
 
   loadProfileData(): void {
@@ -72,6 +78,9 @@ export class MyProfileComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(profile => {
         this.profileData = { ...profile };
+        // If the profile data has an avatar URL returned from backend
+        this.profileImage = 'http://localhost:3000' + profile.avatar || '/assets/userImage.webp';
+
       });
   }
 
@@ -91,14 +100,13 @@ export class MyProfileComponent implements OnInit, OnDestroy {
       });
   }
 
-   get filteredTransactions() {
-    return this.payments().filter(txn => {
-      const matchesFilter = this.transactionFilter
-        ? txn.type === this.transactionFilter
-        : true;
-
-      return matchesFilter;
-    });
+   get filteredTransactions(): payment_item[] {
+    return this.payments()
+      .filter(tx =>
+        this.transactionFilter
+          ? tx.type === this.transactionFilter
+          : true
+      );
   }
 
   get occupations() { return this.dropdownOptions.occupations || []; }
@@ -109,44 +117,56 @@ export class MyProfileComponent implements OnInit, OnDestroy {
   get subjects() { return this.dropdownOptions.subjects || []; }
 
   onImageUpload(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      this.profileService.uploadProfileImage(file)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: (imageUrl) => {
-            this.profileImage = imageUrl;
-          },
-          error: (error) => {
-            console.error('Error uploading image:', error);
-            alert('Error uploading image. Please try again.');
-          }
-        });
-    }
-  }
-
-  onUpdate(): void {
-    this.isUpdating = true;
-    this.profileService.updateProfile(this.profileData)
+  const file = event.target.files[0];
+  if (file) {
+    this.profileService.uploadProfileImage(file)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (success) => {
-          this.isUpdating = false;
-          if (success) {
-            alert('Profile updated successfully!');
-          } else {
-            alert('Error updating profile. Please try again.');
-          }
+        next: (imageUrl) => {
+          this.profileImage = 'http://localhost:3000' + imageUrl;  // Set the profileImage URL
+          this.profileData.avatar = imageUrl;  // Optionally set the avatar in the profile data as well
         },
         error: (error) => {
-          console.error('Error updating profile:', error);
-          this.isUpdating = false;
-          alert('Error updating profile. Please try again.');
+          console.error('Error uploading image:', error);
+          alert('Error uploading image. Please try again.');
         }
       });
   }
+}
+
+
+  onUpdate(): void {
+  this.isUpdating = true;
+
+  // Debug: Log the profile data and JWT token being sent
+  console.log('Profile data being sent:', this.profileData);
+  console.log('JWT Token:', localStorage.getItem('auth_token'));
+  console.log('User ID:', localStorage.getItem('user_id'));
+  
+
+  this.profileService.updateProfile(this.profileData)
+    .pipe(takeUntil(this.destroy$))
+    .subscribe({
+      next: (success) => {
+        this.isUpdating = false;
+        if (success) {
+          alert('Profile updated successfully!');
+        } else {
+          alert('Error updating profile. Please try again.');
+        }
+      },
+      error: (error) => {
+        console.error('Error updating profile:', error);
+        this.isUpdating = false;
+        alert('Error updating profile. Please try again.');
+      }
+    });
+}
+
+
 
   onChangePassword(): void {
+     console.log('Password Form:', this.passwordForm);
     if (this.passwordForm.newPassword !== this.passwordForm.confirmPassword) {
       alert('New passwords do not match!');
       return;
@@ -156,6 +176,7 @@ export class MyProfileComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (success) => {
+          console.log('Password change response:', success);
           if (success) {
             alert('Password changed successfully!');
             this.passwordForm = { oldPassword: '', newPassword: '', confirmPassword: '' };

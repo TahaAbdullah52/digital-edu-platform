@@ -24,7 +24,7 @@ export class HeaderComponent {
   goToLogin() {
     if (this.isAuthenticated) {
       this.userService.logout();  // Logout if user is already logged in
-      // this.router.navigate(['/login']);
+      this.router.navigate(['/home']);
     } else {
       this.router.navigate(['/login']);  // Navigate to login if not authenticated
     }

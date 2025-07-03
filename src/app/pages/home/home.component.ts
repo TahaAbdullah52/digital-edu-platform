@@ -72,7 +72,7 @@ export class HomeComponent implements OnInit{
       if (res.success) {
         this.loadStories();
       } else {
-        console.warn('Story submission failed:', res.message);
+        alert(`Error: ${res.message}`);
       }
     });
   }

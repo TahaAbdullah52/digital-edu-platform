@@ -51,7 +51,7 @@
         <!-- Profile Image Section -->
         <div class="profile-image-section">
           <div class="profile-image">
-            <img [src]="profileImage" alt="" />
+            <img [src]="profileImage || '/assets/images/userImage.webp'" alt="" />
           </div>
           <label class="upload-btn">
             UPLOAD YOUR IMAGE
@@ -187,15 +187,15 @@
     <h2>Change Password</h2>
     <div class="form-group">
       <label>Old Password</label>
-      <input type="password" placeholder="Enter old password" />
+      <input type="password" [(ngModel)]="passwordForm.oldPassword" placeholder="Enter old password" />
     </div>
     <div class="form-group">
       <label>New Password</label>
-      <input type="password" placeholder="Enter new password" />
+      <input type="password" [(ngModel)]="passwordForm.newPassword" placeholder="Enter new password" />
     </div>
     <div class="form-group">
       <label>Confirm Password</label>
-      <input type="password" placeholder="Confirm new password" />
+      <input type="password" [(ngModel)]="passwordForm.confirmPassword" placeholder="Confirm new password" />
     </div>
     <button class="change-password-btn" (click)="onChangePassword()">
       Change Password

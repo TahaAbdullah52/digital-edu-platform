@@ -9,10 +9,12 @@ import { story_item } from '../models/story-item';
 })
 export class StoryService {
 
+  private BASE_URL= 'http://localhost:3000/api';
+
   constructor(private http: HttpClient) { }
 
    getStories(): Observable<story_item[]> {
-    return this.http.get<story_item[]>('https://your-api-url.com/stories?status=accepted').pipe(
+    return this.http.get<story_item[]>(`${this.BASE_URL}/stories?status=accepted`).pipe(
       catchError((err) => {
         console.warn('API not ready or failed. Falling back to mock data.');
         return of(MOCK_STORIES.filter(s => s.status === 'accepted'));
@@ -21,19 +23,15 @@ export class StoryService {
   }
 
   submitStory(story: story_item): Observable<{ success: boolean; message: string }> {
-    return this.http.post<{ success: boolean; message: string }>('https://your-api-url.com/stories', story).pipe(
-      catchError((err) => {
-        console.warn('Submit failed, falling back to mock behavior.');
-        const stored = localStorage.getItem('mockStories');
-        const mockStories = stored ? JSON.parse(stored) : [];
-
-        mockStories.unshift(story);
-        localStorage.setItem('mockStories', JSON.stringify(mockStories));
-        return of({
-          success: true,
-          message: 'Story submitted successfully (offline mode)'
-        });
-      })
-    );
-  }
+  return this.http.post<{ success: boolean; message: string }>(`${this.BASE_URL}/stories/create`, story).pipe(
+    catchError((err) => {
+      const errorMessage =
+        err?.error?.message || 'Unknown error occurred during story submission';
+      return of({
+        success: false,
+        message: errorMessage
+      });
+    })
+  );
+}
 }

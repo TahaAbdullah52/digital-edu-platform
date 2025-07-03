@@ -11,12 +11,14 @@ export class UserManagementService {
   private deletedUserIds = new Set<number>(); 
   private usingMockData = false; 
 
+  private baseUrl = 'http://localhost:3000/api';
+
   constructor(private http: HttpClient) { }
 
   getUsers(filter: string = 'all'): Observable<UserManagementApiResponse> {
     const params = { filter };
     
-    return this.http.get<UserManagementApiResponse>('https://your-api-url.com/api/admin/users', { params }).pipe(
+    return this.http.get<UserManagementApiResponse>(`${this.baseUrl}/admin/users`, { params }).pipe(
       catchError(error => {
         console.warn('Failed to load users from API:', error.message);
         this.usingMockData = true;
@@ -32,7 +34,7 @@ export class UserManagementService {
   }
 
   deleteUser(userId: number): Observable<{ success: boolean }> {
-    return this.http.delete<{ success: boolean }>(`https://your-api-url.com/api/admin/users/${userId}`).pipe(
+    return this.http.delete<{ success: boolean }>(`${this.baseUrl}/admin/users/${userId}`).pipe(
       catchError(error => {
         console.error('Failed to delete user:', error);
         

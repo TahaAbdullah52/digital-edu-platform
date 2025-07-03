@@ -6,7 +6,10 @@
   <div class="payment-list">
     <div *ngFor="let payment of paymentRequests" class="payment-item">
       <div class="user-info">
-        <div class="avatar">{{ payment.user_avatar }}</div>
+        <div class="avatar">
+          <img [src]="'http://localhost:3000'+payment.user_avatar" alt="User Avatar" class="avatar-img" />
+
+        </div>
         <div class="user-details">
           <h3 class="user-name">{{ payment.user_name }}</h3>
           <p class="transaction-id">{{ payment.trxId }}</p>

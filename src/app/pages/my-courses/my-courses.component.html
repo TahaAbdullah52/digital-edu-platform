@@ -1,17 +1,17 @@
 <div class="my-courses-div">
   <h1 class="title">My Courses</h1>
   <div class="videos-part">
-    <ng-container *ngIf="filteredCourses.length > 0; else noEnrolledCourses">
+    <ng-container *ngIf="myCourses.length > 0; else noEnrolled">
       <div class="outer-div">
-        @for (item of filteredCourses; track item.id) {
-        <div (click)="goToVideosList(item.playlistId)" class="my-video">
+        <div *ngFor="let item of myCourses; trackBy: trackById"
+           class="my-video"
+           (click)="goToVideosList(item.playlistId)">
           <app-my-course [video]="item"></app-my-course>
         </div>
-        }
       </div>
     </ng-container>
 
-    <ng-template #noEnrolledCourses>
+    <ng-template #noEnrolled>
       <div class="no-courses">
         <p>No courses to view.</p>
       </div>
@@ -23,14 +23,13 @@
   <h1 class="title">Recommended Courses</h1>
   <div class="recm-videos-part">
     <ng-container
-      *ngIf="recommendedCourses().length > 0; else noRecommendedCourses"
+      *ngIf="recommendedCourses.length > 0; else noRecommendedCourses"
     >
       <div class="recm-outer-div">
-        @for (item of recommendedCourses(); track item.id) {
-        <div (click)="goToSingleCourse(item.id)">
+        <div *ngFor="let item of recommendedCourses; trackBy: trackById"
+           (click)="goToSingleCourse(item.id)">
           <app-my-course [video]="item"></app-my-course>
         </div>
-        }
       </div>
     </ng-container>
 

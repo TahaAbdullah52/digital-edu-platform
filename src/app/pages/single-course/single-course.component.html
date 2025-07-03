@@ -9,7 +9,9 @@
       }}</app-prim-button>
       <h2>
         {{
-          course.course_fee ? (course.course_fee | currency : "BDT - ") : "Free"
+          course.course_fee > 0
+          ? (course.course_fee | currency : "BDT - " : "symbol")
+          : "Free"
         }}
       </h2>
     </div>

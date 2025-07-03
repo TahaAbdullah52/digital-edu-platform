@@ -9,12 +9,12 @@ import { MOCK_ADMIN_COURSES } from '../mock/course-mock';
 })
 export class CourseManagementService {
 
-  private apiUrl = 'https://api.yourapp.com/admin/courses';
-  
+  private apiUrl = 'http://localhost:3000/api';
+
   constructor(private http: HttpClient) { }
 
   getCourses(): Observable<course_item[]> {
-    return this.http.get<course_item[]>(this.apiUrl)
+    return this.http.get<course_item[]>(`${this.apiUrl}/courses`)
       .pipe(
         catchError((error) => {
           console.warn('API call failed, using mock data:', error.message);
@@ -24,7 +24,7 @@ export class CourseManagementService {
   }
 
   createCourse(course: Omit<course_item, 'id'>): Observable<course_item> {
-    return this.http.post<course_item>(this.apiUrl, course)
+    return this.http.post<course_item>(`${this.apiUrl}/courses`, course)
       .pipe(
         catchError((error) => {
           console.warn('Create course API call failed:', error.message);
@@ -38,7 +38,7 @@ export class CourseManagementService {
   }
 
   updateCourse(id: number, course: Partial<course_item>): Observable<course_item> {
-    return this.http.put<course_item>(`${this.apiUrl}/${id}`, course)
+    return this.http.put<course_item>(`${this.apiUrl}/courses/${id}`, course)
       .pipe(
         catchError((error) => {
           console.warn('Update course API call failed:', error.message);
@@ -54,7 +54,7 @@ export class CourseManagementService {
   }
 
   deleteCourse(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`)
+    return this.http.delete(`${this.apiUrl}/courses/${id}`)
       .pipe(
         catchError((error) => {
           console.warn('Delete course API call failed:', error.message);
@@ -64,7 +64,7 @@ export class CourseManagementService {
   }
 
   getCourseById(id: number): Observable<course_item> {
-    return this.http.get<course_item>(`${this.apiUrl}/${id}`).pipe(
+    return this.http.get<course_item>(`${this.apiUrl}/course/${id}`).pipe(
       catchError((error) => {
         console.warn(`Fetch course ${id} failed:`, error.message);
         const fallback = MOCK_ADMIN_COURSES.find(c => c.id === id) || MOCK_ADMIN_COURSES[0];

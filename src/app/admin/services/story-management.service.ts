@@ -9,12 +9,12 @@ import { MOCK_STORIES } from '../../mock-data/mock-stories';
 })
 export class StoryManagementService {
   
-  private apiUrl = 'https://api.yourapp.com/admin/stories';
+  private baseUrl = 'http://localhost:3000/api';
   
   constructor(private http: HttpClient) {}
 
   getAllStories(): Observable<story_item[]> {
-    return this.http.get<story_item[]>(this.apiUrl).pipe(
+    return this.http.get<story_item[]>(`${this.baseUrl}/stories/admin`).pipe(
       catchError((error) => {
         console.warn('API call failed, using fallback:', error.message);
         return of(this.getMergedStories());
@@ -75,7 +75,7 @@ export class StoryManagementService {
   }
 
   acceptStory(id: number): Observable<{ success: boolean; message: string }> {
-    return this.http.put<{ success: boolean; message: string }>(`${this.apiUrl}/${id}/accept`, {})
+    return this.http.put<{ success: boolean; message: string }>(`${this.baseUrl}/stories/admin/${id}/accept`, {})
       .pipe(
         catchError((error) => {
           console.warn('Accept story API call failed:', error.message);
@@ -95,7 +95,7 @@ export class StoryManagementService {
   }
 
   rejectStory(id: number): Observable<{ success: boolean; message: string }> {
-    return this.http.put<{ success: boolean; message: string }>(`${this.apiUrl}/${id}/reject`, {})
+    return this.http.put<{ success: boolean; message: string }>(`${this.baseUrl}stories/admin/${id}/reject`, {})
       .pipe(
         catchError((error) => {
           console.warn('Reject story API call failed:', error.message);
@@ -115,7 +115,7 @@ export class StoryManagementService {
   }
 
   deleteStory(id: number): Observable<{ success: boolean; message: string }> {
-    return this.http.delete<{ success: boolean; message: string }>(`${this.apiUrl}/${id}`)
+    return this.http.delete<{ success: boolean; message: string }>(`${this.baseUrl}stories/admin/${id}`)
       .pipe(
         catchError((error) => {
           console.warn('Delete story API call failed:', error.message);

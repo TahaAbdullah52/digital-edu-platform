@@ -26,9 +26,10 @@
 }
 
 .outer-div {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 30px;
+  align-items: start;
 }
 .my-video {
   width: 554px;
@@ -61,6 +62,8 @@
   margin-top: 25px;
 }
 .recm-outer-div {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 30px;
+  align-items: start;
 }

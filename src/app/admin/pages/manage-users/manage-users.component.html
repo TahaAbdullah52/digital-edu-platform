@@ -18,8 +18,9 @@
         (click)="selectUser(user)"
       >
         <div class="user-avatar">
-          {{ user.avatar }}
+          <img [src]="'http://localhost:3000'+user.avatar" alt="Avatar" class="avatar-img" />
         </div>
+
         <div class="user-info">
           <div class="user-header">
             <h3 class="user-name">{{ user.name }}</h3>
@@ -62,7 +63,7 @@
         <div class="details-section">
           <div class="profile-header">
             <div class="profile-avatar large">
-              {{ selectedUser()?.avatar }}
+              <img [src]="'http://localhost:3000'+selectedUser()?.avatar" alt="Avatar" class="avatar-img large" />
             </div>
             <div class="profile-info">
               <h2>{{ selectedUser()?.name }}</h2>

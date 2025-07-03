@@ -1,4 +1,4 @@
-<div class="inner-div" [routerLink]="['/single-course', course().id]">
+<div class="inner-div" [routerLink]="['/single-course', course().id]" (click)="logCourseId(course().id)">
   <div class="thumbnail">
     <img [src]="course().img_url" alt="course Thumbnail" />
   </div>

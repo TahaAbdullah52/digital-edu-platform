@@ -1,7 +1,7 @@
-<div class="outer-div">
+<div class="outer-div" *ngIf="course">
   <h1>Complete Payment</h1>
 
-  <div class="inner-div-1" *ngIf="course">
+  <div class="inner-div-1">
     <div class="inner-div">
       <div class="course-details">
         <img [src]="course.img_url" [alt]="course.course_name" />
@@ -15,7 +15,7 @@
       <h2>Payment Method</h2>
       <div class="payment-methods">
         <label>
-          <input type="radio" name="paymentMethod" value="bkash" />
+          <input type="radio" name="paymentMethod" value="bkash" [(ngModel)]="paymentMethod" />
           <img
             class="payment-logo"
             src="assets/images/bkash-payment.png"
@@ -23,11 +23,11 @@
           />
         </label>
         <label>
-          <input type="radio" name="paymentMethod" value="nagad" />
+          <input type="radio" name="paymentMethod" value="nagad"  [(ngModel)]="paymentMethod" />
           <img class="payment-logo" src="assets/images/nagad.png" alt="" />
         </label>
         <label>
-          <input type="radio" name="paymentMethod" value="rocket" />
+          <input type="radio" name="paymentMethod" value="rocket"  [(ngModel)]="paymentMethod" />
           <img class="payment-logo" src="assets/images/rocket.png" alt="" />
         </label>
       </div>
@@ -39,9 +39,9 @@
   </p>
   <div class="transaction">
     <label for="trxid">Transaction ID</label>
-    <input id="trxid" type="text" placeholder="e.g., CEA12345678" />
+    <input id="trxid" type="text" placeholder="e.g., CEA12345678"  [(ngModel)]="trxId"/>
   </div>
   <div class="Complete-pmnt-Btn">
-    <app-prim-button>Complete Payment</app-prim-button>
+    <app-prim-button (click)="completePayment()">Complete Payment</app-prim-button>
   </div>
 </div>

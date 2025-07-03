@@ -221,6 +221,17 @@
   gap: 0.5rem;
 }
 
+.error-message {
+  color: #d9534f;
+  background-color: #f9d6d5;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #e6a1a1;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 .action-btn {
   display: flex;
   align-items: center;

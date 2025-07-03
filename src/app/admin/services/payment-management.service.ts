@@ -9,10 +9,12 @@ import { PaymentApiResponse } from '../../models/payment';
 })
 export class PaymentManagementService {
 
+  private baseUrl = 'http://localhost:3000/api';
+
   constructor(private http: HttpClient) { }
 
   getPaymentRequests(): Observable<PaymentApiResponse[]> {
-    return this.http.get<PaymentApiResponse[]>('https://api.yourapp.com/admin/payments')
+    return this.http.get<PaymentApiResponse[]>(`${this.baseUrl}/admin/payments`)
       .pipe(
         catchError((error) => {
           console.warn('API call failed, using mock data:', error.message);
@@ -22,7 +24,7 @@ export class PaymentManagementService {
   }
 
   acceptPayment(paymentId: number): Observable<any> {
-    return this.http.post(`${'https://api.yourapp.com/admin/payments'}/${paymentId}/accept`, {})
+    return this.http.post(`${this.baseUrl}/admin/payments/${paymentId}/accept`, {})
       .pipe(
         catchError((error) => {
           console.warn('Accept payment API call failed:', error.message);
@@ -33,7 +35,7 @@ export class PaymentManagementService {
   }
 
   rejectPayment(paymentId: number): Observable<any> {
-    return this.http.post(`${'https://api.yourapp.com/admin/payments'}/${paymentId}/reject`, {})
+    return this.http.post(`${this.baseUrl}/admin/payments/${paymentId}/reject`, {})
       .pipe(
         catchError((error) => {
           console.warn('Reject payment API call failed:', error.message);

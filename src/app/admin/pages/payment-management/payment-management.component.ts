@@ -15,6 +15,7 @@ export class PaymentManagementComponent implements OnInit {
   paymentRequests: PaymentApiResponse[] = [];
   loading = false;
   error: string | null = null;
+  
 
   constructor(private paymentManagementService: PaymentManagementService){}
 
@@ -30,6 +31,7 @@ export class PaymentManagementComponent implements OnInit {
       next: (payments) => {
         this.paymentRequests = payments;
         this.loading = false;
+        console.log('Fetched payment requests:', this.paymentRequests);
       },
       error: (error) => {
         this.error = 'Failed to load payment requests';

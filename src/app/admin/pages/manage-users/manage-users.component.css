@@ -155,6 +155,14 @@
       background: #eff6ff;
     }
 
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+
     .user-avatar {
       width: 3rem;
       height: 3rem;
@@ -331,6 +339,12 @@
     align-items: flex-start;
     gap: 1rem;
     margin-bottom: 1rem;
+   
+
+    .avatar-img.large {
+      width: 5rem;
+      height: 5rem;
+    }
 
     .profile-avatar {
       width: 4rem;

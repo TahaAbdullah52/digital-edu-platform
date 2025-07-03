@@ -13,12 +13,14 @@ import { TaskCounts, TaskCountsApiResponse } from '../models/task-management';
 })
 export class DashboardService {
 
+  private baseUrl = 'http://localhost:3000/api';
+
   private readonly statsConfig: StatCardConfig[] = STAT_CARDS_CONFIG;
 
   constructor(private http: HttpClient) { }
   
    getStatItems(): Observable<StatCard[]> {
-    return this.http.get<StatsApiResponse>('https://your-api-url.com/api/dashboard/stats').pipe(
+    return this.http.get<StatsApiResponse>(`${this.baseUrl}/stats`).pipe(
       map(apiResponse => this.mapApiResponseToStatCards(apiResponse)),
   
       catchError(error => {
@@ -30,7 +32,7 @@ export class DashboardService {
   }
 
   getTaskCounts(): Observable<TaskCounts> {
-    return this.http.get<TaskCountsApiResponse>('https://your-api-url.com/api/admin/task-counts').pipe(
+    return this.http.get<TaskCountsApiResponse>(`${this.baseUrl}/task-counts`).pipe(
       map(response => ({
         paymentTasks: response.pending.payments,
         storyTasks: response.pending.stories,
@@ -45,7 +47,7 @@ export class DashboardService {
   }
   
   getCoursesCounts(): Observable<CourseCountsApiResponse> {
-    return this.http.get<CourseCountsApiResponse>('https://your-api-url.com/api/dashboard/courses-count').pipe(
+    return this.http.get<CourseCountsApiResponse>(`${this.baseUrl}/courses-count`).pipe(
       catchError(error => {
         console.warn('Failed to load course counts from API:', error.message);
         return of(MOCK_COURSE_COUNTS);
@@ -54,7 +56,7 @@ export class DashboardService {
   }
   
   getTopCourses(): Observable<TopCourse[]> {
-   return this.http.get<TopCoursesApiResponse>('https://your-api-url.com/api/dashboard/top-courses').pipe(
+   return this.http.get<TopCoursesApiResponse>(`${this.baseUrl}/top-courses`).pipe(
      map(response => response.topCourses),
      catchError(error => {
        console.warn('Failed to load top courses from API:', error.message);
