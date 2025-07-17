@@ -17,4 +17,8 @@ export interface PaymentApiResponse {
   user_name: string;
   user_avatar: string;
   amount: number;
+  course_name: string;
+  date: string;
+  type: string;
+
 }

@@ -33,7 +33,8 @@ export class DashboardService {
 
   getTaskCounts(): Observable<TaskCounts> {
     return this.http.get<TaskCountsApiResponse>(`${this.baseUrl}/task-counts`).pipe(
-      map(response => ({
+      map(response => (
+        console.log('Task counts response:', response),{
         paymentTasks: response.pending.payments,
         storyTasks: response.pending.stories,
         completedPaymentTasks: response.completed.payments,

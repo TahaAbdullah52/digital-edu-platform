@@ -32,5 +32,9 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/login/login.component').then(m => m.LoginComponent)
   },
-  { path: 'admin-dash', component: AdminDashboardComponent },
+  { 
+    path: 'admin-dash', 
+    component: AdminDashboardComponent,
+    canActivate: [userGuard]
+  },
 ];

@@ -256,8 +256,13 @@ const getAllUsers = async (req, res) => {
       user.coursesEnrolled = courseRows.length;
       user.totalSpent = courseRows.reduce((sum, row) => sum + Number(row.course_fee || 0), 0); // Ensure numeric summation
     }
+    const mappedUsers = users.map(user => ({
+      ...user,
+      id: user.userId,
+      userId: undefined // Or remove if unnecessary
+    }));
 
-    res.status(200).json({ users });
+    res.status(200).json({ users: mappedUsers });
   } catch (error) {
     console.error('Error fetching users with stats:', error);
     res.status(500).json({ message: 'Failed to load users' });
@@ -267,6 +272,7 @@ const getAllUsers = async (req, res) => {
 // Delete a user by ID
 const deleteUser = async (req, res) => {
   const userId = req.params.id;
+  console.log('Deleting user with ID:', userId);
 
   try {
     const [result] = await db.execute('DELETE FROM users WHERE userId = ?', [userId]);

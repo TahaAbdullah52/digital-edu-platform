@@ -15,6 +15,7 @@ export class PaymentManagementComponent implements OnInit {
   paymentRequests: PaymentApiResponse[] = [];
   loading = false;
   error: string | null = null;
+  selectedPayment: any = null;
   
 
   constructor(private paymentManagementService: PaymentManagementService){}
@@ -39,6 +40,19 @@ export class PaymentManagementComponent implements OnInit {
         console.error('Error loading payments:', error);
       }
     });
+  }
+
+  selectPayment(payment: PaymentApiResponse): void {
+    if (this.selectedPayment?.id === payment.id) {
+      this.selectedPayment = null;
+    } else {
+      console.log('Selected payment:', payment);
+      this.selectedPayment = payment;
+    }
+  }
+
+  closePaymentDetails(): void {
+    this.selectedPayment = null;
   }
 
   acceptPayment(paymentId: number): void {

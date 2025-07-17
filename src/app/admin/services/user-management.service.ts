@@ -29,11 +29,12 @@ export class UserManagementService {
         return of({
           users: filteredUsers
         });
-      })
+      }),
     );
   }
 
   deleteUser(userId: number): Observable<{ success: boolean }> {
+    console.log(`Deleting user with ID: ${userId}`);
     return this.http.delete<{ success: boolean }>(`${this.baseUrl}/admin/users/${userId}`).pipe(
       catchError(error => {
         console.error('Failed to delete user:', error);

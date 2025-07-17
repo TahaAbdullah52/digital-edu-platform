@@ -27,6 +27,7 @@ export class ManageUsersComponent implements OnInit {
     this.loading.set(true);
     this.userManagementService.getUsers(this.filterStatus()).subscribe({
       next: (response) => {
+        console.log('Fetched users:', response.users);
         this.users.set(response.users);
         this.loading.set(false);
       },
@@ -38,7 +39,9 @@ export class ManageUsersComponent implements OnInit {
   }
 
   selectUser(user: UserManagementData): void {
+    console.log('Selected user:', user);
     this.selectedUser.set(user);
+    // console.log('Selected user details:', this.selectedUser());
   }
 
   closeUserDetails(): void {
@@ -47,6 +50,8 @@ export class ManageUsersComponent implements OnInit {
 
   deleteUser(user: UserManagementData): void {
     if (confirm(`Are you sure you want to delete ${user.name}?`)) {
+      console.log('Deleting user:', user);
+      // console.log(`Deleting user with ID: ${user.id}`);
       this.userManagementService.deleteUser(user.id).subscribe({
         next: (result) => {
           if (result.success) {

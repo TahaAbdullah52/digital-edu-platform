@@ -69,7 +69,8 @@ export class CourseManagementComponent implements OnInit{
       
       const matchesPremium =
       this.premiumFilter === '' ||
-      course.isPremium.toString() === this.premiumFilter;
+      (this.premiumFilter === 'true' && course.isPremium) ||
+      (this.premiumFilter === 'false' && !course.isPremium);
       
       return matchesCategory && matchesPremium;
     });

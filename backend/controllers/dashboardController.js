@@ -79,8 +79,8 @@ const getTaskCounts = async (req, res) => {
 
     const [[completed]] = await db.execute(`
       SELECT 
-        (SELECT COUNT(*) FROM payments WHERE status = 'Confirmed') AS payments,
-        (SELECT COUNT(*) FROM stories WHERE status = 'accepted') AS stories
+        (SELECT COUNT(*) FROM payments WHERE status IN ('Completed', 'Rejected')) AS payments,
+        (SELECT COUNT(*) FROM stories WHERE status IN ('accepted', 'rejected')) AS stories
     `);
 
     res.status(200).json({ pending, completed });
@@ -89,6 +89,7 @@ const getTaskCounts = async (req, res) => {
     res.status(500).json({ message: 'Failed to load task data' });
   }
 };
+
 
 module.exports = {
   initDB,

@@ -102,7 +102,7 @@ export class AdminDashboardComponent implements AfterViewInit, OnDestroy {
 
 
   getTotalTasks(): number {
-    return this.taskCounts().paymentTasks + this.taskCounts().storyTasks;
+    return this.taskCounts().paymentTasks + this.taskCounts().storyTasks + this.getCompletedTasks();
   }
 
   getCompletedTasks(): number {

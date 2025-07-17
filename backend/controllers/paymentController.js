@@ -10,6 +10,7 @@ const getPayments = async (req, res) => {
       SELECT
         p.id,
         p.trxId,
+        p.date,
         p.type,
         p.status,
         c.course_fee   AS amount,

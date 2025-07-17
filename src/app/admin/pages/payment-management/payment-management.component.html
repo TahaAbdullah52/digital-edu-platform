@@ -3,33 +3,95 @@
     <p class="total-count">Total: {{ paymentRequests.length }}</p>
   </div>
 
-  <div class="payment-list">
-    <div *ngFor="let payment of paymentRequests" class="payment-item">
-      <div class="user-info">
-        <div class="avatar">
-          <img [src]="'http://localhost:3000'+payment.user_avatar" alt="User Avatar" class="avatar-img" />
+  <div class="payment-content" [class.has-selected]="selectedPayment">
 
+    <div class="payment-list">
+      <div
+        *ngFor="let payment of paymentRequests"
+        class="payment-item"
+        [class.selected]="selectedPayment?.id === payment.id"
+        (click)="selectPayment(payment)"
+      >
+        <div class="user-info">
+          <div class="avatar">
+            <img [src]="'http://localhost:3000'+payment.user_avatar" alt="User Avatar" class="avatar-img" />
+          </div>
+          <div class="user-details">
+            <h3 class="user-name">{{ payment.user_name }}</h3>
+            <p class="transaction-id">{{ payment.trxId }}</p>
+            <p class="amount" *ngIf="payment.amount">৳ {{ payment.amount }}</p>
+          </div>
         </div>
-        <div class="user-details">
-          <h3 class="user-name">{{ payment.user_name }}</h3>
-          <p class="transaction-id">{{ payment.trxId }}</p>
-          <p class="amount" *ngIf="payment.amount">৳ {{ payment.amount }}</p>
+
+        <div class="action-buttons">
+          <button class="btn btn-accept" (click)="acceptPayment(payment.id)">
+            Accept
+          </button>
+          <button class="btn btn-reject" (click)="rejectPayment(payment.id)">
+            Reject
+          </button>
         </div>
       </div>
 
-      <div class="action-buttons">
-        <button class="btn btn-accept" (click)="acceptPayment(payment.id)">
-          Accept
-        </button>
-        <button class="btn btn-reject" (click)="rejectPayment(payment.id)">
-          Reject
-        </button>
+      <div *ngIf="paymentRequests.length === 0" class="no-users">
+        <span class="material-icons">person_off</span>
+        <p>No users found matching your criteria</p>
       </div>
     </div>
 
-    <div *ngIf="paymentRequests.length === 0" class="no-users">
-      <span class="material-icons">person_off</span>
-      <p>No users found matching your criteria</p>
+    <!-- Payment Details Panel -->
+    <div *ngIf="selectedPayment" class="payment-details">
+      <div class="details-header">
+        <h3>Payment Details</h3>
+        <button class="close-btn" (click)="closePaymentDetails()">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+
+      <div class="details-content">
+        <div class="profile-header">
+          <div class="profile-avatar large">
+            <img [src]="'http://localhost:3000' + selectedPayment.user_avatar" class="avatar-img large" />
+          </div>
+          <div class="profile-info">
+            <h2>{{ selectedPayment.user_name }}</h2>
+            <p class="profile-email">Transaction ID: {{ selectedPayment.trxId }}</p>
+            <p class="profile-email">৳ {{ selectedPayment.amount }}</p>
+          </div>
+        </div>
+
+        <div class="details-section">
+          <h4>Payment Information</h4>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="material-icons">book</span>
+              <div>
+                <label>Course</label>
+                <p>{{ selectedPayment.course_name }}</p>
+              </div>
+            </div>
+            <div class="info-item">
+              <span class="material-icons">calendar_today</span>
+              <div>
+                <label>Date</label>
+                <p>{{ selectedPayment.date | date }}</p>
+              </div>
+            </div>
+            <div class="info-item">
+              <span class="material-icons">info</span>
+              <div>
+                <label>Status</label>
+                <p>{{ selectedPayment.status }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="details-actions">
+          <button class="btn btn-accept" (click)="acceptPayment(selectedPayment.id)">Accept</button>
+          <button class="btn btn-reject" (click)="rejectPayment(selectedPayment.id)">Reject</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
