@@ -135,7 +135,7 @@
         </div>
 
         <!-- Pricing Information -->
-        <div class="details-section" *ngIf="selectedCourse.isPremium">
+        <div class="details-section">
           <h4>Pricing</h4>
           <div class="pricing-card">
             <span class="BDT-icon">৳</span>
@@ -361,7 +361,7 @@
 
             <button
               type="button"
-              class="btn btn-success"
+              class="btn btn-primary btn-quiz"
               (click)="showQuizCreationForm()"
               [disabled]="!isCourseSaved"
               *ngIf="!isEditMode || isCourseSaved"

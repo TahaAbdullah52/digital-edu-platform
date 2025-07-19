@@ -4,7 +4,6 @@ const initDB = async (connection) => {
   db = connection;
 };
 
-
 const checkEnrollment = async (req, res) => {
   const { userId, courseId } = req.params;
 
@@ -23,7 +22,6 @@ const checkEnrollment = async (req, res) => {
     res.status(500).json({ message: 'Error checking enrollment' });
   }
 };
-
 
 const enrollInCourse = async (req, res) => {
   const { userId, courseId } = req.body;
@@ -64,7 +62,6 @@ const enrollInCourse = async (req, res) => {
       [courseId]
     );
 
-
     // Update the isEnrolled status for the course
     res.status(201).json({ message: 'User enrolled successfully' });
   } catch (error) {
@@ -72,7 +69,6 @@ const enrollInCourse = async (req, res) => {
     res.status(500).json({ message: 'Error enrolling in course' });
   }
 };
-
 
 const getUserCourses = async (req, res) => {
   const userId = Number(req.params.userId);
@@ -86,25 +82,35 @@ const getUserCourses = async (req, res) => {
       WHERE uc.user_id = ?
     `, [userId]);
 
+<<<<<<< HEAD
     // parse `technologies` JSON field
+=======
+    // parse technologies JSON field
+>>>>>>> df28128384b40bc15feafc49778b409ce9ec62f0
     const courses = rows.map(c => ({
       ...c,
       technologies: c.technologies ? JSON.parse(c.technologies) : []
     }));
 
+<<<<<<< HEAD
     console.log(`User ${userId} courses:`, courses);
+=======
+>>>>>>> df28128384b40bc15feafc49778b409ce9ec62f0
     res.json(courses);
 
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Could not fetch user courses' });
-  }
+    res.status(500).json({ message: 'Could not fetch user courses' });
+  }
 };
 
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> df28128384b40bc15feafc49778b409ce9ec62f0
 module.exports = {
   initDB,
   checkEnrollment,

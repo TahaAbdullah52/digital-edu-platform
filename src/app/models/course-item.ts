@@ -4,7 +4,6 @@ export interface course_item{
     batch_nO: number;
     no_of_seat: number;
     rem_days: number;
-    // course_id: string;
     course_name: string;
     course_desc: string;
     no_of_class: number;

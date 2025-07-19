@@ -46,10 +46,7 @@ export class AdminDashboardComponent implements AfterViewInit, OnDestroy {
   }
 
   logout(): void {
-  // Clear any stored session/auth data if needed
-    localStorage.clear(); // or sessionStorage.clear()
-
-    // Redirect to login
+    localStorage.clear(); 
     this.router.navigate(['/login']);
   }
 
@@ -70,10 +67,10 @@ export class AdminDashboardComponent implements AfterViewInit, OnDestroy {
     this.dashboardService.getCoursesCounts().subscribe((data) => {
       this.courseCounts.set(data);
     });
-    }
+  }
     
   loadTaskData(): void {
-      this.dashboardService.getTaskCounts().subscribe((data) => {
+    this.dashboardService.getTaskCounts().subscribe((data) => {
       this.taskCounts.set(data);
     });
   }
@@ -99,7 +96,6 @@ export class AdminDashboardComponent implements AfterViewInit, OnDestroy {
     const maxEnrollments = Math.max(...this.topCourses().map(c => c.enrollments));
     return (enrollments / maxEnrollments) * 100;
   }
-
 
   getTotalTasks(): number {
     return this.taskCounts().paymentTasks + this.taskCounts().storyTasks + this.getCompletedTasks();
@@ -138,42 +134,69 @@ export class AdminDashboardComponent implements AfterViewInit, OnDestroy {
 
     const canvas = this.pieChart.nativeElement;
     const ctx = canvas.getContext('2d');
-    
+
     if (!ctx) {
       console.warn('Canvas context not available');
       return;
     }
-    
-    // Set canvas size explicitly
+
     canvas.width = 200;
     canvas.height = 200;
-    
-    const total = this.courseCounts().freeCoursesCount + this.courseCounts().premiumCoursesCount;
-    const freePercentage = (this.courseCounts().freeCoursesCount / total) * 2 * Math.PI;
-    const premiumPercentage = (this.courseCounts().premiumCoursesCount / total) * 2 * Math.PI;
-    
+
+    const { freeCoursesCount, premiumCoursesCount } = this.courseCounts();
+    const total = freeCoursesCount + premiumCoursesCount;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (total === 0) {
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const radius = 80;
+      
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+      ctx.fillStyle = '#e0e0e0';
+      ctx.fill();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      return;
+    }
+
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
     const radius = 80;
-    
-    // Clear canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // Draw free courses slice
-    ctx.beginPath();
-    ctx.moveTo(centerX, centerY);
-    ctx.arc(centerX, centerY, radius, 0, freePercentage);
-    ctx.fillStyle = '#bbdefb';
-    ctx.fill();
-    
+
+    let currentAngle = -Math.PI / 2;
+
+    if (freeCoursesCount > 0) {
+      const freeAngle = (freeCoursesCount / total) * 2 * Math.PI;
+      
+      ctx.beginPath();
+      ctx.moveTo(centerX, centerY);
+      ctx.arc(centerX, centerY, radius, currentAngle, currentAngle + freeAngle);
+      ctx.lineTo(centerX, centerY);
+      ctx.closePath();
+      ctx.fillStyle = '#bbdefb';
+      ctx.fill();
+      
+      currentAngle += freeAngle;
+    }
+
     // Draw premium courses slice
-    ctx.beginPath();
-    ctx.moveTo(centerX, centerY);
-    ctx.arc(centerX, centerY, radius, freePercentage, freePercentage + premiumPercentage);
-    ctx.fillStyle = '#42a5f5';
-    ctx.fill();
-    
-    // Add stroke for better visibility
+    if (premiumCoursesCount > 0) {
+      const premiumAngle = ((total-freeCoursesCount)/ total) * 2 * Math.PI;
+      
+      ctx.beginPath();
+      ctx.moveTo(centerX, centerY);
+      ctx.arc(centerX, centerY, radius, currentAngle, currentAngle + premiumAngle);
+      ctx.lineTo(centerX, centerY);
+      ctx.closePath();
+      ctx.fillStyle = '#42a5f5';
+      ctx.fill();
+    }
+
+    // Add border around the entire chart
     ctx.beginPath();
     ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
     ctx.strokeStyle = '#ffffff';
@@ -181,15 +204,27 @@ export class AdminDashboardComponent implements AfterViewInit, OnDestroy {
     ctx.stroke();
   }
 
-  getFreePercentage(): number {
-    const total = this.courseCounts().freeCoursesCount + this.courseCounts().premiumCoursesCount;
-    return Math.round((this.courseCounts().freeCoursesCount / total) * 100);
-  }
+getFreePercentage(): number {
+  const courseData = this.courseCounts();
+  
+  const freeCount = Number(courseData.freeCoursesCount);
+  const premiumCount = Number(courseData.premiumCoursesCount);
+  const total = freeCount + premiumCount;
+  
+  if (total === 0) return 0; 
+  return Math.round((freeCount / total) * 100);
+}
 
-  getPremiumPercentage(): number {
-    const total = this.courseCounts().freeCoursesCount + this.courseCounts().premiumCoursesCount;
-    return Math.round((this.courseCounts().premiumCoursesCount / total) * 100);
-  }
+getPremiumPercentage(): number {
+  const courseData = this.courseCounts();
+  
+  const freeCount = Number(courseData.freeCoursesCount);
+  const premiumCount = Number(courseData.premiumCoursesCount);
+  const total = freeCount + premiumCount;
+  
+  if (total === 0) return 0;
+  return Math.round((premiumCount / total) * 100);
+}
 
   getPageTitle(): string {
     const pageTitles: { [key: string]: string } = {
