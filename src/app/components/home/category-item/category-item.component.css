@@ -1,39 +1,62 @@
-.inner-div{
-    border: 1px solid gray;
-    background-color: #f3f3f6;
-    border-radius: 4%;
-    display: flex;
-    height: 110px;
-    margin: 30px 20px 0 20px ;
-    gap: 25px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+.inner-div {
+  border: 1px solid gray;
+  background-color: #f3f3f6;
+  border-radius: 4%;
+  display: flex;
+  height: 110px;
+  margin: 30px 20px 0 20px;
+  gap: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
-.img-div{
-    width: 30px;
-    height: 40px;
-    border: 1px solid white;
-    background-color: white;
-    border-radius: 50%;
-    margin: 20px 0 0 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.img-div {
+  width: 30px;
+  height: 40px;
+  border: 1px solid white;
+  background-color: white;
+  border-radius: 50%;
+  margin: 20px 0 0 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.desc{
-    display:flex;
-    flex-direction: column;
+.desc {
+  display: flex;
+  flex-direction: column;
 }
-.desc h3{
-    height: 5px;
+.desc h3 {
+  height: 5px;
 }
-.inner-div:hover{
-    background-color: #eff2ff;
-    .img-div{
-        border: 1px solid #eff2ff;
-    }
+.inner-div:hover {
+  background-color: #eff2ff;
+  .img-div {
+    border: 1px solid #eff2ff;
+  }
 }
 .inner-div.active {
-    background-color: #e0e4ff; 
-    transform: scale(1.08);
+  background-color: #e0e4ff;
+  transform: scale(1.08);
+}
+@media (max-width: 1024px) {
+  .inner-div {
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    padding: 15px;
+    margin: 20px 10px 0 10px;
+    gap: 15px;
+  }
+
+  .img-div {
+    width: 50px;
+    height: 50px;
+    margin: 0;
+  }
+
+  .desc h3 {
+    font-size: 1.1rem;
+    height: auto;
+    text-align: center;
+  }
 }

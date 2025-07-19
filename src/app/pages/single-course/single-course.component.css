@@ -293,3 +293,29 @@
   font-size: 1rem;
   font-weight: 500;
 }
+@media (max-width: 768px) {
+  .course-details {
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    padding: 15px;
+  }
+
+  .course-details p,
+  .outcomes p {
+    max-width: 100%;
+  }
+
+  .benefits-grid {
+    grid-template-columns: 1fr;
+    margin-left: 0;
+  }
+
+  .course-benefits {
+    justify-content: center;
+  }
+
+  .faq-container {
+    padding: 20px 10px;
+  }
+}

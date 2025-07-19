@@ -1,8 +1,8 @@
 import { QuizDataMap } from "../models/quiz-model";
 
 export const QUIZ_DATA : QuizDataMap = {
-    'WD101': {
-        courseName: '',
+    '10004': {
+        courseName: 'Web Development From Scratch',
         questions: [
           {
             question: "What does HTML stand for?",
@@ -106,7 +106,7 @@ export const QUIZ_DATA : QuizDataMap = {
           }
         ]
     },
-    'WD102': {
+    '10002': {
       courseName: 'Learn Dot Net Development',
       questions: [
         {
@@ -211,7 +211,7 @@ export const QUIZ_DATA : QuizDataMap = {
         }
       ]
     },
-    'WD103': {
+    '10003': {
         courseName: 'Full Stack Web Development (MERN)',
         questions: [
           {
@@ -526,7 +526,7 @@ export const QUIZ_DATA : QuizDataMap = {
         }
       ]
     },
-    'AI101': {
+    '10001': {
       courseName: 'Learn Artificial Intelligence',
       questions: [
         {
@@ -841,7 +841,7 @@ export const QUIZ_DATA : QuizDataMap = {
         }
       ]
     },
-    'DE101': {
+    '10005': {
       courseName: 'Data Science Full Course',
       questions: [
         {
@@ -946,7 +946,7 @@ export const QUIZ_DATA : QuizDataMap = {
         }
       ]
     },
-    'CSEC101': {
+    '10006': {
       courseName: 'Learn Ethical Hacking',
       questions: [
         {
@@ -1156,7 +1156,7 @@ export const QUIZ_DATA : QuizDataMap = {
         }
       ]
     },
-    'PROG101': {
+    '10007': {
       courseName: 'Learn C++ Language',
       questions: [
         {

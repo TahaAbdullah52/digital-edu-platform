@@ -34,3 +34,35 @@
   padding: 4px;
   max-width: 100px;
 }
+@media (max-width: 1024px) {
+  .inner-div {
+    width: 100%;
+    flex-direction: column;
+    height: auto;
+    margin-top: 20px;
+    padding: 10px;
+  }
+
+  .thumbnail {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .thumbnail img {
+    width: 100%;
+    height: auto;
+    border-radius: 5%;
+  }
+
+  .course-info {
+    margin-left: 0;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .course-details {
+    max-width: 100%;
+    padding: 6px;
+    border-radius: 8px;
+  }
+}

@@ -144,3 +144,41 @@
   background-color: #9ca3af;
   cursor: not-allowed;
 }
+@media (max-width: 1024px) {
+  .modal-content {
+    max-width: 90vw;
+    max-height: 80vh;
+    padding: 16px;
+  }
+
+  .modal-header h2 {
+    font-size: 20px;
+  }
+
+  .close-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 24px;
+  }
+
+  .form-control {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .story-textarea {
+    min-height: 100px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn-cancel,
+  .btn-submit {
+    width: 100%;
+    padding: 12px 0;
+    font-size: 14px;
+  }
+}

@@ -97,9 +97,7 @@
             </div>
             <div class="profile-info">
               <h2>{{ selectedCourse.course_name }}</h2>
-              <p class="course-id-detail">
-                Course ID: {{ selectedCourse.id }}
-              </p>
+              <p class="course-id-detail">Course ID: {{ selectedCourse.id }}</p>
               <div class="course-category-detail">
                 <span class="material-icons">category</span>
                 {{ selectedCourse.category }}
@@ -198,7 +196,8 @@
                   id="courseCategory"
                   name="courseCategory"
                   class="form-select"
-                  [(ngModel)]="courseFormData.category" required
+                  [(ngModel)]="courseFormData.category"
+                  required
                 >
                   <option value="">All Categories</option>
                   <option value="Programming">Programming</option>
@@ -313,12 +312,6 @@
                 <label for="isPremium" class="checkbox-label"
                   >Premium Course</label
                 >
-                <!-- <input
-                  type="checkbox"
-                  name="isEnrolled"
-                  [(ngModel)]="courseFormData.isEnrolled"
-                />
-                <label for="isEnrolled" class="checkbox-label">Enrolled</label> -->
               </div>
             </div>
 
@@ -365,8 +358,48 @@
               <span class="material-icons">save</span>
               {{ isEditMode ? "Update Course" : "Add Course" }}
             </button>
+
+            <button
+              type="button"
+              class="btn btn-success"
+              (click)="showQuizCreationForm()"
+              [disabled]="!isCourseSaved"
+              *ngIf="!isEditMode || isCourseSaved"
+            >
+              <span class="material-icons">quiz</span>
+              Create Quiz
+            </button>
           </div>
         </form>
+      </div>
+    </div>
+    <!-- Quiz Creation Panel -->
+    <div *ngIf="showQuizForm && currentQuizCourse" class="course-form-panel">
+      <div class="form-header">
+        <h3>Create Quiz for "{{ currentQuizCourse.course_name }}"</h3>
+        <button class="close-btn" (click)="hideQuizForm()">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+
+      <div class="form-content">
+        <!-- Course Info Display -->
+        <div class="quiz-course-info">
+          <div class="course-badge">
+            <span class="material-icons">school</span>
+            <span>{{ currentQuizCourse.course_name }}</span>
+          </div>
+          <button class="btn btn-outline" (click)="backToCourseForm()">
+            <span class="material-icons">arrow_back</span>
+            Back to Course
+          </button>
+        </div>
+
+        <!-- Embed the Quiz Component Here -->
+        <app-quiz
+          [courseId]="currentQuizCourse.id"
+          [courseName]="currentQuizCourse.course_name"
+        ></app-quiz>
       </div>
     </div>
   </div>

@@ -59,3 +59,49 @@
   font-style: italic;
   font-size: 1.5rem;
 }
+@media (max-width: 1024px) {
+  .title {
+    font-size: 26px;
+  }
+
+  .title::after {
+    width: 80%;
+    height: 4px;
+    margin: 10px auto;
+  }
+
+  .category {
+    width: 100%;
+    padding-top: 5px;
+    margin-top: 30px;
+  }
+
+  .outer-part {
+    grid-template-columns: repeat(3, 1fr);
+    height: auto;
+    width: 100%;
+    gap: 15px;
+    margin-top: 30px;
+  }
+
+  .videos-part {
+    width: 100%;
+    padding: 15px;
+    min-height: auto;
+  }
+
+  .outer-div {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    width: 100%;
+  }
+
+  .see-all-btn {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+
+  .no-courses {
+    font-size: 1.2rem;
+  }
+}

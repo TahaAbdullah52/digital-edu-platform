@@ -3,10 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { course_item } from '../../../models/course-item';
 import { CourseManagementService } from '../../services/course-management.service';
+import { QuizComponent } from "../../admin-components/quiz/quiz.component";
 
 @Component({
   selector: 'app-course-management',
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule, QuizComponent],
   templateUrl: './course-management.component.html',
   styleUrl: './course-management.component.css'
 })
@@ -21,12 +22,16 @@ export class CourseManagementComponent implements OnInit{
 
   showForm = false;
   isEditMode = false;
+  showQuizForm = false;
+  currentQuizCourse: course_item | null = null;
 
   courseFormData: course_item = this.getEmptyCourse();
   categoryFilter = '';
   premiumFilter = '';
 
-  constructor(private adminCourseService: CourseManagementService) { }
+  constructor(
+    private adminCourseService: CourseManagementService,
+  ) { }
   
   ngOnInit(): void {
     this.loadCourses();
@@ -77,14 +82,11 @@ export class CourseManagementComponent implements OnInit{
   }
   
   saveCourse() {
-    // Handle technologies input formatting
     if (this.technologiesInput) {
     try {
-      // If technologiesInput is a string (from textarea), parse it
       if (typeof this.technologiesInput === 'string') {
         this.courseFormData.technologies = JSON.parse(this.technologiesInput);
       } else {
-        // If it's already an array, use it directly
         this.courseFormData.technologies = this.technologiesInput;
       }
       console.log('Parsed technologies:', this.courseFormData.technologies);
@@ -95,7 +97,7 @@ export class CourseManagementComponent implements OnInit{
   } else {
     this.courseFormData.technologies = [];
   }
-    if (this.isEditMode) {
+   if (this.isEditMode) {
       this.adminCourseService.updateCourse(this.courseFormData.id, this.courseFormData).subscribe({
         next: (updatedCourse) => {
           const index = this.courses.findIndex(c => c.id === updatedCourse.id);
@@ -104,8 +106,7 @@ export class CourseManagementComponent implements OnInit{
             console.log('Previous course data:', this.courses[index]);
             this.courses[index] = updatedCourse;
           }
-          this.hideAddCourseForm();
-          this.resetForm();
+          this.currentQuizCourse = updatedCourse;
         },
         error: (error) => {
           console.error('Error updating course:', error);
@@ -113,12 +114,10 @@ export class CourseManagementComponent implements OnInit{
         }
       });
     } else {
-      // const { id, ...newCourseData } = this.courseFormData;
       this.adminCourseService.createCourse(this.courseFormData).subscribe({
         next: (newCourse) => {
           this.courses.push(newCourse);
-          this.hideAddCourseForm();
-          this.resetForm();
+          this.currentQuizCourse = newCourse;
         },
         error: (error) => {
           console.error('Error creating course:', error);
@@ -166,13 +165,12 @@ export class CourseManagementComponent implements OnInit{
   
   hideAddCourseForm() {
     this.showForm = false;
+    this.currentQuizCourse = null;
   }
-  
   
   closeCourseDetails() {
     this.selectedCourse = null;
   }
-  
 
   onPremiumChange() {
     if (!this.courseFormData.isPremium) {
@@ -193,7 +191,6 @@ export class CourseManagementComponent implements OnInit{
       no_of_seat: 0,
       no_of_class:0,
       rem_days:0,
-      // course_id: '',
       course_name: '',
       course_desc: '',
       category: '',
@@ -203,5 +200,26 @@ export class CourseManagementComponent implements OnInit{
       course_fee: 0,
       technologies: []
     };
+  }
+
+  showQuizCreationForm() {
+    if (this.currentQuizCourse) {
+      this.showQuizForm = true;
+      this.showForm = false; 
+    }
+  }
+
+  hideQuizForm() {
+    this.showQuizForm = false;
+    this.currentQuizCourse = null;
+  }
+
+  backToCourseForm() {
+    this.showQuizForm = false;
+    this.showForm = true;
+  }
+
+  get isCourseSaved(): boolean {
+    return this.currentQuizCourse !== null;
   }
 }

@@ -493,3 +493,30 @@
 .bar-fill.free {
   background: linear-gradient(90deg, #3b82f6, #8b5cf6);
 }
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 200px; /* fixed sidebar width */
+    min-width: 200px;
+  }
+
+  .main-content {
+    margin-left: 200px; /* margin to accommodate sidebar */
+    padding: 16px; /* add some padding for content */
+  }
+
+  .search-input {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .course-stats-chart {
+    width: 100%;
+    max-width: 600px;
+    height: auto; /* maintain aspect ratio */
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}

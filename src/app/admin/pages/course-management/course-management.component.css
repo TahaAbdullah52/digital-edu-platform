@@ -708,3 +708,136 @@
   transform: translateY(-1px);
   box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
 }
+.quiz-course-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.course-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.course-badge .material-icons {
+  color: #3498db;
+}
+
+.btn-outline {
+  border: 1px solid #ddd;
+  background: white;
+  color: #666;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-outline:hover {
+  background: #f8f9fa;
+  border-color: #3498db;
+  color: #3498db;
+}
+/* Target laptops with scaled resolution ~1300px width */
+@media (max-width: 1400px) {
+  .manage-courses-container {
+    padding: 20px;
+  }
+
+  .course-stats {
+    gap: 12px;
+  }
+
+  .stat-item {
+    font-size: 20px;
+  }
+
+  .header-actions .btn {
+    padding: 0.65rem 1.25rem;
+    font-size: 0.875rem;
+  }
+
+  .filter-bar {
+    gap: 0.75rem;
+  }
+
+  .search-container {
+    max-width: 350px;
+  }
+
+  .filter-controls {
+    gap: 0.5rem;
+  }
+
+  .courses-content {
+    gap: 1rem;
+  }
+
+  .courses-content.has-selected .courses-list {
+    flex: 0 0 60%;
+  }
+
+  .courses-list {
+    padding-right: 0.3rem;
+  }
+
+  .course-card {
+    padding: 1rem;
+    gap: 12px;
+  }
+
+  .course-name {
+    font-size: 1rem;
+  }
+
+  .course-category {
+    font-size: 0.8rem;
+  }
+
+  .meta-item {
+    font-size: 0.8rem;
+    padding: 6px;
+  }
+
+  .course-details {
+    flex: 0 0 450px;
+    max-height: 650px;
+  }
+
+  .details-header h3 {
+    font-size: 1.1rem;
+  }
+
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .form-input,
+  .form-select,
+  .form-textarea {
+    width: 90%;
+    font-size: 0.875rem;
+  }
+
+  .checkbox-group {
+    width: 90%;
+  }
+
+  .form-section h4 {
+    font-size: 1.1rem;
+  }
+
+  .details-actions .btn {
+    font-size: 0.85rem;
+    padding: 0.65rem 1.25rem;
+  }
+}

@@ -162,7 +162,6 @@
       border-radius: 50%;
     }
 
-
     .user-avatar {
       width: 3rem;
       height: 3rem;
@@ -339,7 +338,6 @@
     align-items: flex-start;
     gap: 1rem;
     margin-bottom: 1rem;
-   
 
     .avatar-img.large {
       width: 5rem;
@@ -465,4 +463,145 @@
 .btn-danger:hover {
   opacity: 0.9;
   cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+  .manage-users-container {
+    padding: 16px;
+  }
+
+  .users-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .users-header .user-stats {
+    gap: 12px;
+  }
+
+  .users-header .header-actions .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  .filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .filter-bar .search-container {
+    max-width: 100%;
+  }
+
+  .filter-bar .filter-controls {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .users-content {
+    flex-direction: column;
+  }
+
+  .users-content.has-selected .users-list {
+    flex: 1 1 auto;
+    max-width: 100%;
+  }
+
+  .users-list {
+    max-height: 400px;
+    padding-right: 0;
+  }
+
+  .user-card {
+    padding: 1rem;
+    gap: 12px;
+  }
+
+  .user-avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1rem;
+    margin-right: 0.75rem;
+  }
+
+  .user-info .user-header .user-name {
+    font-size: 0.9rem;
+  }
+
+  .user-email {
+    font-size: 0.75rem;
+  }
+
+  .user-meta {
+    gap: 0.5rem;
+  }
+
+  .user-actions .action-btn {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .user-actions .action-btn .material-icons {
+    font-size: 1.25rem;
+  }
+
+  .user-details {
+    flex: 1 1 auto;
+    max-height: none;
+    margin-top: 24px;
+    width: 100%;
+    border-radius: 0.5rem;
+  }
+
+  .details-header {
+    padding: 1rem;
+  }
+
+  .details-content {
+    max-height: 300px;
+    padding: 1rem;
+  }
+
+  .details-section h4 {
+    font-size: 0.9rem;
+  }
+
+  .profile-header {
+    gap: 0.75rem;
+  }
+
+  .profile-avatar,
+  .avatar-img.large {
+    width: 3.5rem;
+    height: 3.5rem;
+    font-size: 1.25rem;
+  }
+
+  .profile-info h2 {
+    font-size: 1.25rem;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .stat-card {
+    padding: 0.75rem;
+  }
+
+  .stat-value {
+    font-size: 1.1rem;
+  }
+
+  .stat-label {
+    font-size: 0.65rem;
+  }
 }

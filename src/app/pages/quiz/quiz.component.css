@@ -329,3 +329,71 @@
   background: linear-gradient(135deg, #20c997, #28a745);
   transform: translateY(-2px);
 }
+@media (max-width: 768px) {
+  .quiz-container {
+    max-width: 95%;
+    margin: 20px auto;
+    padding: 0 10px;
+  }
+
+  .question-card {
+    padding: 20px;
+  }
+
+  .question {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+
+  .options {
+    gap: 10px;
+  }
+
+  .option {
+    padding: 15px;
+  }
+
+  .option input[type="radio"] {
+    width: 16px;
+    height: 16px;
+  }
+
+  .option-text {
+    font-size: 1rem;
+  }
+
+  .quiz-navigation {
+    flex-direction: column;
+    gap: 15px;
+    padding: 0 20px 20px;
+  }
+
+  .nav-btn,
+  .submit-btn {
+    min-width: 100%;
+    padding: 12px 0;
+    font-size: 1rem;
+  }
+
+  .progress-section {
+    padding: 15px;
+  }
+
+  .progress-bar {
+    height: 6px;
+  }
+
+  .score-circle {
+    width: 120px;
+    height: 120px;
+    border-width: 6px;
+  }
+
+  .score-number {
+    font-size: 2rem;
+  }
+
+  .score-percentage {
+    font-size: 1.3rem;
+  }
+}
