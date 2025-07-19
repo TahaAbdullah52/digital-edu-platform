@@ -76,24 +76,31 @@ const enrollInCourse = async (req, res) => {
 
 const getUserCourses = async (req, res) => {
   const userId = Number(req.params.userId);
+
   try {
     const [rows] = await db.execute(`
-      SELECT c.*
+      SELECT c.*, cat.title AS category
       FROM user_course uc
-      JOIN courses    c ON uc.course_id = c.id
+      JOIN courses c ON uc.course_id = c.id
+      JOIN categories cat ON c.cate_id = cat.cate_id
       WHERE uc.user_id = ?
     `, [userId]);
-    // parse `technologies` JSON field on each course
+
+    // parse `technologies` JSON field
     const courses = rows.map(c => ({
       ...c,
       technologies: c.technologies ? JSON.parse(c.technologies) : []
     }));
+
+    console.log(`User ${userId} courses:`, courses);
     res.json(courses);
+
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Could not fetch user courses' });
   }
 };
+
 
 
 

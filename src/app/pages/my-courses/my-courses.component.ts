@@ -45,63 +45,37 @@ export class MyCoursesComponent {
   trackById(_idx: number, item: course_item) {
     return item.id;
   }
-  // Recommendations: same category as any enrolled, up to 3
+
   get recommendedCourses(): course_item[] {
     if (!this.myCourses.length) {
       // No enrollments => show first 6 of the catalog (3 rows of 2)
       return this.allCourses.slice(0, 6);
     }
-    
-    // Get enrolled course IDs for filtering
     const enrolledIds = new Set(this.myCourses.map(c => c.id));
     
-    // Get categories of enrolled courses
     const cats = new Set(this.myCourses.map(c => c.category));
     
-    // Filter courses: same category as enrolled courses but not already enrolled
+    // console.log('All courses:', this.allCourses);
+    // console.log('Enrolled IDs:', enrolledIds);
+    // console.log('Categories of enrolled courses:', cats);
+   
     let recommended = this.allCourses.filter(c => 
       cats.has(c.category) && !enrolledIds.has(c.id)
     );
     
-    // If we don't have enough recommendations from same categories, 
-    // add other courses not enrolled in
-    if (recommended.length < 6) {
+
+    if (!recommended.length) {
       const otherCourses = this.allCourses.filter(c => 
         !cats.has(c.category) && !enrolledIds.has(c.id)
       );
       recommended = [...recommended, ...otherCourses];
     }
+
+    console.log('Recommended courses:', recommended);
     
     return recommended.slice(0, 6); // Show maximum 6 (3 rows of 2)
   }
-  // get showAll() {
-  //   return this.courseService.showAll;
-  // }
-  // get filteredCourses() {
-  //     const allCourses = this.courseService.courses();
-  //     let filtered = allCourses.filter(v => 
-  //       v.isEnrolled === true
-  //   );
-  //   return this.showAll() ? filtered : filtered.slice(0, 4);
-  // }
-  
-  // recommendedCourses = computed(() => {
-  //   const allCourses = this.courseService.courses();
-  //   const enrolledCourses = allCourses.filter(v => v.isEnrolled === true);
-    
-  //   if (enrolledCourses.length === 0) {
-  //     let allNonEnrolled = allCourses.filter(v => !v.isEnrolled);
-  //     allNonEnrolled = allNonEnrolled.sort((a, b) => a.id - b.id);
-  //     return allNonEnrolled.slice(0, 3);
-  //   }
-    
-  //   const categories = Array.from(new Set(enrolledCourses.map(v => v.category)));
-  //   let recmCourses = allCourses.filter(v =>
-  //     categories.includes(v.category) && !v.isEnrolled
-  //   );
-  //   recmCourses = recmCourses.sort((a, b) => a.id - b.id);
-  //   return recmCourses.slice(0, 3);
-  // });
+
 
   goToVideosList(playlistId: string) {
     this.router.navigate(['/videos-list', playlistId]);
