@@ -3,6 +3,7 @@ import { YoutubeService } from '../../services/youtube.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../../services/course.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-video-list',
@@ -15,9 +16,10 @@ export class VideoListComponent implements OnInit {
   videos: any[] = [];
   courseId: number = 0; 
   courseName: string = ''; 
+  quizExists: boolean = false;
 
   constructor(private youtubeService: YoutubeService, private route: ActivatedRoute,
-    private router: Router, private courseService:CourseService
+    private router: Router, private courseService:CourseService,private http: HttpClient
   ) {}
 
   ngOnInit() {
@@ -36,6 +38,17 @@ export class VideoListComponent implements OnInit {
         this.courseName = 'General';
       }
 
+      this.http.get<{ exists: boolean }>(`http://localhost:3000/courses/${this.courseId}/quiz/exists`)
+          .subscribe({
+            next: (res) => {
+              this.quizExists = res.exists;
+            },
+            error: () => {
+              this.quizExists = false;
+            }
+          });
+
+
       this.youtubeService.getPlaylistItems(playlistId).subscribe(res => {
         this.videos = res.items;
       });
@@ -43,6 +56,10 @@ export class VideoListComponent implements OnInit {
   });
   }
   takeQuiz() {
-    this.router.navigate(['/quiz', this.courseId]);   
-  }
+  this.router.navigate(['/quiz', this.courseId], {
+    state: {
+      courseData: { courseName: this.courseName }
+    }
+  });
+}
 }

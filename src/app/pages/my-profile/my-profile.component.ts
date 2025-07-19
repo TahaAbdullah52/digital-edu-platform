@@ -44,14 +44,18 @@ export class MyProfileComponent implements OnInit, OnDestroy {
   profileData: ProfileData = {} as ProfileData;
   leaderboardUsers: LeaderboardUser[] = [];
   dropdownOptions: DropdownOptions = STATIC_DROPDOWN_OPTIONS;
+  currentUserId: number = 0;
 
   private destroy$ = new Subject<void>();
 
   constructor(private profileService: ProfileService, private paymentService: PaymentService) {}
   ngOnInit(): void {
 
-    console.log('JWT Token:', localStorage.getItem('auth_token'));
-    console.log('User ID:', localStorage.getItem('user_id'));
+    // console.log('JWT Token:', localStorage.getItem('auth_token'));
+    // console.log('User ID:', localStorage.getItem('user_id'));
+    const storedId= localStorage.getItem('user_id');
+    this.currentUserId = storedId ? parseInt(storedId) : 0;
+
     window.scrollTo(0, 0);
     this.loadPayments();
     this.loadProfileData();
@@ -90,6 +94,7 @@ export class MyProfileComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (data) => {
+          console.log('Leaderboard data loaded:', data);
           this.leaderboardUsers = data;
           this.isLoadingLeaderboard = false;
         },

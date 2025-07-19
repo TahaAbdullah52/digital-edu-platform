@@ -67,3 +67,35 @@
   gap: 30px;
   align-items: start;
 }
+@media (max-width: 1024px) {
+  .videos-part,
+  .recm-videos-part {
+    width: 100%;
+    padding: 15px;
+    min-height: auto;
+  }
+
+  .outer-div,
+  .recm-outer-div {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .my-video {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .title {
+    margin-left: 10px;
+  }
+
+  .see-all-btn {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+
+  .recommendation-div {
+    margin-top: 30px;
+  }
+}

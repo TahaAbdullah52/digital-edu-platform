@@ -47,3 +47,45 @@ app-prim-button {
   display: flex;
   justify-self: center;
 }
+@media (max-width: 1024px) {
+  .inner-div {
+    width: 100%;
+    max-width: 330px;
+    height: auto;
+    margin: 20px auto 25px;
+    padding: 10px;
+  }
+
+  .thumbnail {
+    width: 100%;
+  }
+
+  .thumbnail img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 5%;
+  }
+
+  .course-info {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+  }
+
+  .course-details {
+    padding: 8px;
+    margin: 0 auto;
+  }
+
+  h2 {
+    margin-left: 0;
+    text-align: center;
+    height: auto;
+  }
+
+  app-prim-button {
+    justify-self: center;
+    width: 100%;
+  }
+}

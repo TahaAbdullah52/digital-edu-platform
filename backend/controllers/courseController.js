@@ -24,9 +24,9 @@ const updateRemainingDaysForCourses = async () => {
     });
 
     await Promise.all(updates);
-    console.log("✅ Remaining days updated for all courses.");
+    console.log("Remaining days updated for all courses.");
   } catch (error) {
-    console.error("❌ Error updating remaining days:", error);
+    console.error("Error updating remaining days:", error);
   }
 };
 

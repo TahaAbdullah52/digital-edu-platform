@@ -21,7 +21,7 @@
   display: flex;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25);
 }
 
 .form-container {
@@ -79,7 +79,7 @@ button {
   border: none;
   padding: 12px 45px;
   margin-top: 20px;
-  background-color: #6C63FF;
+  background-color: #6c63ff;
   color: #fff;
   font-size: 12px;
   font-weight: bold;
@@ -89,7 +89,7 @@ button {
 }
 
 button:hover {
-  background-color: #6C63FF;
+  background-color: #6c63ff;
 }
 
 .overlay-container {
@@ -104,7 +104,7 @@ button:hover {
 }
 
 .overlay {
-  background: linear-gradient(to right, #6C63FF, #716dc4);
+  background: linear-gradient(to right, #6c63ff, #716dc4);
   color: #fff;
   position: relative;
   left: -100%;
@@ -156,4 +156,66 @@ button:hover {
 .ghost {
   background-color: transparent;
   border: 1px solid #fff;
+}
+@media (max-width: 1024px) {
+  :host {
+    height: auto;
+    width: 100vw;
+    padding: 20px;
+    align-items: flex-start;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 100%;
+    min-height: auto;
+    flex-direction: column;
+    position: relative;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .form-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    left: 0 !important;
+    opacity: 1 !important;
+    z-index: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .sign-in-container,
+  .sign-up-container {
+    width: 100%;
+    position: relative;
+    opacity: 1 !important;
+    left: 0 !important;
+    transform: none !important;
+    z-index: 1 !important;
+  }
+
+  .container.right-panel-active .sign-up-container,
+  .container.right-panel-active .sign-in-container {
+    transform: none !important;
+    opacity: 1 !important;
+    left: 0 !important;
+    z-index: 1 !important;
+  }
+
+  .overlay-container {
+    display: none;
+  }
+
+  form {
+    padding: 20px;
+  }
+
+  button {
+    width: 100%;
+    padding: 15px 0;
+    font-size: 16px;
+    border-radius: 8px;
+  }
 }

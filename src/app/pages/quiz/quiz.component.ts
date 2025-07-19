@@ -19,6 +19,8 @@ export class QuizComponent implements OnInit {
   score = 0;
   quizQuestions: any[] = [];
 
+  userId: number = 0;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -38,15 +40,24 @@ export class QuizComponent implements OnInit {
         this.courseName = courseData.courseName;
       }
     }
+
+    const storedId = localStorage.getItem('user_id');
+    if (storedId) {
+      this.userId = parseInt(storedId, 10);
+    }
   }
 
   loadQuizForCourse(courseId: string) {
-
-    this.quizQuestions = this.quizService.getQuizByCourseId(courseId);
-    
-    this.courseName = this.quizService.getCourseNameById(courseId);
-
-    this.selectedAnswers = new Array(this.quizQuestions.length).fill(-1);
+    this.quizService.getQuizByCourseId(courseId).subscribe({
+      next: (data) => {
+        this.quizQuestions = data.questions;
+        if (!this.courseName) this.courseName = data.courseName;
+        this.selectedAnswers = new Array(this.quizQuestions.length).fill(-1);
+      },
+      error: () => {
+        alert('Failed to load quiz. Please try again later.');
+      }
+    });
   }
 
   getCurrentQuestion() {
@@ -88,7 +99,21 @@ export class QuizComponent implements OnInit {
         this.score+=10;
       }
     }
-    this.showResult = true;
+
+    console.log('Quiz submitted. Score:', this.score);
+    console.log('Selected Answers:', this.selectedAnswers);
+    console.log('User ID:', this.userId);
+
+    this.quizService.updateUserPoints(this.userId, this.score).subscribe({
+      next: () => {
+        console.log('User points updated successfully');
+        this.showResult = true;
+      },
+      error: () => {
+        alert('Failed to update your points. Please try again later.');
+      }
+    });
+    
   }
 
   getResultMessage(): string {

@@ -75,3 +75,20 @@ button {
 button:hover {
   opacity: 0.8;
 }
+@media (max-width: 600px) {
+  .video-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .video-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .video-item h1 {
+    font-size: 1.2rem;
+    margin-top: 10px;
+  }
+}

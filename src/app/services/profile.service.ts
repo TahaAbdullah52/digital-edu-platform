@@ -71,7 +71,7 @@ export class ProfileService {
   }
 
   getLeaderboardData(): Observable<LeaderboardUser[]> {
-    return this.http.get<LeaderboardUser[]>(`https://your-api-url.com/leaderboard`).pipe(
+    return this.http.get<LeaderboardUser[]>(`${this.apiUrl}/leaderboard`).pipe(
       catchError((err) => {
         console.warn('Leaderboard API failed, using mock data.', err);
         return of(MOCK_LEADERBOARD);

@@ -469,3 +469,140 @@
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
+@media only screen and (min-width: 1500px) and (max-width: 1600px) and (resolution: 96dpi),
+  only screen and (min-resolution: 96dpi) and (max-resolution: 110dpi) {
+  .manage-stories-container {
+    padding: 16px;
+    background-color: #f0f4f8;
+  }
+
+  .stories-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .stat-item {
+    font-size: 20px;
+  }
+
+  .filter-controls {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .status-filter {
+    width: 100%;
+  }
+
+  .stories-content {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .stories-content.has-selected {
+    grid-template-columns: 1fr 600px;
+  }
+
+  .story-card {
+    padding: 1rem;
+  }
+
+  .user-info {
+    gap: 12px;
+  }
+
+  .avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1rem;
+    margin-right: 0.5rem;
+  }
+
+  .user-name {
+    font-size: 14px;
+  }
+
+  .course-name {
+    font-size: 12px;
+  }
+
+  .story-meta {
+    gap: 8px;
+  }
+
+  .meta-item {
+    font-size: 10px;
+  }
+
+  .story-actions {
+    gap: 6px;
+  }
+
+  .action-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .details-header {
+    padding: 16px;
+  }
+
+  .details-content {
+    padding: 16px;
+  }
+
+  .details-section {
+    margin-bottom: 16px;
+  }
+
+  .profile-avatar.large {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .profile-info h2 {
+    font-size: 18px;
+  }
+
+  .profile-course {
+    font-size: 12px;
+  }
+
+  .info-item {
+    padding: 8px;
+  }
+
+  .info-item label {
+    font-size: 10px;
+  }
+
+  .info-item p {
+    font-size: 12px;
+  }
+
+  .story-content {
+    padding: 12px;
+  }
+
+  .story-text {
+    font-size: 13px;
+  }
+
+  .details-actions {
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .status-badge {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.4rem;
+  }
+
+  .btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.75rem;
+    min-width: 100px;
+  }
+}

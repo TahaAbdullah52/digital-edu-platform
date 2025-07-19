@@ -35,12 +35,13 @@
             <div
               class="leaderboard-item"
               *ngFor="let user of leaderboardUsers"
-              [class.current-user]="user.name === 'You'"
+              [class.current-user]="user.id === currentUserId"
             >
               <div class="rank">{{ user.rank }}</div>
               <div class="user-info">
                 <div class="details">
-                  <div class="name">{{ user.name }}</div>
+                  <div class="name">
+                    {{user.id === currentUserId ? 'You' : user.name}}</div>
                   <div class="points">{{ user.points }} pts</div>
                 </div>
               </div>

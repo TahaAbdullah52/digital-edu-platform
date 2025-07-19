@@ -1,143 +1,182 @@
 let db;  
-const initDB = connection => { db = connection; };
+const initDB = (connection) => {
+  db = connection;
+};
 
 
-// Helper function to get course_id from course_name
-async function getCourseIdByName(courseName) {
-  const [rows] = await db.promise().query(
-    'SELECT id FROM courses WHERE course_name = ? LIMIT 1',
-    [courseName]
-  );
-  if (rows.length === 0) throw new Error('Course not found');
-  return rows[0].id;
-}
+// Create Quiz
+const createQuiz = async (req, res) => {
+  const courseId = parseInt(req.params.courseId);
+  const { questions } = req.body;
 
-const addQuiz = async (req, res) => {
-  let { courseName, questions } = req.body;
-
-  if (!courseName || !Array.isArray(questions)) {
-    return res.status(400).json({ message: "courseName and questions are required" });
+  if (!Array.isArray(questions) || questions.length === 0) {
+    return res.status(400).json({ success: false, message: 'Invalid quiz data' });
   }
 
   try {
-    const courseId = await getCourseIdByName(courseName);
-
-    const conn = await db.promise().getConnection();
-    await conn.beginTransaction();
-
-    // Insert quiz
-    const [quizResult] = await conn.query(
-      'INSERT INTO quizzes (course_id) VALUES (?)',
-      [courseId]
-    );
+    // 1. Insert quiz row
+    const [quizResult] = await db.query('INSERT INTO quizzes (course_id) VALUES (?)', [courseId]);
     const quizId = quizResult.insertId;
 
-    // Insert questions and options
+    // 2. Insert each question and its options
     for (const q of questions) {
-      const [questionResult] = await conn.query(
+      const [questionResult] = await db.query(
         'INSERT INTO questions (quiz_id, question_text, correct_answer_index) VALUES (?, ?, ?)',
         [quizId, q.question, q.correctAnswer]
       );
       const questionId = questionResult.insertId;
 
+      // 3. Insert each option
       for (let i = 0; i < q.options.length; i++) {
-        await conn.query(
+        await db.query(
           'INSERT INTO options (question_id, option_text, option_index) VALUES (?, ?, ?)',
           [questionId, q.options[i], i]
         );
       }
     }
 
-    await conn.commit();
-    conn.release();
-
-    res.status(201).json({ message: 'Quiz added successfully', quizId });
+    res.status(201).json({ success: true, message: 'Quiz created successfully' });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: error.message || 'Failed to add quiz' });
+    console.error('Error creating quiz:', error);
+    res.status(500).json({ success: false, message: 'Failed to create quiz' });
   }
 };
 
-
-
-const getQuizByCourseId = async (req, res) => {
-  const courseId = req.params.courseId;
-
-  try {
-    // 1. Get quiz for the course
-    const [quizRows] = await db.promise().query(
-      'SELECT quiz_id FROM quizzes WHERE course_id = ?',
-      [courseId]
-    );
-
-    if (quizRows.length === 0) {
-      return res.status(404).json({ message: 'Quiz not found for this course' });
-    }
-
-    const quizId = quizRows[0].quiz_id;
-
-    // 2. Get questions for quiz
-    const [questionRows] = await db.promise().query(
-      'SELECT question_id, question_text, correct_answer_index FROM questions WHERE quiz_id = ?',
-      [quizId]
-    );
-
-    // 3. Get all options for all questions in one query
-    const questionIds = questionRows.map(q => q.question_id);
-    let optionRows = [];
-    if (questionIds.length > 0) {
-      const placeholders = questionIds.map(() => '?').join(',');
-      [optionRows] = await db.promise().query(
-        `SELECT question_id, option_text, option_index FROM options WHERE question_id IN (${placeholders}) ORDER BY question_id, option_index`,
-        questionIds
-      );
-    }
-
-    // 4. Map options to their questions
-    const questions = questionRows.map(q => ({
-      question: q.question_text,
-      correctAnswer: q.correct_answer_index,
-      options: optionRows
-        .filter(o => o.question_id === q.question_id)
-        .sort((a,b) => a.option_index - b.option_index)
-        .map(o => o.option_text)
-    }));
-
-    // 5. Return nested structure matching your frontend model
-    res.json({
-      courseId,
-      questions
-    });
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Failed to fetch quiz', error });
-  }
-};
-
-const deleteQuiz = async (req, res) => {
-  const quizId = req.params.quizId;
+// Get Quiz
+const getQuiz = async (req, res) => {
+  const courseId = parseInt(req.params.courseId);
 
   try {
-    const [result] = await db.promise().query(
-      'DELETE FROM quizzes WHERE quiz_id = ?',
-      [quizId]
-    );
-
-    if (result.affectedRows === 0) {
+    const [quizRow] = await db.query('SELECT quiz_id FROM quizzes WHERE course_id = ?', [courseId]);
+    if (quizRow.length === 0) {
       return res.status(404).json({ message: 'Quiz not found' });
     }
 
-    // Due to foreign key with ON DELETE CASCADE,
-    // related questions and options will be deleted automatically
+    const quizId = quizRow[0].quiz_id;
 
-    res.json({ message: 'Quiz deleted successfully' });
+    const [questions] = await db.query('SELECT * FROM questions WHERE quiz_id = ?', [quizId]);
+
+    for (let q of questions) {
+      const [options] = await db.query('SELECT option_text FROM options WHERE question_id = ? ORDER BY option_index ASC', [q.question_id]);
+      q.options = options.map(o => o.option_text);
+    }
+
+    res.json({
+      courseId,
+      questions: questions.map(q => ({
+        question: q.question_text,
+        correctAnswer: q.correct_answer_index,
+        options: q.options
+      }))
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Failed to delete quiz', error });
+    console.error('Error fetching quiz:', error);
+    res.status(500).json({ message: 'Failed to fetch quiz' });
+  }
+};
+
+// Delete Quiz
+const deleteQuiz = async (req, res) => {
+  const courseId = parseInt(req.params.courseId);
+
+  try {
+    const [quizRow] = await db.query('SELECT quiz_id FROM quizzes WHERE course_id = ?', [courseId]);
+    if (quizRow.length === 0) return res.status(404).json({ message: 'Quiz not found' });
+
+    const quizId = quizRow[0].quiz_id;
+
+    // Delete options
+    await db.query('DELETE FROM options WHERE question_id IN (SELECT question_id FROM questions WHERE quiz_id = ?)', [quizId]);
+    // Delete questions
+    await db.query('DELETE FROM questions WHERE quiz_id = ?', [quizId]);
+    // Delete quiz
+    await db.query('DELETE FROM quizzes WHERE quiz_id = ?', [quizId]);
+
+    res.json({ success: true, message: 'Quiz deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting quiz:', error);
+    res.status(500).json({ success: false, message: 'Failed to delete quiz' });
+  }
+};
+
+// Check if Quiz Exists
+const quizExists = async (req, res) => {
+  const courseId = parseInt(req.params.courseId);
+
+  try {
+    const [result] = await db.query('SELECT 1 FROM quizzes WHERE course_id = ? LIMIT 1', [courseId]);
+    res.json({ exists: result.length > 0 });
+  } catch (error) {
+    res.status(500).json({ exists: false });
+  }
+};
+
+// Get Quiz Stats
+ const quizStats = async (req, res) => {
+  const courseId = parseInt(req.params.courseId);
+
+  try {
+    const [[{ count }]] = await db.query(`
+      SELECT COUNT(*) AS count FROM questions 
+      WHERE quiz_id = (SELECT quiz_id FROM quizzes WHERE course_id = ?)
+    `, [courseId]);
+
+    const [[{ course_name }]] = await db.query(`SELECT course_name FROM courses WHERE id = ?`, [courseId]);
+
+    res.json({ totalQuestions: count, courseName: course_name });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to load quiz statistics' });
   }
 };
 
 
 
-module.exports = {initDB,addQuiz,getQuizByCourseId,deleteQuiz};
+
+const updateUserPoints = async (req, res) => {
+  const userId = req.params.userId;
+  const { points } = req.body;
+
+  try {
+    const [rows] = await db.query('SELECT * FROM users WHERE userId= ?', [userId]);
+    if (rows.length === 0) {
+      return res.status(404).send({ error: 'User not found' });
+    }
+
+    const currentPoints = rows[0].points;
+    const updatedPoints = currentPoints + points;
+
+    await db.query('UPDATE users SET points = ? WHERE userId = ?', [updatedPoints, userId]);
+
+    res.send({ success: true, totalPoints: updatedPoints });
+  } catch (err) {
+    console.error('Error updating user points:', err);
+    res.status(500).send({ error: 'Failed to update points' });
+  }
+};
+
+
+// controllers/courseController.js
+// const getCourseIdByName = async (req, res) => {
+//   const { courseName } = req.params;
+
+//   try {
+//     const [rows] = await db.query(
+//       'SELECT id FROM courses WHERE course_name = ?',
+//       [courseName]
+//     );
+
+//     if (rows.length > 0) {
+//       res.json({ success: true, courseId: rows[0].id });
+//     } else {
+//       res.status(404).json({ success: false, message: 'Course not found' });
+//     }
+//   } catch (err) {
+//     console.error('Error fetching courseId:', err);
+//     res.status(500).json({ success: false, message: 'Server error' });
+//   }
+// };
+
+
+
+
+module.exports = {initDB, createQuiz, getQuiz, deleteQuiz, quizExists, quizStats, updateUserPoints};

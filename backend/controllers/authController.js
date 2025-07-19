@@ -317,4 +317,24 @@ const verifyToken = (req, res, next) => {
 };
 
 
-module.exports = { initDB, signup, login ,protectedRoute, verifyToken, updateProfile, uploadProfileImage, getProfile, changePassword, getAllUsers, deleteUser };
+const getLeaderboard = async (req, res) => {
+  try {
+    const [rows] = await db.query(`
+      SELECT userId AS id, name, points
+      FROM users
+      ORDER BY points DESC
+    `);
+
+    const leaderboard = rows.map((user, index) => ({
+      ...user,
+      rank: index + 1,
+    }));
+
+    res.json(leaderboard);
+  } catch (err) {
+    console.error('Error loading leaderboard:', err);
+    res.status(500).json({ error: 'Failed to load leaderboard' });
+  }
+};
+
+module.exports = { initDB, signup, login ,protectedRoute, verifyToken, updateProfile, uploadProfileImage, getProfile, changePassword, getAllUsers, deleteUser, getLeaderboard };

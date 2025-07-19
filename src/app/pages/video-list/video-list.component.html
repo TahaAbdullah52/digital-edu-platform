@@ -19,7 +19,7 @@
       </a>
     </div>
   </div>
-  <div class="quiz-btn">
+  <div class="quiz-btn" *ngIf="quizExists">
     <button (click)="takeQuiz()">Take Quiz</button>
   </div>
 </section>

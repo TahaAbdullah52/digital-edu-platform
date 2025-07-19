@@ -1,0 +1,160 @@
+<!-- quiz.component.html -->
+<link rel="stylesheet" href="quiz.component.css" />
+<div class="quiz-creator-container">
+  <div class="quiz-header">
+    <button class="back-btn" (click)="goBackToCourse()">
+      <span class="material-icons">arrow_back</span>
+      Back to Course
+    </button>
+    <h1>Create Quiz</h1>
+    <p>Design engaging questions for your course</p>
+  </div>
+
+  <div class="quiz-content">
+    <!-- Course Info -->
+    <div class="course-info">
+      <h3>{{ courseName || "Web Development From Scratch" }}</h3>
+      <p>Creating quiz questions to test student knowledge</p>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+      <div class="progress-fill" [style.width.%]="progressPercentage"></div>
+    </div>
+
+    <!-- Quiz Summary -->
+    <div
+      class="quiz-summary"
+      [class.hidden]="currentQuestion !== totalQuestions || !isSaving"
+    >
+      <h3>
+        <span class="material-icons">quiz</span>
+        Quiz Summary
+      </h3>
+      <div class="summary-stats">
+        <div class="stat-item">
+          <div class="stat-number">{{ totalQuestions }}</div>
+          <div class="stat-label">Questions</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">{{ totalQuestions * 4 }}</div>
+          <div class="stat-label">Total Options</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">{{ completedQuestions }}</div>
+          <div class="stat-label">Completed</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error Message -->
+    <div class="error-message" [class.hidden]="!showError">
+      <span class="material-icons">error</span>
+      <span>{{ errorMessage }}</span>
+    </div>
+
+    <!-- Success Message -->
+    <div class="success-message" [class.hidden]="!showSuccess">
+      <span class="material-icons">check_circle</span>
+      <span>{{ successMessage }}</span>
+    </div>
+
+    <!-- Question Card -->
+    <div class="question-card">
+      <div class="question-header">
+        <div class="question-number">{{ currentQuestion }}</div>
+        <div class="question-title">
+          Question {{ currentQuestion }} of {{ totalQuestions }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label [for]="'questionText' + currentQuestion">Question *</label>
+        <textarea
+          class="form-textarea"
+          [id]="'questionText' + currentQuestion"
+          [(ngModel)]="currentQuestionData.question"
+          placeholder="Enter your question here..."
+          rows="3"
+          required
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Answer Options *</label>
+        <div class="options-grid">
+          <div
+            class="option-group"
+            *ngFor="let option of currentQuestionData.options; let i = index"
+          >
+            <div class="option-label">
+              <span class="option-badge">{{ ["A", "B", "C", "D"][i] }}</span>
+              Option {{ i + 1 }}
+            </div>
+            <input
+              type="text"
+              class="form-input"
+              [(ngModel)]="currentQuestionData.options[i]"
+              [placeholder]="'Enter option ' + ['A', 'B', 'C', 'D'][i] + '...'"
+              required
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="correct-answer-section">
+        <h4>
+          <span class="material-icons">check_circle</span>
+          Correct Answer *
+        </h4>
+        <div class="radio-group">
+          <label
+            class="radio-option"
+            *ngFor="let option of currentQuestionData.options; let i = index"
+          >
+            <input
+              type="radio"
+              [name]="'correct' + currentQuestion"
+              [value]="i"
+              [(ngModel)]="currentQuestionData.correctAnswer"
+              [checked]="currentQuestionData.correctAnswer === i"
+              required
+            />
+            <span>Option {{ ["A", "B", "C", "D"][i] }}</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-buttons">
+    <button
+      class="btn btn-secondary"
+      (click)="previousQuestion()"
+      [disabled]="currentQuestion === 1 || isSaving"
+    >
+      Previous
+    </button>
+
+    <div>
+      <button
+        class="btn btn-primary"
+        (click)="nextQuestion()"
+        [class.hidden]="currentQuestion === totalQuestions"
+        [disabled]="isSaving"
+      >
+        Next
+      </button>
+
+      <button
+        class="btn btn-success"
+        (click)="finishQuiz()"
+        [class.hidden]="currentQuestion !== totalQuestions"
+        [disabled]="isSaving"
+      >
+        <span class="material-icons">save</span>
+        {{ isSaving ? "Saving..." : "Save Quiz" }}
+      </button>
+    </div>
+  </div>
+</div>

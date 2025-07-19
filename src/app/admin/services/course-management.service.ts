@@ -32,6 +32,7 @@ export class CourseManagementService {
             ...course,
             id: Math.max(...MOCK_ADMIN_COURSES.map(c => c.id)) + 1
           };
+          console.log('Using mock data for new course:', newCourse);
           return of(newCourse);
         })
       );
