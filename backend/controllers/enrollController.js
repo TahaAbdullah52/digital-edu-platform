@@ -82,35 +82,25 @@ const getUserCourses = async (req, res) => {
       WHERE uc.user_id = ?
     `, [userId]);
 
-<<<<<<< HEAD
     // parse `technologies` JSON field
-=======
-    // parse technologies JSON field
->>>>>>> df28128384b40bc15feafc49778b409ce9ec62f0
     const courses = rows.map(c => ({
       ...c,
       technologies: c.technologies ? JSON.parse(c.technologies) : []
     }));
 
-<<<<<<< HEAD
     console.log(`User ${userId} courses:`, courses);
-=======
->>>>>>> df28128384b40bc15feafc49778b409ce9ec62f0
     res.json(courses);
 
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Could not fetch user courses' });
-  }
+    res.status(500).json({ message: 'Could not fetch user courses' });
+  }
 };
 
-<<<<<<< HEAD
 
 
 
 
-=======
->>>>>>> df28128384b40bc15feafc49778b409ce9ec62f0
 module.exports = {
   initDB,
   checkEnrollment,
