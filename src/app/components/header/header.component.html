@@ -17,13 +17,9 @@
   </nav>
 
   <div class="badge-section">
-    <img
-      src="assets/images/silver_badge.png"
-      alt="User Badge"
-      class="user-badge"
-    />
+    <img src="assets/images/no_badge.png" alt="User Badge" class="user-badge" />
   </div>
   <app-prim-button (clicked)="goToLogin()">
-    {{ isAuthenticated ? 'Sign Out' : 'Login / Sign Up' }}
+    {{ isAuthenticated ? "Sign Out" : "Login / Sign Up" }}
   </app-prim-button>
 </header>

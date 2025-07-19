@@ -274,12 +274,12 @@
 }
 
 .course-details {
-  flex: 0 0 500px;
+  /* flex: 0 0 600px;  */
   background: white;
   border: 1px solid #e5e7eb;
   border-radius: 0.75rem;
   overflow: hidden;
-  max-height: 725px;
+  max-height: 800px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
@@ -325,7 +325,7 @@
 .details-content {
   padding: 1.5rem;
   overflow-y: auto;
-  max-height: calc(100vh - 100px);
+  max-height: auto;
 }
 
 .details-section {
@@ -476,8 +476,9 @@
 
 .details-actions {
   display: flex;
-  gap: 2rem;
   justify-content: center;
+  align-items: center;
+  gap: 2rem;
   margin-top: 1.5rem;
   padding-top: 1.5rem;
   border-top: 1px solid #e5e7eb;
@@ -746,6 +747,14 @@
   border-color: #3498db;
   color: #3498db;
 }
+
+.btn-quiz {
+  background-color: #ff9800 !important;
+  border: none !important;
+}
+.btn-quiz:hover:not(:disabled) {
+  background-color: #f57c00 !important;
+}
 /* Target laptops with scaled resolution ~1300px width */
 @media (max-width: 1400px) {
   .manage-courses-container {
@@ -809,7 +818,7 @@
 
   .course-details {
     flex: 0 0 450px;
-    max-height: 650px;
+    max-height: 850px;
   }
 
   .details-header h3 {

@@ -1,4 +1,3 @@
-// src/app/mock-data/profile-mock.ts
 import { LeaderboardUser,ProfileData } from '../models/profile-model';
 
 export const MOCK_PROFILE: ProfileData = {

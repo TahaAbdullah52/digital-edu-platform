@@ -15,18 +15,16 @@ import { UserService } from '../../services/user.service';
 export class HeaderComponent {
   constructor(private router: Router, private userService: UserService) {}
 
-  // Check if the user is authenticated
   get isAuthenticated() {
     return this.userService.isAuthenticated();
   }
 
-  // Redirect user to login page
   goToLogin() {
     if (this.isAuthenticated) {
-      this.userService.logout();  // Logout if user is already logged in
+      this.userService.logout();  
       this.router.navigate(['/home']);
     } else {
-      this.router.navigate(['/login']);  // Navigate to login if not authenticated
+      this.router.navigate(['/login']); 
     }
   }
 }

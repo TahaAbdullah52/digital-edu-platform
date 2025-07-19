@@ -4,13 +4,6 @@ import { catchError, of, map, tap, Observable } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { course_item } from '../models/course-item';
 import { MOCK_COURSES } from '../mock-data/mock-courses';
-// import {
-//   COMMON_WEB_TECHS,
-//   DEVOPS_TECHS,
-//   DOT_NET_TECHS,
-//   MERN_TECHS,
-//   PYTHON_TECHS
-// } from '../shared/data/shared-tech';
 import { BASE_CATEGORIES } from '../constants/categories';
 
 @Injectable({
@@ -45,9 +38,7 @@ export class CourseService {
         return of(MOCK_COURSES);
       }),
       tap((courses) => {
-      // This will log the courses fetched from the backend
         console.log('Fetched Courses:', courses);
-        // You can also log the individual course details if you need to inspect each one
         courses.forEach(course => {
           console.log('Course ID:', course.id);
           console.log('Course Name:', course.course_name);
@@ -88,40 +79,11 @@ export class CourseService {
     return this.showAll() ? filtered : filtered.slice(0, 4);
   });
 
-  // getCourseById(id: number) {
-  //   return this.http.get<course_item>(`${this.apiUrl}/courses/${id}`).pipe(
-  //     map(courses => {
-  //       const course = courses.find(c => c.id === id);
-  //       if (!course) return undefined;
-
-  //       // if (course.category === 'Web Development') {
-  //       //   // if (course.course_id === 'WD103' || course.course_id === 'WD101') {
-  //       //   //   course.technologies = [...COMMON_WEB_TECHS, ...MERN_TECHS];
-  //       //   // } else if (course.course_id === 'WD102') {
-  //       //   //   course.technologies = [...COMMON_WEB_TECHS, ...DOT_NET_TECHS];
-  //       //   // } else if (course.course_id === 'DOPS101') {
-  //       //   //   course.technologies = [...DEVOPS_TECHS];
-  //       //   // } else if (course.course_id === 'WD104') {
-  //       //   //   course.technologies = [...PYTHON_TECHS];
-  //       //   // }
-  //       // } else if (course.category === 'Artificial Intelligence') {
-  //       //   course.technologies = [...PYTHON_TECHS];
-  //       // } else if (course.category === 'Cyber Security') {
-  //       //   course.technologies = [...PYTHON_TECHS];
-  //       // } else if (course.category === 'Programming') {
-  //       //   course.technologies = [...PYTHON_TECHS, ...DOT_NET_TECHS];
-  //       // } else {
-  //       //   course.technologies = [...PYTHON_TECHS];
-  //       // }
-  //       return course;
-  //     })
-  //   );
-  // }
   getCourseById(id: number) {
     return this.http.get<course_item>(`${this.apiUrl}/course/${id}`).pipe(
       catchError((err) => {
         console.warn('Error fetching course by ID:', err);
-        return of(undefined); // Return undefined if there's an error fetching
+        return of(undefined); 
       })
     );
   }
@@ -151,11 +113,9 @@ export class CourseService {
     return this.http.get<course_item[]>(`${this.apiUrl}/user_courses/${userId}`);
   }
 
-
   getCourseByPlaylistId(playlistId: string): course_item | undefined {
     return this.courses().find(c => c.playlistId === playlistId);
   }
-
 
   filteredFreeCourses = computed(() => {
     const selected = this.selectedCategory();
