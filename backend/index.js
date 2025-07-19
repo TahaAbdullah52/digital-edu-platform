@@ -14,6 +14,10 @@ const { initDB: initEnrollDB } = require('./controllers/enrollController');
 const storyRoutes = require('./routes/storyRoutes');
 const { initDB: initStoryDB } = require('./controllers/storyController');  // Rename
 const { initDB: initDashboardDB } = require('./controllers/dashboardController');  // Rename initDB from dashboardController
+const quizRoutes = require('./routes/quizRoutes');
+const { initDB: initQuizDB } = require('./controllers/quizController');  // Rename initDB from quizController
+
+
 const path = require('path');
 
 dotenv.config();
@@ -36,7 +40,7 @@ const startServer = async () => {
   initPaymentDB(db);  
   initStoryDB(db);                // initialize payment controller with db connection                     
   initDashboardDB(db);            // initialize dashboard controller with db connection
-
+  initQuizDB(db);                 // initialize quiz controller with db connection
 
   app.use('/api', authRoutes);        // use auth routes// use profile routes
   app.use('/api',courseRoutes);
@@ -44,6 +48,7 @@ const startServer = async () => {
   app.use('/api', paymentRoutes);     // use payment routes
   app.use('/api', storyRoutes);
   app.use('/api', dashboardRoutes);   // use dashboard routes
+  app.use('/api', quizRoutes);
   app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
   
   const PORT = process.env.PORT || 3000;
