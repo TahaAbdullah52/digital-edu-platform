@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 06, 2025 at 09:24 PM
+-- Generation Time: Jul 19, 2025 at 07:12 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -95,13 +95,25 @@ CREATE TABLE `courses` (
 --
 
 INSERT INTO `courses` (`id`, `img_url`, `batch_nO`, `no_of_seat`, `rem_days`, `course_name`, `course_desc`, `no_of_class`, `created_at`, `cate_id`, `playlistId`, `isPremium`, `isEnrolled`, `course_fee`, `technologies`) VALUES
-(10001, 'https://img.youtube.com/vi/5NgNicANyqM/hqdefault.jpg', 4, 18, 0, 'Learn Artificial Intelligence', 'This project demonstrates full-stack web development using the MERN stack (MongoDB, Express.js, React.js, and Node.js). It covers building a responsive frontend with React, managing backend APIs with Express and Node, and integrating MongoDB for data storage—offering a complete end-to-end application development experience.', 20, '2025-06-29 20:10:17', 2, '5NgNicANyqM', 0, 0, 0, '[{\"name\":\"Python\",\"icon\":\"assets/images/python.jpg\"},{\"name\":\"AWS\",\"icon\":\"assets/images/aws-brands.svg\"},{\"name\":\"Docker\",\"icon\":\"assets/images/docker-brands.svg\"},{\"name\":\"Jenkins\",\"icon\":\"assets/images/jenkins-brands-solid.svg\"},{\"name\":\"Flask\",\"icon\":\"assets/images/Flask.png\"},{\"name\":\"MSSQL\",\"icon\":\"assets/images/MSSQL.png\"},{\"name\":\"Git\",\"icon\":\"assets/images/Git.png\"}]'),
-(10002, 'https://img.youtube.com/vi/RWXKysImabs/hqdefault.jpg', 2, 2, 2, 'Learn Dot Net Development', 'This project showcases web application development using the .NET framework, focusing on building scalable backend services with ASP.NET Core. It includes implementation of RESTful APIs, integration with a SQL Server database, and application of MVC architecture for clean and maintainable code structure.', 10, '2025-07-03 16:35:20', 1, 'RWXKysImabs', 0, 0, 0, '[{\"name\":\"C#\",\"icon\":\"assets/images/c_Sharp.png\"},{\"name\":\"ASP.NET MVC\",\"icon\":\"assets/images/MVC_arch.png\"},{\"name\":\"OOP\",\"icon\":\"assets/images/oop.png\"},{\"name\":\"VS Code\",\"icon\":\"assets/images/VsCode.png\"}]'),
-(10003, 'https://img.youtube.com/vi/EsUL2bfKKLc/hqdefault.jpg', 13, 2, 7, 'Full Stack Web Development (MERN)', 'This project demonstrates full-stack web development using the MERN stack (MongoDB, Express.js, React.js, and Node.js). It covers building a responsive frontend with React, managing backend APIs with Express and Node, and integrating MongoDB for data storage—offering a complete end-to-end application development experience.', 30, '2025-07-03 19:30:20', 1, 'EsUL2bfKKLc', 1, 0, 2500, '[{\"name\":\"React\",\"icon\":\"assets/images/reactJS.png\"},{\"name\":\"Node.js\",\"icon\":\"assets/images/nodejs.png\"},{\"name\":\"NEXT.js\",\"icon\":\"assets/images/nextJS.png\"},{\"name\":\"JQuery\",\"icon\":\"assets/images/Jquery.png\"}]'),
-(10004, 'https://img.youtube.com/vi/tVzUXW6siu0/hqdefault.jpg', 3, 8, 5, 'Web Development From Scratch', 'This project demonstrates full-stack web development using the MERN stack (MongoDB, Express.js, React.js, and Node.js). It covers building a responsive frontend with React, managing backend APIs with Express and Node, and integrating MongoDB for data storage—offering a complete end-to-end application development experience.', 139, '2025-07-03 19:57:37', 1, 'PLu0W_9lII9agq5TrH9XLIKQvv0iaF2X3w', 0, 0, 0, '[{\"name\":\"HTML\",\"icon\":\"assets/images/html.png\"},{\"name\":\"CSS\",\"icon\":\"assets/images/CSS.png\"},{\"nam\":\"JavaScript\",\"icon\":\"assets/images/JS.png\"},{\"name\":\"Rest API\",\"icon\":\"assets/images/REST_Api.png\"},{\"name\":\"MSSQL\",\"icon\":\"assets/images/MSSQL.png\"},{\"name\":\"Git\",\"icon\":\"assets/images/Git.png\"}]'),
-(10005, 'https://img.youtube.com/vi/7WRlYJFG7YI/hqdefault.jpg', 3, 20, 2, 'Data Science Full Course', 'This project demonstrates full-stack web development using the MERN stack (MongoDB, Express.js, React.js, and Node.js). It covers building a responsive frontend with React, managing backend APIs with Express and Node, and integrating MongoDB for data storage—offering a complete end-to-end application development experience.', 14, '2025-07-03 20:02:52', 4, '7WRlYJFG7YI', 0, 0, 0, '[{\"name\":\"Python\",\"icon\":\"assets/images/python.jpg\"},{\"name\":\"Django\",\"icon\":\"assets/images/Django.png\"},{\"name\":\"Fast API\",\"icon\":\"assets/images/FastAPi.png\"},{\"name\":\"Flask\",\"icon\":\"assets/images/Flask.png\"}]'),
-(10006, 'https://img.youtube.com/vi/fNzpcB7ODxQ/hqdefault.jpg', 11, 4, 8, 'Learn Ethical Hacking', 'This project demonstrates full-stack web development using the MERN stack (MongoDB, Express.js, React.js, and Node.js). It covers building a responsive frontend with React, managing backend APIs with Express and Node, and integrating MongoDB for data storage—offering a complete end-to-end application development experience.', 80, '2025-07-03 20:04:55', 3, 'fNzpcB7ODxQ', 0, 0, 0, '[]'),
-(10007, 'https://img.youtube.com/vi/-TkoO8Z07hI/hqdefault.jpg', 20, 4, 5, 'Learn C++ Language', 'This project demonstrates full-stack web development using the MERN stack (MongoDB, Express.js, React.js, and Node.js). It covers building a responsive frontend with React, managing backend APIs with Express and Node, and integrating MongoDB for data storage—offering a complete end-to-end application development experience.', 40, '2025-07-03 20:10:33', 5, '-TkoO8Z07hI', 0, 0, 0, '[]');
+(10001, 'https://img.youtube.com/vi/5NgNicANyqM/hqdefault.jpg', 4, 17, 0, 'Learn Artificial Intelligence', 'This project demonstrates full-stack web development using the MERN stack (MongoDB, Express.js, React.js, and Node.js). It covers building a responsive frontend with React, managing backend APIs with Express and Node, and integrating MongoDB for data storage—offering a complete end-to-end application development experience.', 20, '2025-06-29 20:10:17', 2, '5NgNicANyqM', 1, 0, 1500, '[]'),
+(10002, 'https://img.youtube.com/vi/RWXKysImabs/hqdefault.jpg', 2, 2, 0, 'Learn Dot Net Development', 'This project showcases web application development using the .NET framework, focusing on building scalable backend services with ASP.NET Core. It includes implementation of RESTful APIs, integration with a SQL Server database, and application of MVC architecture for clean and maintainable code structure.', 10, '2025-07-03 16:35:20', 1, 'RWXKysImabs', 0, 0, 0, '[{\"name\":\"C#\",\"icon\":\"assets/images/c_Sharp.png\"},{\"name\":\"ASP.NET MVC\",\"icon\":\"assets/images/MVC_arch.png\"},{\"name\":\"OOP\",\"icon\":\"assets/images/oop.png\"},{\"name\":\"VS Code\",\"icon\":\"assets/images/VsCode.png\"}]'),
+(10003, 'https://img.youtube.com/vi/EsUL2bfKKLc/hqdefault.jpg', 13, 2, 0, 'Full Stack Web Development (MERN)', 'This project demonstrates full-stack web development using the MERN stack (MongoDB, Express.js, React.js, and Node.js). It covers building a responsive frontend with React, managing backend APIs with Express and Node, and integrating MongoDB for data storage—offering a complete end-to-end application development experience.', 30, '2025-07-03 19:30:20', 1, 'EsUL2bfKKLc', 1, 0, 2500, '[{\"name\":\"React\",\"icon\":\"assets/images/reactJS.png\"},{\"name\":\"Node.js\",\"icon\":\"assets/images/nodejs.png\"},{\"name\":\"NEXT.js\",\"icon\":\"assets/images/nextJS.png\"},{\"name\":\"JQuery\",\"icon\":\"assets/images/Jquery.png\"}]'),
+(10004, 'https://img.youtube.com/vi/tVzUXW6siu0/hqdefault.jpg', 3, 7, 0, 'Web Development From Scratch', 'This project demonstrates full-stack web development using the MERN stack (MongoDB, Express.js, React.js, and Node.js). It covers building a responsive frontend with React, managing backend APIs with Express and Node, and integrating MongoDB for data storage—offering a complete end-to-end application development experience.', 139, '2025-07-03 19:57:37', 1, 'PLu0W_9lII9agq5TrH9XLIKQvv0iaF2X3w', 0, 0, 0, '[{\"name\":\"HTML\",\"icon\":\"assets/images/html.png\"},{\"name\":\"CSS\",\"icon\":\"assets/images/CSS.png\"},{\"nam\":\"JavaScript\",\"icon\":\"assets/images/JS.png\"},{\"name\":\"Rest API\",\"icon\":\"assets/images/REST_Api.png\"},{\"name\":\"MSSQL\",\"icon\":\"assets/images/MSSQL.png\"},{\"name\":\"Git\",\"icon\":\"assets/images/Git.png\"}]'),
+(10005, 'https://img.youtube.com/vi/7WRlYJFG7YI/hqdefault.jpg', 3, 20, 0, 'Data Science Full Course', 'This project demonstrates full-stack web development using the MERN stack (MongoDB, Express.js, React.js, and Node.js). It covers building a responsive frontend with React, managing backend APIs with Express and Node, and integrating MongoDB for data storage—offering a complete end-to-end application development experience.', 14, '2025-07-03 20:02:52', 4, '7WRlYJFG7YI', 0, 0, 0, '[{\"name\":\"Python\",\"icon\":\"assets/images/python.jpg\"},{\"name\":\"Django\",\"icon\":\"assets/images/Django.png\"},{\"name\":\"Fast API\",\"icon\":\"assets/images/FastAPi.png\"},{\"name\":\"Flask\",\"icon\":\"assets/images/Flask.png\"}]'),
+(10007, 'https://img.youtube.com/vi/-TkoO8Z07hI/hqdefault.jpg', 20, 3, 0, 'Learn C++ Language', 'This project demonstrates full-stack web development using the MERN stack (MongoDB, Express.js, React.js, and Node.js). It covers building a responsive frontend with React, managing backend APIs with Express and Node, and integrating MongoDB for data storage—offering a complete end-to-end application development experience.', 40, '2025-07-03 20:10:33', 5, '-TkoO8Z07hI', 0, 0, 0, '[]');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `options`
+--
+
+CREATE TABLE `options` (
+  `option_id` int(11) NOT NULL,
+  `question_id` int(11) DEFAULT NULL,
+  `option_text` text NOT NULL,
+  `option_index` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -124,9 +136,34 @@ CREATE TABLE `payments` (
 --
 
 INSERT INTO `payments` (`id`, `trxId`, `user_id`, `course_id`, `date`, `type`, `status`) VALUES
-(1, '4365436546', 13, 10003, '2025-07-04', 'bkash', 'Completed'),
-(2, '34565467476', 15, 10003, '2025-07-04', 'rocket', 'Pending'),
-(3, '32554356346', 17, 10003, '2025-07-04', 'Nagad', 'Completed');
+(2, '34565467476', 15, 10003, '2025-07-04', 'rocket', 'Completed'),
+(3, '32554356346', 17, 10003, '2025-07-04', 'Nagad', 'Completed'),
+(6, '34565467476', 17, 10001, '2025-07-18', 'bkash', 'Pending'),
+(7, '4365475685', 14, 10003, '2025-07-18', 'rocket', 'Pending');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `questions`
+--
+
+CREATE TABLE `questions` (
+  `question_id` int(11) NOT NULL,
+  `quiz_id` int(11) DEFAULT NULL,
+  `question_text` text NOT NULL,
+  `correct_answer_index` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `quizzes`
+--
+
+CREATE TABLE `quizzes` (
+  `quiz_id` int(11) NOT NULL,
+  `course_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -187,7 +224,6 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`userId`, `username`, `email`, `password`, `name`, `avatar`, `primaryNumber`, `alternativeNumber`, `countryCode`, `joinDate`, `currentOccupation`, `skillSector`, `specificTopic`, `gender`, `age`, `educationalBackground`, `subject`, `rank`, `points`) VALUES
-(13, 'Rahul', 'rahuldatta484@gmail.com', '1234', 'Rahul Datta', '/uploads/1751225005000.jpeg', '01834538573', '1743857271', '+880', '2025-06-29', 'Student', 'Mobile Development', 'Full Stack Development', 'Male', 23, 'BSc', 'CSE', NULL, NULL),
 (14, 'Kasem32', 'kasem@gmail.com', '13245', 'Kasem Malik', '/uploads/1751577378979.jpg', '01532647584', '8213214325', '+880', '2025-07-03', 'Professional', 'Machine Learning', 'ML Engineer', 'Male', 30, 'MSc', 'CSE', NULL, NULL),
 (15, 'Junain40', 'kasem@gmail.com', '1234', 'Junain Uddin', '/uploads/1751577474411.jpg', '018345923452', '1958472513', '+880', '2025-07-03', 'Student', 'Web Development', 'Full Stack Development', 'Male', 23, 'BSc', 'CSE', NULL, NULL),
 (16, 'Piash51', 'piash@gmail.com', '12344', 'Piash Islam', '/uploads/1751577760892.jpg', '01748593857', '18574960013', '+880', '2025-07-03', 'Student', 'DevOps', 'Frontend Development', 'Male', 22, 'BSc', 'CSE', NULL, NULL),
@@ -209,10 +245,7 @@ CREATE TABLE `user_course` (
 --
 
 INSERT INTO `user_course` (`user_id`, `course_id`) VALUES
-(13, 10001),
-(13, 10003),
-(13, 10004),
-(13, 10007),
+(15, 10003),
 (15, 10004),
 (15, 10007),
 (16, 10001),
@@ -244,12 +277,33 @@ ALTER TABLE `courses`
   ADD KEY `foreign_cate` (`cate_id`);
 
 --
+-- Indexes for table `options`
+--
+ALTER TABLE `options`
+  ADD PRIMARY KEY (`option_id`),
+  ADD KEY `question_id` (`question_id`);
+
+--
 -- Indexes for table `payments`
 --
 ALTER TABLE `payments`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `payment_user` (`user_id`),
-  ADD KEY `payment_course` (`course_id`);
+  ADD KEY `payment_course` (`course_id`),
+  ADD KEY `payment_user` (`user_id`);
+
+--
+-- Indexes for table `questions`
+--
+ALTER TABLE `questions`
+  ADD PRIMARY KEY (`question_id`),
+  ADD KEY `quiz_id` (`quiz_id`);
+
+--
+-- Indexes for table `quizzes`
+--
+ALTER TABLE `quizzes`
+  ADD PRIMARY KEY (`quiz_id`),
+  ADD KEY `course_id` (`course_id`);
 
 --
 -- Indexes for table `stories`
@@ -293,10 +347,28 @@ ALTER TABLE `courses`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10008;
 
 --
+-- AUTO_INCREMENT for table `options`
+--
+ALTER TABLE `options`
+  MODIFY `option_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `questions`
+--
+ALTER TABLE `questions`
+  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `quizzes`
+--
+ALTER TABLE `quizzes`
+  MODIFY `quiz_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `stories`
@@ -308,7 +380,7 @@ ALTER TABLE `stories`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables
@@ -321,11 +393,28 @@ ALTER TABLE `courses`
   ADD CONSTRAINT `foreign_cate` FOREIGN KEY (`cate_id`) REFERENCES `categories` (`cate_id`);
 
 --
+-- Constraints for table `options`
+--
+ALTER TABLE `options`
+  ADD CONSTRAINT `options_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `questions` (`question_id`);
+
+--
 -- Constraints for table `payments`
 --
 ALTER TABLE `payments`
-  ADD CONSTRAINT `payment_course` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`),
-  ADD CONSTRAINT `payment_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`userId`);
+  ADD CONSTRAINT `payment_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`userId`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `questions`
+--
+ALTER TABLE `questions`
+  ADD CONSTRAINT `questions_ibfk_1` FOREIGN KEY (`quiz_id`) REFERENCES `quizzes` (`quiz_id`);
+
+--
+-- Constraints for table `quizzes`
+--
+ALTER TABLE `quizzes`
+  ADD CONSTRAINT `quizzes_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`);
 
 --
 -- Constraints for table `user_course`
