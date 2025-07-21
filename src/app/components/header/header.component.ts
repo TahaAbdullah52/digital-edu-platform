@@ -65,6 +65,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe((profile) => {
         if (profile) {
           const newPoints = profile.points || 0;
+          console.log('Current User Points:', newPoints);
           if (this.currentUserPoints !== newPoints) {
             this.currentUserPoints = newPoints;
             this.updateBadgeInfo(this.currentUserPoints);
