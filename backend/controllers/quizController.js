@@ -105,6 +105,7 @@ const quizExists = async (req, res) => {
 
   try {
     const [result] = await db.query('SELECT 1 FROM quizzes WHERE course_id = ? LIMIT 1', [courseId]);
+    console.log('Quiz exists check:', result);
     res.json({ exists: result.length > 0 });
   } catch (error) {
     res.status(500).json({ exists: false });

@@ -38,10 +38,11 @@ export class VideoListComponent implements OnInit {
         this.courseName = 'General';
       }
 
-      this.http.get<{ exists: boolean }>(`http://localhost:3000/courses/${this.courseId}/quiz/exists`)
+      this.http.get<{ exists: boolean }>(`http://localhost:3000/api/courses/${this.courseId}/quiz/exists`)
           .subscribe({
             next: (res) => {
               this.quizExists = res.exists;
+              console.log('Quiz exists:', this.quizExists);
             },
             error: () => {
               this.quizExists = false;

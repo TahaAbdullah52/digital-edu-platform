@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getAllCourses, createCourse, updateCourse, deleteCourse ,getCourseById} = require('../controllers/courseController');
+const { getAllCourses, createCourse, updateCourse, deleteCourse ,getCourseById, getCourses} = require('../controllers/courseController');
 
 // Get all courses
 router.get('/courses', getAllCourses);
@@ -15,5 +15,8 @@ router.put('/courses/:id', updateCourse);
 
 // Delete a course
 router.delete('/courses/:id', deleteCourse);
+
+router.get('/user/courses', getCourses);
+
 
 module.exports = router;

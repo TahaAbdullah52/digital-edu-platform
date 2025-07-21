@@ -2,7 +2,12 @@
   <div class="logo" [routerLink]="['home']">
     <img src="assets/images/logo.png" alt="Digital Agency Logo" />
   </div>
-  <input type="text" placeholder="Search Courses" />
+  <input
+    type="text"
+    placeholder="Search Courses"
+    [(ngModel)]="searchText"
+    (keyup.enter)="searchAndRedirect()" 
+  />
 
   <nav class="nav">
     <a

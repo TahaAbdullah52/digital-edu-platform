@@ -137,4 +137,8 @@ export class CourseService {
     });
   });
 
+  getAllCourses(): Observable<course_item[]> {
+    return this.http.get<course_item[]>(`${this.apiUrl}/user/courses`);
+  }
+
 }

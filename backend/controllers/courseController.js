@@ -234,6 +234,17 @@ const deleteCourse = async (req, res) => {
 };
 
 
+const getCourses = async (req, res) => {
+  try {
+      const [courses] = await db.query('SELECT * FROM courses');
+      res.json(courses);
+    } catch (error) {
+      console.error('Error fetching courses:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+
 
 module.exports = {
   initDB,
@@ -241,5 +252,6 @@ module.exports = {
   createCourse,
   updateCourse,
   deleteCourse,
-  getCourseById
+  getCourseById,
+  getCourses
 };
