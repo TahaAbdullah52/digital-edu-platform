@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
@@ -11,8 +11,6 @@ import { FormsModule } from '@angular/forms';
 import { ProfileService } from '../../services/profile.service';
 import { BadgeService, BadgeInfo, BadgeProgress } from '../../services/badge.service';
 import { ProfileData } from '../../models/profile-model';
-
-
 
 @Component({
   selector: 'app-header',
@@ -29,6 +27,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   badgeProgress: BadgeProgress | null = null;
   searchText: string = '';
   allCourses: course_item[] = [];
+  filteredCourses: course_item[] = [];
+  showSuggestions: boolean = false;
+  selectedSuggestionIndex: number = -1;
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -52,10 +53,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: any): void {
+    const searchContainer = event.target.closest('.search-container');
+    if (!searchContainer) {
+      this.hideSuggestions();
+    }
+  }
+
   get isAuthenticated() {
     return this.userService.isAuthenticated();
   }
-  
 
   private loadUserBadge(): void {
     this.profileService.fetchAndEmitProfileData();
@@ -80,6 +89,69 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.currentBadge = this.badgeService.getBadgeByPoints(points);
     this.userBadgeImage = this.badgeService.getBadgeImage(points);
     this.badgeProgress = this.badgeService.getBadgeProgress(points);
+  }
+
+  // Search functionality methods
+  onSearchInput(): void {
+    const searchTerm = this.searchText.trim().toLowerCase();
+    
+    if (searchTerm.length > 0) {
+      this.filteredCourses = this.allCourses.filter(course =>
+        course.course_name.toLowerCase().startsWith(searchTerm)
+      );
+      this.showSuggestions = this.filteredCourses.length > 0;
+      this.selectedSuggestionIndex = -1;
+    } else {
+      this.hideSuggestions();
+    }
+  }
+
+  onSearchKeydown(event: KeyboardEvent): void {
+    if (!this.showSuggestions || this.filteredCourses.length === 0) {
+      if (event.key === 'Enter') {
+        this.searchAndRedirect();
+      }
+      return;
+    }
+
+    switch (event.key) {
+      case 'ArrowDown':
+        event.preventDefault();
+        this.selectedSuggestionIndex = Math.min(
+          this.selectedSuggestionIndex + 1,
+          this.filteredCourses.length - 1
+        );
+        break;
+      
+      case 'ArrowUp':
+        event.preventDefault();
+        this.selectedSuggestionIndex = Math.max(this.selectedSuggestionIndex - 1, -1);
+        break;
+      
+      case 'Enter':
+        event.preventDefault();
+        if (this.selectedSuggestionIndex >= 0) {
+          this.selectSuggestion(this.filteredCourses[this.selectedSuggestionIndex]);
+        } else {
+          this.searchAndRedirect();
+        }
+        break;
+      
+      case 'Escape':
+        this.hideSuggestions();
+        break;
+    }
+  }
+
+  selectSuggestion(course: course_item): void {
+    this.searchText = course.course_name;
+    this.hideSuggestions();
+    this.router.navigate(['/single-course', course.id]);
+  }
+
+  hideSuggestions(): void {
+    this.showSuggestions = false;
+    this.selectedSuggestionIndex = -1;
   }
 
   // Public methods that components can use
@@ -122,7 +194,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.router.navigate(['/login']); 
     }
   }
-  
 
   searchAndRedirect() {
     const search = this.searchText.trim().toLowerCase();
@@ -133,10 +204,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     );
 
     if (match) {
-      this.router.navigate(['/single-course', match.id]);  // example: /single-course/5
+      this.router.navigate(['/single-course', match.id]);
     } else {
       alert('Course not found');
     }
+    
+    this.hideSuggestions();
   }
 }
-

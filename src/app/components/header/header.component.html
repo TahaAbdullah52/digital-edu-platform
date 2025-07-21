@@ -2,12 +2,45 @@
   <div class="logo" [routerLink]="['home']">
     <img src="assets/images/logo.png" alt="Digital Agency Logo" />
   </div>
-  <input
-    type="text"
-    placeholder="Search Courses"
-    [(ngModel)]="searchText"
-    (keyup.enter)="searchAndRedirect()" 
-  />
+
+  <!-- Enhanced Search Container with Dropdown -->
+  <div class="search-container">
+    <input
+      type="text"
+      placeholder="Search Courses"
+      [(ngModel)]="searchText"
+      (input)="onSearchInput()"
+      (keydown)="onSearchKeydown($event)"
+      (focus)="onSearchInput()"
+      class="search-input"
+    />
+
+    <!-- Search Suggestions Dropdown -->
+    <div class="suggestions-dropdown" *ngIf="showSuggestions">
+      <div
+        *ngFor="let course of filteredCourses; let i = index"
+        class="suggestion-item"
+        [class.selected]="i === selectedSuggestionIndex"
+        (click)="selectSuggestion(course)"
+        (mouseenter)="selectedSuggestionIndex = i"
+      >
+        <div class="course-suggestion">
+          <span class="course-name">{{ course.course_name }}</span>
+          <span class="course-category" *ngIf="course.category">{{
+            course.category
+          }}</span>
+        </div>
+      </div>
+
+      <!-- No results message -->
+      <div
+        class="no-results"
+        *ngIf="filteredCourses.length === 0 && searchText.trim().length > 0"
+      >
+        No courses found
+      </div>
+    </div>
+  </div>
 
   <nav class="nav">
     <a
@@ -67,7 +100,6 @@
       </div>
     </div>
   </div>
-
 
   <app-prim-button (clicked)="goToLogin()">
     {{ isAuthenticated ? "Sign Out" : "Login / Sign Up" }}

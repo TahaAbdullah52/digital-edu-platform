@@ -199,7 +199,91 @@ input::placeholder {
   border-color: #ffd700;
   box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
 }
+/* Search Container Styles */
+.search-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  margin-right: 50px;
+}
 
+.search-input {
+  width: 100%;
+  height: 28px;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.search-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* Suggestions Dropdown Styles */
+.suggestions-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50px;
+  right: -40px;
+  background: white;
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.suggestion-item {
+  padding: 10px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s ease;
+}
+
+.suggestion-item:last-child {
+  border-bottom: none;
+}
+
+.suggestion-item:hover,
+.suggestion-item.selected {
+  background-color: #f8f9fa;
+}
+
+.suggestion-item.selected {
+  background-color: #e9ecef;
+}
+
+.course-suggestion {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.course-name {
+  font-weight: 500;
+  color: #333;
+  font-size: 14px;
+}
+
+.course-category {
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
+}
+
+.no-results {
+  padding: 10px 12px;
+  color: #666;
+  font-style: italic;
+  text-align: center;
+}
 @media (min-width: 1366px) and (max-width: 1920px) and (hover: hover) and (pointer: fine) {
   .header {
     width: 101.5%;
