@@ -21,9 +21,54 @@
     <a routerLink="/my-profile" routerLinkActive="active">My Profile</a>
   </nav>
 
-  <div class="badge-section">
-    <img src="assets/images/no_badge.png" alt="User Badge" class="user-badge" />
+  <!-- Enhanced Badge Section for Authenticated Users -->
+  <div class="badge-section" *ngIf="isAuthenticated">
+    <div class="badge-container" [title]="getBadgeTitle(currentUserPoints)">
+      <div class="badge-wrapper">
+        <img [src]="userBadgeImage" alt="User Badge" class="user-badge" />
+        <div class="badge-overlay" *ngIf="currentBadge">
+          <span class="badge-name">{{ currentBadge.name }}</span>
+        </div>
+      </div>
+
+      <div class="points-display">
+        <span class="points-text">{{ currentUserPoints }} pts</span>
+        <div
+          class="progress-info"
+          *ngIf="badgeProgress && badgeProgress.nextBadge"
+        >
+          <small class="next-badge-text">
+            {{ getPointsToNextBadge() }} pts to {{ getNextBadgeName() }}
+          </small>
+          <div class="progress-bar">
+            <div
+              class="progress-fill"
+              [style.width.%]="getBadgeProgressPercentage()"
+              [style.background-color]="getBadgeColor(currentUserPoints)"
+            ></div>
+          </div>
+        </div>
+        <div
+          class="max-badge-reached"
+          *ngIf="badgeProgress && !badgeProgress.nextBadge"
+        >
+          <small class="max-level-text">Maximum Level Reached! 🎉</small>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <!-- Badge Section for Non-Authenticated Users -->
+  <div class="badge-section" *ngIf="!isAuthenticated">
+    <div class="badge-container" title="Login to start earning badges!">
+      <img src="assets/images/no_badge.png" alt="No Badge" class="user-badge" />
+      <div class="points-display">
+        <span class="points-text">Login to Start</span>
+      </div>
+    </div>
+  </div>
+
+
   <app-prim-button (clicked)="goToLogin()">
     {{ isAuthenticated ? "Sign Out" : "Login / Sign Up" }}
   </app-prim-button>

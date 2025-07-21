@@ -49,20 +49,25 @@ export class ManageUsersComponent implements OnInit {
   }
 
   deleteUser(user: UserManagementData): void {
-    if (confirm(`Are you sure you want to delete ${user.name}?`)) {
-      console.log('Deleting user:', user);
-      // console.log(`Deleting user with ID: ${user.id}`);
-      this.userManagementService.deleteUser(user.id).subscribe({
-        next: (result) => {
-          if (result.success) {
-            this.users.update(users => users.filter(u => u.id !== user.id));
-            this.selectedUser.set(null);
-          }
-        },
-        error: (error) => console.error('Error deleting user:', error)
-      });
-    }
+  if (user.userId === undefined) {
+    console.error('User has no userId, cannot delete.');
+    return;
   }
+
+  if (confirm(`Are you sure you want to delete ${user.name}?`)) {
+    console.log('Deleting user:', user);
+    this.userManagementService.deleteUser(user.userId).subscribe({
+      next: (result) => {
+        if (result.success) {
+          this.users.update(users => users.filter(u => u.userId !== user.userId));
+          this.selectedUser.set(null);
+        }
+      },
+      error: (error) => console.error('Error deleting user:', error)
+    });
+  }
+}
+
 
   onFilterChange(): void {
     this.loadUsers();

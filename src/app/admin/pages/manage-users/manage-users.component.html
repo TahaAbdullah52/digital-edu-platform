@@ -14,11 +14,15 @@
       <div
         *ngFor="let user of users()"
         class="user-card"
-        [class.selected]="selectedUser()?.id === user.id"
+        [class.selected]="selectedUser()?.userId === user.userId"
         (click)="selectUser(user)"
       >
         <div class="user-avatar">
-          <img [src]="'http://localhost:3000'+user.avatar" alt="Avatar" class="avatar-img" />
+          <img
+            [src]="'http://localhost:3000' + user.avatar"
+            alt="Avatar"
+            class="avatar-img"
+          />
         </div>
 
         <div class="user-info">
@@ -63,7 +67,11 @@
         <div class="details-section">
           <div class="profile-header">
             <div class="profile-avatar large">
-              <img [src]="'http://localhost:3000'+selectedUser()?.avatar" alt="Avatar" class="avatar-img large" />
+              <img
+                [src]="'http://localhost:3000' + selectedUser()?.avatar"
+                alt="Avatar"
+                class="avatar-img large"
+              />
             </div>
             <div class="profile-info">
               <h2>{{ selectedUser()?.name }}</h2>

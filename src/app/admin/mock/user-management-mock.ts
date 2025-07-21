@@ -2,7 +2,7 @@ import { UserManagementData } from '../models/user-management';
 
 export const MOCK_USERS: UserManagementData[] = [
   {
-    id: 1,
+    userId: 1,
     name: 'John Smith',
     avatar: 'JS',
     primaryNumber: '+1 (555) 123-4567',
@@ -21,7 +21,7 @@ export const MOCK_USERS: UserManagementData[] = [
     totalSpent: 0
   },
   {
-    id: 2,
+    userId: 2,
     name: 'Sarah Johnson',
     avatar: 'SJ',
     primaryNumber: '+1 (555) 987-6543',
@@ -40,7 +40,7 @@ export const MOCK_USERS: UserManagementData[] = [
     totalSpent: 1999
   },
   {
-    id: 3,
+    userId: 3,
     name: 'Michael Chen',
     avatar: 'MC',
     primaryNumber: '+1 (555) 456-7890',

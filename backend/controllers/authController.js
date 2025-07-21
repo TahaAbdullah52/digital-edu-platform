@@ -166,6 +166,7 @@ const updateProfile = async (req, res) => {
 
 
 // Controller for fetching the user profile based on JWT userId
+// Controller for fetching the user profile based on JWT userId
 const getProfile = async (req, res) => {
   const userId = req.user.userId;  // Extract userId from the JWT token
 
@@ -173,9 +174,9 @@ const getProfile = async (req, res) => {
     // Query the database to get user details using the userId
     const [user] = await db.execute(`
       SELECT 
-        userId, name, avatar, primaryNumber, alternativeNumber, email
+        userId, username, name, avatar, primaryNumber, alternativeNumber, email,
         countryCode, currentOccupation, skillSector, specificTopic, 
-        gender, age, educationalBackground, subject, joinDate
+        gender, age, educationalBackground, subject, joinDate, points, rank
       FROM users WHERE userId = ?`, [userId]);
 
     if (user.length === 0) {
@@ -189,7 +190,6 @@ const getProfile = async (req, res) => {
     res.status(500).json({ message: 'Server error during profile fetch' });
   }
 };
-
 
 // Change Password
 const changePassword = async (req, res) => {
