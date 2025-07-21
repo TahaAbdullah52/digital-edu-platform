@@ -23,7 +23,7 @@
   </div>
 
   <!-- ACCOUNT DETAILS SECTION -->
-  <div class="content" *ngIf="activeTab === 'account'" @fadeInOut>
+  <div class="content" *ngIf="activeTab === 'account'" [@fadeInOut]>
     <!-- Main Content Area -->
     <div class="main-content">
       <!-- Profile Section with Leaderboard and Image -->
@@ -34,14 +34,15 @@
           <div class="leaderboard-list">
             <div
               class="leaderboard-item"
-              *ngFor="let user of leaderboardUsers"
-              [class.current-user]="user.id === currentUserId"
+              *ngFor="let user of leaderboardUsers; trackByUserId"
+              [class.current-user]="user.userId === currentUserId"
             >
               <div class="rank">{{ user.rank }}</div>
               <div class="user-info">
                 <div class="details">
                   <div class="name">
-                    {{user.id === currentUserId ? 'You' : user.name}}</div>
+                    {{ user.userId === currentUserId ? "You" : user.name }}
+                  </div>
                   <div class="points">{{ user.points }} pts</div>
                 </div>
               </div>
@@ -52,7 +53,10 @@
         <!-- Profile Image Section -->
         <div class="profile-image-section">
           <div class="profile-image">
-            <img [src]="profileImage || '/assets/images/userImage.webp'" alt="" />
+            <img
+              [src]="profileImage || '/assets/images/userImage.webp'"
+              [alt]="profileData.name || 'Profile Image'"
+            />
           </div>
           <label class="upload-btn">
             UPLOAD YOUR IMAGE
@@ -70,48 +74,68 @@
       <div class="profile-form">
         <div class="form-row">
           <div class="form-group">
-            <label>Full Name</label>
-            <input type="text" [(ngModel)]="profileData.name" />
+            <label for="fullName">Full Name</label>
+            <input
+              id="fullName"
+              type="text"
+              [(ngModel)]="profileData.name"
+              name="fullName"
+            />
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label>Primary Number</label>
-            <input type="text" [(ngModel)]="profileData.primaryNumber" />
+            <label for="primaryNumber">Primary Number</label>
+            <input
+              id="primaryNumber"
+              type="text"
+              [(ngModel)]="profileData.primaryNumber"
+              name="primaryNumber"
+            />
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label>Email</label>
-            <input type="email" [(ngModel)]="profileData.email" />
+            <label for="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              [(ngModel)]="profileData.email"
+              name="email"
+            />
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group half">
-            <label>Alternative Number</label>
+            <label for="alternativeNumber">Alternative Number</label>
             <div class="phone-input">
               <select
                 [(ngModel)]="profileData.countryCode"
                 class="country-code"
+                name="countryCode"
               >
                 <option value="+880">+880</option>
                 <option value="+1">+1</option>
                 <option value="+44">+44</option>
               </select>
               <input
+                id="alternativeNumber"
                 type="text"
                 [(ngModel)]="profileData.alternativeNumber"
                 placeholder="Alternative Number"
+                name="alternativeNumber"
               />
             </div>
           </div>
         </div>
 
-        <button class="update-btn" (click)="onUpdate()">
-          UPDATE <i class="fas fa-chevron-down"></i>
+        <button class="update-btn" (click)="onUpdate()" [disabled]="isUpdating">
+          {{ isUpdating ? "UPDATING..." : "UPDATE" }}
+          <i class="fas fa-chevron-down" *ngIf="!isUpdating"></i>
+          <i class="fas fa-spinner fa-spin" *ngIf="isUpdating"></i>
         </button>
       </div>
     </div>
@@ -119,59 +143,108 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <div class="form-group">
-        <label>Current Occupation</label>
-        <select [(ngModel)]="profileData.currentOccupation">
-          <option *ngFor="let occupation of occupations" [value]="occupation">
+        <label for="currentOccupation">Current Occupation</label>
+        <select
+          id="currentOccupation"
+          [(ngModel)]="profileData.currentOccupation"
+          name="currentOccupation"
+        >
+          <option value="">Select Occupation</option>
+          <option
+            *ngFor="let occupation of occupations; trackBy: trackByValue"
+            [value]="occupation"
+          >
             {{ occupation }}
           </option>
         </select>
       </div>
 
       <div class="form-group">
-        <label>Which sector do you want to build skills in?</label>
-        <select [(ngModel)]="profileData.skillSector">
-          <option *ngFor="let sector of skillSectors" [value]="sector">
+        <label for="skillSector"
+          >Which sector do you want to build skills in?</label
+        >
+        <select
+          id="skillSector"
+          [(ngModel)]="profileData.skillSector"
+          name="skillSector"
+        >
+          <option value="">Select Skill Sector</option>
+          <option
+            *ngFor="let sector of skillSectors; trackBy: trackByValue"
+            [value]="sector"
+          >
             {{ sector }}
           </option>
         </select>
       </div>
 
       <div class="form-group">
-        <label>Select a specific topic</label>
-        <select [(ngModel)]="profileData.specificTopic">
-          <option *ngFor="let topic of specificTopics" [value]="topic">
+        <label for="specificTopic">Select a specific topic</label>
+        <select
+          id="specificTopic"
+          [(ngModel)]="profileData.specificTopic"
+          name="specificTopic"
+        >
+          <option value="">Select Topic</option>
+          <option
+            *ngFor="let topic of specificTopics; trackBy: trackByValue"
+            [value]="topic"
+          >
             {{ topic }}
           </option>
         </select>
       </div>
 
       <div class="form-group">
-        <label>Gender</label>
-        <select [(ngModel)]="profileData.gender">
-          <option *ngFor="let gender of genders" [value]="gender">
+        <label for="gender">Gender</label>
+        <select id="gender" [(ngModel)]="profileData.gender" name="gender">
+          <option value="">Select Gender</option>
+          <option
+            *ngFor="let gender of genders; trackBy: trackByValue"
+            [value]="gender"
+          >
             {{ gender }}
           </option>
         </select>
       </div>
 
       <div class="form-group">
-        <label>Age</label>
-        <input type="number" [(ngModel)]="profileData.age" />
+        <label for="age">Age</label>
+        <input
+          id="age"
+          type="number"
+          [(ngModel)]="profileData.age"
+          name="age"
+          min="1"
+          max="120"
+        />
       </div>
 
       <div class="form-group">
-        <label>Educational Background</label>
-        <select [(ngModel)]="profileData.educationalBackground">
-          <option *ngFor="let education of educationLevels" [value]="education">
+        <label for="educationalBackground">Educational Background</label>
+        <select
+          id="educationalBackground"
+          [(ngModel)]="profileData.educationalBackground"
+          name="educationalBackground"
+        >
+          <option value="">Select Education Level</option>
+          <option
+            *ngFor="let education of educationLevels; trackBy: trackByValue"
+            [value]="education"
+          >
             {{ education }}
           </option>
         </select>
       </div>
 
       <div class="form-group">
-        <label>Subject</label>
-        <select [(ngModel)]="profileData.subject">
-          <option *ngFor="let subject of subjects" [value]="subject">
+        <label for="subject">Subject</label>
+        <select id="subject" [(ngModel)]="profileData.subject" name="subject">
+          <option value="">Select Subject</option>
+          <option
+            *ngFor="let subject of subjects; trackBy: trackByValue"
+            [value]="subject"
+          >
             {{ subject }}
           </option>
         </select>
@@ -183,20 +256,38 @@
   <div
     class="change-password-section"
     *ngIf="activeTab === 'account'"
-    @fadeInOut
+    [@fadeInOut]
   >
     <h2>Change Password</h2>
     <div class="form-group">
-      <label>Old Password</label>
-      <input type="password" [(ngModel)]="passwordForm.oldPassword" placeholder="Enter old password" />
+      <label for="oldPassword">Old Password</label>
+      <input
+        id="oldPassword"
+        type="password"
+        [(ngModel)]="passwordForm.oldPassword"
+        placeholder="Enter old password"
+        name="oldPassword"
+      />
     </div>
     <div class="form-group">
-      <label>New Password</label>
-      <input type="password" [(ngModel)]="passwordForm.newPassword" placeholder="Enter new password" />
+      <label for="newPassword">New Password</label>
+      <input
+        id="newPassword"
+        type="password"
+        [(ngModel)]="passwordForm.newPassword"
+        placeholder="Enter new password"
+        name="newPassword"
+      />
     </div>
     <div class="form-group">
-      <label>Confirm Password</label>
-      <input type="password" [(ngModel)]="passwordForm.confirmPassword" placeholder="Confirm new password" />
+      <label for="confirmPassword">Confirm Password</label>
+      <input
+        id="confirmPassword"
+        type="password"
+        [(ngModel)]="passwordForm.confirmPassword"
+        placeholder="Confirm new password"
+        name="confirmPassword"
+      />
     </div>
     <button class="change-password-btn" (click)="onChangePassword()">
       Change Password
@@ -207,12 +298,12 @@
   <div
     class="transaction-history"
     *ngIf="activeTab === 'transactions'"
-    @fadeInOut
+    [@fadeInOut]
   >
     <h2>Transaction History</h2>
 
     <div class="transaction-filters">
-      <select [(ngModel)]="transactionFilter">
+      <select [(ngModel)]="transactionFilter" name="transactionFilter">
         <option value="">All Types</option>
         <option value="Nagad">Nagad</option>
         <option value="Bkash">Bkash</option>
@@ -230,7 +321,10 @@
         <div>Status</div>
       </div>
 
-      <div class="transaction-row" *ngFor="let txn of filteredTransactions">
+      <div
+        class="transaction-row"
+        *ngFor="let txn of filteredTransactions; trackBy: trackByTransactionId"
+      >
         <div>{{ txn.id }}</div>
         <div>{{ txn.date }}</div>
         <div>{{ txn.course_name }}</div>

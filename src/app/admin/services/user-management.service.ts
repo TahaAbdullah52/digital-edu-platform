@@ -24,8 +24,10 @@ export class UserManagementService {
         this.usingMockData = true;
         
         // Filter out deleted users from mock data
-        const filteredUsers = MOCK_USERS.filter(user => !this.deletedUserIds.has(user.id));
-        
+        const filteredUsers = MOCK_USERS.filter(user => 
+                              user.userId !== undefined && !this.deletedUserIds.has(user.userId)
+                            );
+
         return of({
           users: filteredUsers
         });
